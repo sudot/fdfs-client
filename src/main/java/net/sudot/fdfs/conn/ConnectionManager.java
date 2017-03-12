@@ -11,13 +11,11 @@ import java.net.InetSocketAddress;
 
 /**
  * 连接池管理
- * 
+ *
  * <pre>
  * 负责借出连接，在连接上执行业务逻辑，然后归还连
  * </pre>
- * 
  * @author tobato
- *
  */
 @Component
 public class ConnectionManager {
@@ -37,7 +35,6 @@ public class ConnectionManager {
 
     /**
      * 构造函数
-     * 
      * @param pool
      */
     public ConnectionManager(FdfsConnectionPool pool) {
@@ -47,7 +44,6 @@ public class ConnectionManager {
 
     /**
      * 获取连接并执行交易
-     * 
      * @param address
      * @param command
      * @return
@@ -63,7 +59,6 @@ public class ConnectionManager {
 
     /**
      * 执行交易
-     * 
      * @param conn
      * @param command
      * @return
@@ -91,7 +86,6 @@ public class ConnectionManager {
 
     /**
      * 获取连接
-     * 
      * @param address
      * @return
      */
