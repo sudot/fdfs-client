@@ -1,17 +1,14 @@
 package net.sudot.fdfs.proto.storage;
 
-import org.junit.Test;
-
 import net.sudot.fdfs.TestConstants;
 import net.sudot.fdfs.proto.StorageCommandTestBase;
+import org.junit.Test;
 
 /**
  * 文件上传命令测试
- * 
  * @author tobato
- *
  */
-public class StorageUploadFileCommandTest  extends  StorageCommandTestBase {
+public class StorageUploadFileCommandTest extends StorageCommandTestBase {
 
     /**
      * 文件上传测试

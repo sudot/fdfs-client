@@ -9,19 +9,14 @@ import java.net.Socket;
 
 /**
  * 模拟socket处理类
- * 
  * @author tobato
- *
  */
-public class FdfsMockHandler  extends  Thread {
+public class FdfsMockHandler extends Thread {
 
     /** 日志 */
     private static final Logger LOGGER = LoggerFactory.getLogger(FdfsMockHandler.class);
-
-    private Socket client;
-
     DataInputStream in = null;
-
+    private Socket client;
     private boolean stop = false;
 
     public FdfsMockHandler(Socket client) {

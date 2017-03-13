@@ -1,18 +1,15 @@
 package net.sudot.fdfs.proto.tracker;
 
-import org.junit.Test;
-
 import net.sudot.fdfs.FastdfsTestBase;
 import net.sudot.fdfs.TestConstants;
 import net.sudot.fdfs.proto.tracker.internal.TrackerListGroupsRequest;
+import org.junit.Test;
 
 /**
  * 列举Groups请求
- * 
  * @author tobato
- *
  */
-public class TrackerListGroupsRequestTest extends FastdfsTestBase{
+public class TrackerListGroupsRequestTest extends FastdfsTestBase {
 
     @Test
     public void testGetByteContent() {

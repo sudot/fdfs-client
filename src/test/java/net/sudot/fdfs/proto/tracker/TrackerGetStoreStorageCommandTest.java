@@ -1,18 +1,16 @@
 package net.sudot.fdfs.proto.tracker;
 
-import static org.junit.Assert.assertNotNull;
-
 import net.sudot.fdfs.domain.StorageNode;
 import net.sudot.fdfs.proto.CommandTestBase;
 import org.junit.Test;
 
+import static org.junit.Assert.assertNotNull;
+
 /**
  * 获取存储节点交易
- * 
  * @author tobato
- *
  */
-public class TrackerGetStoreStorageCommandTest  extends CommandTestBase {
+public class TrackerGetStoreStorageCommandTest extends CommandTestBase {
 
     @Test
     public void testTrackerGetStoreStorageCommand() {

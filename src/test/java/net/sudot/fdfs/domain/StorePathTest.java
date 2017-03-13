@@ -1,21 +1,19 @@
 package net.sudot.fdfs.domain;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
 import net.sudot.fdfs.FastdfsTestBase;
 import net.sudot.fdfs.exception.FdfsUnsupportStorePathException;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 /**
  * 文件路径对象
- * 
  * @author tobato
- *
  */
 public class StorePathTest extends FastdfsTestBase {
 

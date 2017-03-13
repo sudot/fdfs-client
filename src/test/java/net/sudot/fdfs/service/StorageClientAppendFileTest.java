@@ -1,28 +1,24 @@
 package net.sudot.fdfs.service;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertNotNull;
-
-import java.io.IOException;
-
-import net.sudot.fdfs.proto.storage.DownloadByteArray;
-import org.junit.Test;
-
 import net.sudot.fdfs.TestConstants;
 import net.sudot.fdfs.domain.RandomTextFile;
 import net.sudot.fdfs.domain.StorePath;
+import net.sudot.fdfs.proto.storage.DownloadByteArray;
+import org.junit.Test;
+
+import java.io.IOException;
+
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * 支持断点续传的文件操作演示
- * 
  * @author tobato
- *
  */
-public class StorageClientAppendFileTest  extends  StorageClientTestBase {
+public class StorageClientAppendFileTest extends StorageClientTestBase {
 
     /**
      * 支持断点续传的文件操作测试
-     * 
      * @throws IOException
      */
     @Test
@@ -71,7 +67,6 @@ public class StorageClientAppendFileTest  extends  StorageClientTestBase {
 
     /**
      * 合并文件内容
-     * 
      * @param file
      * @param secendFile
      * @return

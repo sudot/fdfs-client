@@ -1,22 +1,19 @@
 package net.sudot.fdfs.proto.tracker;
 
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
+import net.sudot.fdfs.domain.StorageNode;
 import net.sudot.fdfs.exception.FdfsServerException;
+import net.sudot.fdfs.proto.ErrorCodeConstants;
 import net.sudot.fdfs.proto.StorageCommandTestBase;
 import org.junit.Test;
 
-import net.sudot.fdfs.domain.StorageNode;
-import net.sudot.fdfs.proto.ErrorCodeConstants;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * 删除存储服务器
- * 
  * @author tobato
- *
  */
-public class TrackerDeleteStorageCommandTest  extends StorageCommandTestBase {
+public class TrackerDeleteStorageCommandTest extends StorageCommandTestBase {
 
     /**
      * 删除存储服务器

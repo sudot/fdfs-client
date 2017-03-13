@@ -1,20 +1,17 @@
 package net.sudot.fdfs.proto.storage;
 
-import java.io.IOException;
-import java.io.InputStream;
-
+import net.sudot.fdfs.domain.StorePath;
 import net.sudot.fdfs.proto.StorageCommandTestBase;
 import org.junit.Test;
 
-import net.sudot.fdfs.domain.StorePath;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * 文件截取命令
- * 
  * @author tobato
- *
  */
-public class StorageTruncateCommandTest  extends StorageCommandTestBase {
+public class StorageTruncateCommandTest extends StorageCommandTestBase {
 
     @Test
     public void testStorageTruncateCommandText() throws IOException {

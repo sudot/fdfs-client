@@ -1,29 +1,26 @@
 package net.sudot.fdfs.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import java.util.HashSet;
-import java.util.Set;
-
 import net.sudot.fdfs.TestConstants;
 import net.sudot.fdfs.domain.MateData;
 import net.sudot.fdfs.domain.RandomTextFile;
 import net.sudot.fdfs.domain.StorePath;
 import net.sudot.fdfs.exception.FdfsServerException;
+import net.sudot.fdfs.proto.ErrorCodeConstants;
 import org.junit.Test;
 
-import net.sudot.fdfs.proto.ErrorCodeConstants;
+import java.util.HashSet;
+import java.util.Set;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * Metadata操作演示
- * 
  * @author tobato
- *
  */
-public class StorageClientMetadataTest  extends  StorageClientTestBase {
+public class StorageClientMetadataTest extends StorageClientTestBase {
 
     @Test
     public void testMetadataOperator() {

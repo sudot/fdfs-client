@@ -1,33 +1,31 @@
 package net.sudot.fdfs.domain;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import java.net.InetSocketAddress;
-import java.util.Arrays;
-import java.util.List;
-
 import net.sudot.fdfs.FastdfsTestBase;
 import net.sudot.fdfs.exception.FdfsUnavailableException;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.net.InetSocketAddress;
+import java.util.Arrays;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 /**
  * TrackerLocator创建
- * 
  * @author tobato
- *
  */
 public class TrackerLocatorTest extends FastdfsTestBase {
 
     /** 日志 */
     protected static Logger LOGGER = LoggerFactory.getLogger(TrackerLocatorTest.class);
 
-    private String[] ips = { "192.168.174.47:22122", "192.168.1.105:22122" };
+    private String[] ips = {"192.168.174.47:22122", "192.168.1.105:22122"};
     private List<String> trackerIpList = Arrays.asList(ips);
 
     @Test
@@ -66,7 +64,6 @@ public class TrackerLocatorTest extends FastdfsTestBase {
 
     /**
      * 获取一个连接地址
-     * 
      * @param msg
      * @param locator
      * @return

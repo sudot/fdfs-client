@@ -17,16 +17,14 @@ import static org.junit.Assert.fail;
 
 /**
  * 验证会轮询地址
- * 
  * @author tobato
- *
  */
-public class TrackerConnectionManagerTest extends FastdfsTestBase{
+public class TrackerConnectionManagerTest extends FastdfsTestBase {
 
     /** 日志 */
     protected static Logger LOGGER = LoggerFactory.getLogger(TrackerConnectionManagerTest.class);
 
-    private String[] ips = { "192.168.174.141:22122", "192.168.1.115:22122" };
+    private String[] ips = {"192.168.174.141:22122", "192.168.1.115:22122"};
     private List<String> trackerIpList = Arrays.asList(ips);
 
     @Test

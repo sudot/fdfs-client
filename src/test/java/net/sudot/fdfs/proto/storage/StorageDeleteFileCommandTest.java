@@ -1,11 +1,10 @@
 package net.sudot.fdfs.proto.storage;
 
-import org.junit.Test;
-
 import net.sudot.fdfs.domain.StorePath;
 import net.sudot.fdfs.proto.StorageCommandTestBase;
+import org.junit.Test;
 
-public class StorageDeleteFileCommandTest  extends  StorageCommandTestBase {
+public class StorageDeleteFileCommandTest extends StorageCommandTestBase {
 
     /**
      * 文件删除测试

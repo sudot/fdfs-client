@@ -10,9 +10,7 @@ import java.net.URL;
 
 /**
  * 测试工具类
- * 
  * @author tobato
- *
  */
 public class TestUtils {
 
@@ -22,7 +20,6 @@ public class TestUtils {
 
     /**
      * 将String 转换为InputStream
-     * 
      * @param text
      * @return
      * @throws IOException
@@ -34,7 +31,6 @@ public class TestUtils {
 
     /**
      * 获取String长度
-     * 
      * @param text
      * @return
      * @throws IOException
@@ -45,7 +41,6 @@ public class TestUtils {
 
     /**
      * 获取文件InputStream
-     * 
      * @param path
      * @return
      * @throws FileNotFoundException
@@ -56,7 +51,6 @@ public class TestUtils {
 
     /**
      * 获取文件
-     * 
      * @param path
      * @return
      */

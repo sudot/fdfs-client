@@ -8,11 +8,9 @@ import static org.junit.Assert.assertFalse;
 
 /**
  * 连接池创建测试
- * 
  * @author tobato
- *
  */
-public class ConnectionPoolTest  extends  MockServerTestBase {
+public class ConnectionPoolTest extends MockServerTestBase {
 
     /**
      * 验证如何使用连接池

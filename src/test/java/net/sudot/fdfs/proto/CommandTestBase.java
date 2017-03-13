@@ -9,9 +9,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * command测试基类
- * 
  * @author tobato
- *
  */
 public class CommandTestBase {
     /** 日志 */
@@ -24,7 +22,6 @@ public class CommandTestBase {
 
     /**
      * 执行Tracker交易命令
-     * 
      * @param command
      * @return
      */
@@ -34,7 +31,6 @@ public class CommandTestBase {
 
     /**
      * 执行存储交易命令
-     * 
      * @param command
      * @return
      */

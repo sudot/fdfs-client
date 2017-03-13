@@ -1,21 +1,18 @@
 package net.sudot.fdfs.proto.tracker;
 
-import static org.junit.Assert.assertTrue;
+import net.sudot.fdfs.domain.GroupState;
+import net.sudot.fdfs.proto.CommandTestBase;
+import org.junit.Test;
 
 import java.util.List;
 
-import net.sudot.fdfs.domain.GroupState;
-import org.junit.Test;
-
-import net.sudot.fdfs.proto.CommandTestBase;
+import static org.junit.Assert.assertTrue;
 
 /**
  * 列举存储目录分组情况
- * 
  * @author tobato
- *
  */
-public class TrackerListGroupsCommandTest  extends  CommandTestBase {
+public class TrackerListGroupsCommandTest extends CommandTestBase {
 
     @Test
     public void test() {

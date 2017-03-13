@@ -1,23 +1,21 @@
 package net.sudot.fdfs.domain;
 
-import static org.junit.Assert.assertEquals;
-
-import java.util.Arrays;
-
 import net.sudot.fdfs.FastdfsTestBase;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Arrays;
+
+import static org.junit.Assert.assertEquals;
+
 /**
  * 循环列表测试-支持列表轮询算法
- * 
  * @author tobato
- *
  */
 public class CircularListTest extends FastdfsTestBase {
 
     private CircularList<String> list;
-    private String[] strs = { "1", "2", "3", "4" };
+    private String[] strs = {"1", "2", "3", "4"};
 
     @Before
     public void init() {

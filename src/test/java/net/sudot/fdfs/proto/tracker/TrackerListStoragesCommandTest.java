@@ -1,22 +1,19 @@
 package net.sudot.fdfs.proto.tracker;
 
-import static org.junit.Assert.assertTrue;
+import net.sudot.fdfs.TestConstants;
+import net.sudot.fdfs.domain.StorageState;
+import net.sudot.fdfs.proto.CommandTestBase;
+import org.junit.Test;
 
 import java.util.List;
 
-import net.sudot.fdfs.domain.StorageState;
-import org.junit.Test;
-
-import net.sudot.fdfs.TestConstants;
-import net.sudot.fdfs.proto.CommandTestBase;
+import static org.junit.Assert.assertTrue;
 
 /**
  * 列举存储目录服务器状态
- * 
  * @author tobato
- *
  */
-public class TrackerListStoragesCommandTest  extends  CommandTestBase {
+public class TrackerListStoragesCommandTest extends CommandTestBase {
 
     @Test
     public void testGroupAndIp() {

@@ -1,19 +1,17 @@
 package net.sudot.fdfs.proto.storage;
 
-import java.io.IOException;
-import java.io.InputStream;
-
 import net.sudot.fdfs.domain.StorePath;
 import net.sudot.fdfs.proto.StorageCommandTestBase;
 import org.junit.Test;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 /**
  * 文件修改命令
- * 
  * @author tobato
- *
  */
-public class StorageModifyCommandTest  extends StorageCommandTestBase {
+public class StorageModifyCommandTest extends StorageCommandTestBase {
 
     @Test
     public void testStorageModifyCommand() throws IOException {

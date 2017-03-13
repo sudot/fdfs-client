@@ -1,18 +1,15 @@
 package net.sudot.fdfs.proto.tracker;
 
 import net.sudot.fdfs.domain.StorageNodeInfo;
-import org.junit.Test;
-
 import net.sudot.fdfs.domain.StorePath;
 import net.sudot.fdfs.proto.StorageCommandTestBase;
+import org.junit.Test;
 
 /**
  * 获取源服务器
- * 
  * @author tobato
- *
  */
-public class TrackerGetFetchStorageCommandTest  extends  StorageCommandTestBase {
+public class TrackerGetFetchStorageCommandTest extends StorageCommandTestBase {
 
     /**
      * 获取源服务器

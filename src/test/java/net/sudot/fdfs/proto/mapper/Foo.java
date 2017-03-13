@@ -4,9 +4,7 @@ import net.sudot.fdfs.proto.OtherConstants;
 
 /**
  * 测试类
- * 
  * @author tobato
- *
  */
 public class Foo {
 

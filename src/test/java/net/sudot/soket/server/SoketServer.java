@@ -8,6 +8,12 @@ public class SoketServer {
     private int port = 22122;
     private ServerSocket serverSocket;
 
+    public static void main(String[] agrs) {
+        SoketServer server = new SoketServer();
+        System.out.println("------服务启动--------");
+        server.service();
+    }
+
     public void service() {
         int i = 0;
         try {
@@ -28,11 +34,5 @@ public class SoketServer {
                 e.printStackTrace();
             }
         }
-    }
-
-    public static void main(String[] agrs) {
-        SoketServer server = new SoketServer();
-        System.out.println("------服务启动--------");
-        server.service();
     }
 }

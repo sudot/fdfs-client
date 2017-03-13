@@ -13,11 +13,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * 性能测试
- * 
  * @author tobato
- *
  */
-public class PerformanceTest  extends  FastdfsTestBase{
+public class PerformanceTest extends FastdfsTestBase {
 
     @Autowired
     protected AppendFileStorageClient storageClient;

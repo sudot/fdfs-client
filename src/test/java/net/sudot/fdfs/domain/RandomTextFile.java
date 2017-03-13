@@ -1,16 +1,14 @@
 package net.sudot.fdfs.domain;
 
-import java.io.InputStream;
-
 import net.sudot.fdfs.TestConstants;
 import net.sudot.fdfs.TestUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 
+import java.io.InputStream;
+
 /**
  * 测试用随机字符文件
- * 
  * @author tobato
- *
  */
 public class RandomTextFile {
 

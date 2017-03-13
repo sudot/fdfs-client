@@ -5,10 +5,10 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ StorageAppendFileCommandTest.class, StorageDeleteFileCommandTest.class,
+@SuiteClasses({StorageAppendFileCommandTest.class, StorageDeleteFileCommandTest.class,
         StorageQueryFileInfoCommandTest.class, StorageUploadFileCommandTest.class,
         StorageUploadSlaveFileCommandTest.class, StorageSetMetadataCommandTest.class,
-        StorageDownloadCommandTest.class })
+        StorageDownloadCommandTest.class})
 public class AllTests {
     // for test
 }

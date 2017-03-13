@@ -7,9 +7,7 @@ import java.nio.charset.Charset;
 
 /**
  * 测试常量定义
- * 
  * @author tobato
- *
  */
 @SuppressWarnings("unused")
 public class TestConstants {

@@ -20,11 +20,9 @@ import static org.junit.Assert.fail;
 
 /**
  * unit test for TrackerClientService
- * 
  * @author tobato
- *
  */
-public class TrackerClientTest extends FastdfsTestBase{
+public class TrackerClientTest extends FastdfsTestBase {
 
     /** 日志 */
     private static Logger LOGGER = LoggerFactory.getLogger(TrackerClientTest.class);

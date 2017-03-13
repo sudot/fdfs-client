@@ -1,6 +1,10 @@
 package net.sudot.fdfs.proto;
 
-import static org.junit.Assert.assertNotNull;
+import net.sudot.fdfs.TestConstants;
+import net.sudot.fdfs.TestUtils;
+import net.sudot.fdfs.domain.StorePath;
+import net.sudot.fdfs.proto.storage.StorageUploadFileCommand;
+import org.apache.commons.io.FilenameUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -8,24 +12,16 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
-import net.sudot.fdfs.TestUtils;
-import net.sudot.fdfs.proto.storage.StorageUploadFileCommand;
-import net.sudot.fdfs.domain.StorePath;
-import org.apache.commons.io.FilenameUtils;
-
-import net.sudot.fdfs.TestConstants;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * command测试基类
- * 
  * @author tobato
- *
  */
-public abstract class StorageCommandTestBase  extends  CommandTestBase {
+public abstract class StorageCommandTestBase extends CommandTestBase {
 
     /**
      * 文件上传操作
-     * 
      * @param isAppenderFile
      */
     public StorePath execStorageUploadFileCommand(String filePath, boolean isAppenderFile) {
@@ -53,8 +49,7 @@ public abstract class StorageCommandTestBase  extends  CommandTestBase {
 
     /**
      * 获取传输文件第一个部分
-     * 
-     * @param filePath
+     * @param text
      * @return
      * @throws IOException
      */
@@ -65,7 +60,6 @@ public abstract class StorageCommandTestBase  extends  CommandTestBase {
 
     /**
      * 上传默认文件
-     * 
      * @return
      */
     protected StorePath uploadDefaultFile() {
@@ -75,7 +69,6 @@ public abstract class StorageCommandTestBase  extends  CommandTestBase {
 
     /**
      * 文件上传操作
-     * 
      * @param isAppenderFile
      */
     protected StorePath uploadInputStream(InputStream in, String fileExtName, long fileSize, boolean isAppenderFile) {

@@ -1,18 +1,16 @@
 package net.sudot.fdfs.domain;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import java.net.InetSocketAddress;
-
 import net.sudot.fdfs.FastdfsTestBase;
 import org.junit.Test;
 
+import java.net.InetSocketAddress;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 /**
  * TrackerAddressHolder测试
- * 
  * @author tobato
- *
  */
 public class TrackerAddressHolderTest extends FastdfsTestBase {
 

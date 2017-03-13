@@ -1,6 +1,12 @@
 package net.sudot.fdfs.proto.storage;
 
-import static org.junit.Assert.assertNotNull;
+import net.coobird.thumbnailator.Thumbnails;
+import net.sudot.fdfs.TestConstants;
+import net.sudot.fdfs.TestUtils;
+import net.sudot.fdfs.domain.StorePath;
+import net.sudot.fdfs.proto.StorageCommandTestBase;
+import org.apache.commons.io.FilenameUtils;
+import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -8,23 +14,13 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
-import net.sudot.fdfs.TestUtils;
-import net.sudot.fdfs.domain.StorePath;
-import net.sudot.fdfs.proto.StorageCommandTestBase;
-import org.apache.commons.io.FilenameUtils;
-import org.junit.Test;
-
-import net.sudot.fdfs.TestConstants;
-
-import net.coobird.thumbnailator.Thumbnails;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * 文件上传命令测试
- * 
  * @author tobato
- *
  */
-public class StorageUploadSlaveFileCommandTest  extends StorageCommandTestBase {
+public class StorageUploadSlaveFileCommandTest extends StorageCommandTestBase {
 
     /**
      * 文件上传测试
@@ -42,8 +38,9 @@ public class StorageUploadSlaveFileCommandTest  extends StorageCommandTestBase {
 
     /**
      * 从文件上传操作
-     * 
-     * @param isAppenderFile
+     * @param filePath
+     * @param masterFilename
+     *  @param prefixName
      */
     public StorePath execStorageUploadSlaveFileCommand(String filePath, String masterFilename, String prefixName) {
 
@@ -78,7 +75,6 @@ public class StorageUploadSlaveFileCommandTest  extends StorageCommandTestBase {
 
     /**
      * 获取缩略图
-     * 
      * @param filePath
      * @return
      * @throws IOException

@@ -1,8 +1,8 @@
 package net.sudot.fdfs.service;
 
-import net.sudot.fdfs.TestUtils;
 import net.sudot.fdfs.FastdfsTestBase;
 import net.sudot.fdfs.TestConstants;
+import net.sudot.fdfs.TestUtils;
 import net.sudot.fdfs.domain.FileInfo;
 import net.sudot.fdfs.domain.MateData;
 import net.sudot.fdfs.domain.RandomTextFile;
@@ -29,20 +29,16 @@ import static org.junit.Assert.assertNotNull;
 
 /**
  * FastFileStorageClient客户端
- * 
  * @author tobato
- *
  */
-public class FastFileStorageClientTest extends FastdfsTestBase{
-
-    @Autowired
-    protected FastFileStorageClient storageClient;
-
-    @Autowired
-    private ThumbImageConfig thumbImageConfig;
+public class FastFileStorageClientTest extends FastdfsTestBase {
 
     /** 日志 */
     protected static Logger LOGGER = LoggerFactory.getLogger(FastFileStorageClientTest.class);
+    @Autowired
+    protected FastFileStorageClient storageClient;
+    @Autowired
+    private ThumbImageConfig thumbImageConfig;
 
     /**
      * 上传文件，并且设置MateData
@@ -57,7 +53,7 @@ public class FastFileStorageClientTest extends FastdfsTestBase{
         // 上传文件和Metadata
         StorePath path = storageClient.uploadFile(file.getInputStream(), file.getFileSize(), file.getFileExtName(),
                 metaDataSet);
-        LOGGER.info("返回文件path={}",path);
+        LOGGER.info("返回文件path={}", path);
         assertNotNull(path);
         LOGGER.debug("上传文件路径{}", path);
 
@@ -133,7 +129,6 @@ public class FastFileStorageClientTest extends FastdfsTestBase{
 
     /**
      * 上传文件
-     * 
      * @param filePath
      * @return
      */

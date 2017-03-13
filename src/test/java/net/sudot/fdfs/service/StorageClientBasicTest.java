@@ -1,29 +1,25 @@
 package net.sudot.fdfs.service;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertNotNull;
-
-import java.io.IOException;
-
-import net.sudot.fdfs.proto.storage.DownloadByteArray;
-import org.junit.Test;
-
 import net.sudot.fdfs.TestConstants;
 import net.sudot.fdfs.domain.FileInfo;
 import net.sudot.fdfs.domain.RandomTextFile;
 import net.sudot.fdfs.domain.StorePath;
+import net.sudot.fdfs.proto.storage.DownloadByteArray;
+import org.junit.Test;
+
+import java.io.IOException;
+
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * 文件基础操作测试演示
- * 
  * @author tobato
- *
  */
-public class StorageClientBasicTest  extends  StorageClientTestBase {
+public class StorageClientBasicTest extends StorageClientTestBase {
 
     /**
      * 基本文件上传操作测试
-     * 
      * @throws IOException
      */
     @Test
@@ -60,7 +56,6 @@ public class StorageClientBasicTest  extends  StorageClientTestBase {
 
     /**
      * 演示上传文件的时候Group可以为空
-     * 
      * @throws IOException
      */
     @Test

@@ -1,19 +1,17 @@
 package net.sudot.fdfs.proto.storage;
 
-import static org.junit.Assert.assertNotNull;
-
 import net.sudot.fdfs.domain.FileInfo;
 import net.sudot.fdfs.domain.StorePath;
 import net.sudot.fdfs.proto.StorageCommandTestBase;
 import org.junit.Test;
 
+import static org.junit.Assert.assertNotNull;
+
 /**
  * 文件查询处理
- * 
  * @author tobato
- *
  */
-public class StorageQueryFileInfoCommandTest  extends StorageCommandTestBase {
+public class StorageQueryFileInfoCommandTest extends StorageCommandTestBase {
 
     @Test
     public void testStorageQueryFileInfoCommand() {

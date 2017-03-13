@@ -1,27 +1,24 @@
 package net.sudot.fdfs.proto.mapper;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
-import java.nio.charset.Charset;
-import java.util.Arrays;
-
+import net.sudot.fdfs.FastdfsTestBase;
+import net.sudot.fdfs.TestConstants;
+import net.sudot.fdfs.proto.OtherConstants;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import net.sudot.fdfs.FastdfsTestBase;
-import net.sudot.fdfs.TestConstants;
-import net.sudot.fdfs.proto.OtherConstants;
+import java.nio.charset.Charset;
+import java.util.Arrays;
+
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * 测试对象序列化
- * 
  * @author tobato
- *
  */
-public class FdfsParamMapperTest extends FastdfsTestBase{
+public class FdfsParamMapperTest extends FastdfsTestBase {
 
     private static final Charset charset = TestConstants.DEFAULT_CHARSET;
 
@@ -127,7 +124,6 @@ public class FdfsParamMapperTest extends FastdfsTestBase{
 
     /**
      * 打印消息
-     * 
      * @param src
      * @param request
      */

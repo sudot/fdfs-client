@@ -1,25 +1,22 @@
 package net.sudot.fdfs.proto.storage;
 
-import static org.junit.Assert.*;
+import net.sudot.fdfs.TestConstants;
+import net.sudot.fdfs.domain.MateData;
+import net.sudot.fdfs.domain.StorePath;
+import net.sudot.fdfs.proto.StorageCommandTestBase;
+import net.sudot.fdfs.proto.storage.enums.StorageMetdataSetType;
+import org.junit.Test;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import net.sudot.fdfs.domain.MateData;
-import net.sudot.fdfs.proto.storage.enums.StorageMetdataSetType;
-import net.sudot.fdfs.domain.StorePath;
-import net.sudot.fdfs.proto.StorageCommandTestBase;
-import org.junit.Test;
-
-import net.sudot.fdfs.TestConstants;
+import static org.junit.Assert.assertEquals;
 
 /**
  * 文件上传命令测试
- * 
  * @author tobato
- *
  */
-public class StorageSetMetadataCommandTest  extends StorageCommandTestBase {
+public class StorageSetMetadataCommandTest extends StorageCommandTestBase {
 
     /**
      * 文件上传测试
@@ -69,7 +66,6 @@ public class StorageSetMetadataCommandTest  extends StorageCommandTestBase {
 
     /**
      * 获取初始化MateDate
-     * 
      * @return
      */
     private Set<MateData> getFirstMateData() {
@@ -84,7 +80,6 @@ public class StorageSetMetadataCommandTest  extends StorageCommandTestBase {
     /**
      * 获取需要合并的MateDate
      * 没有的条目增加，有则条目覆盖 MERGE
-     * 
      * @return
      */
     private Set<MateData> getMergeMateData() {
@@ -97,7 +92,6 @@ public class StorageSetMetadataCommandTest  extends StorageCommandTestBase {
 
     /**
      * 获取需要覆盖的MateData
-     * 
      * @return
      */
     private Set<MateData> getOverWriteMateData() {

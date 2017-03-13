@@ -1,17 +1,14 @@
 package net.sudot.fdfs.proto.storage;
 
-import org.junit.Test;
-
 import net.sudot.fdfs.domain.StorePath;
 import net.sudot.fdfs.proto.StorageCommandTestBase;
+import org.junit.Test;
 
 /**
  * 文件下载
- * 
  * @author tobato
- *
  */
-public class StorageDownloadCommandTest  extends  StorageCommandTestBase {
+public class StorageDownloadCommandTest extends StorageCommandTestBase {
 
     @Test
     public void testStorageDownloadCommand() {

@@ -1,27 +1,23 @@
 package net.sudot.fdfs.proto.storage;
 
-import static org.junit.Assert.assertNotNull;
+import net.sudot.fdfs.domain.StorePath;
+import net.sudot.fdfs.proto.StorageCommandTestBase;
+import org.junit.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.junit.Test;
-
-import net.sudot.fdfs.domain.StorePath;
-import net.sudot.fdfs.proto.StorageCommandTestBase;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * 文件续传命令
- * 
  * @author tobato
- *
  */
-public class StorageAppendFileCommandTest  extends  StorageCommandTestBase {
+public class StorageAppendFileCommandTest extends StorageCommandTestBase {
 
     /**
      * 文件续传需要先使用 append模式Save一个可以续传的文件
      * 然后才能使用续传命令续传文件
-     * 
      * @throws IOException
      */
     @Test
@@ -43,7 +39,6 @@ public class StorageAppendFileCommandTest  extends  StorageCommandTestBase {
 
     /**
      * 文件续传操作
-     * 
      * @param isAppenderFile
      */
     public void execStorageAppendFileCommand(InputStream in, long fileSize, String path) {
