@@ -2,9 +2,7 @@ package net.sudot.fdfs.proto.mapper;
 
 /**
  * 映射例外
- * 
  * @author tobato
- *
  */
 public class FdfsColumnMapException extends RuntimeException {
 
@@ -17,7 +15,7 @@ public class FdfsColumnMapException extends RuntimeException {
     }
 
     protected FdfsColumnMapException(String message, Throwable cause, boolean enableSuppression,
-            boolean writableStackTrace) {
+                                     boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 

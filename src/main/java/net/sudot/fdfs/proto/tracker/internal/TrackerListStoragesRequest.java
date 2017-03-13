@@ -1,19 +1,16 @@
 package net.sudot.fdfs.proto.tracker.internal;
 
-import net.sudot.fdfs.proto.mapper.DynamicFieldType;
-import net.sudot.fdfs.proto.mapper.FdfsColumn;
+import net.sudot.fdfs.proto.CmdConstants;
 import net.sudot.fdfs.proto.FdfsRequest;
 import net.sudot.fdfs.proto.OtherConstants;
 import net.sudot.fdfs.proto.ProtoHead;
+import net.sudot.fdfs.proto.mapper.DynamicFieldType;
+import net.sudot.fdfs.proto.mapper.FdfsColumn;
 import org.apache.commons.lang3.Validate;
-
-import net.sudot.fdfs.proto.CmdConstants;
 
 /**
  * 列出存储状态
- * 
  * @author tobato
- *
  */
 public class TrackerListStoragesRequest extends FdfsRequest {
 
@@ -30,7 +27,6 @@ public class TrackerListStoragesRequest extends FdfsRequest {
 
     /**
      * 列举存储服务器状态
-     * 
      * @param groupName
      * @param storageIpAddr
      */
@@ -43,7 +39,6 @@ public class TrackerListStoragesRequest extends FdfsRequest {
 
     /**
      * 列举组当中存储节点状态
-     * 
      * @param groupName
      */
     public TrackerListStoragesRequest(String groupName) {

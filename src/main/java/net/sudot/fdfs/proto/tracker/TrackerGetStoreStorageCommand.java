@@ -8,9 +8,7 @@ import net.sudot.fdfs.proto.tracker.internal.TrackerGetStoreStorageWithGroupRequ
 
 /**
  * 获取存储节点命令
- * 
  * @author tobato
- *
  */
 public class TrackerGetStoreStorageCommand extends AbstractFdfsCommand<StorageNode> {
 

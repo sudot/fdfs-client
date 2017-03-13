@@ -1,19 +1,17 @@
 package net.sudot.fdfs.proto.storage.internal;
 
+import net.sudot.fdfs.domain.MateData;
+import net.sudot.fdfs.proto.FdfsResponse;
+import net.sudot.fdfs.proto.mapper.MetadataMapper;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.Set;
 
-import net.sudot.fdfs.domain.MateData;
-import net.sudot.fdfs.proto.mapper.MetadataMapper;
-import net.sudot.fdfs.proto.FdfsResponse;
-
 /**
  * 列出分组信息执行结果
- * 
  * @author tobato
- *
  */
 public class StorageGetMetadataResponse extends FdfsResponse<Set<MateData>> {
 

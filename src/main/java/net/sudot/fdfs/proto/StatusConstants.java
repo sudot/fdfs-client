@@ -2,9 +2,7 @@ package net.sudot.fdfs.proto;
 
 /**
  * fastdfs协议服务端状态的常量
- * 
  * @author yuqih
- * 
  */
 public final class StatusConstants {
     public static final byte FDFS_STORAGE_STATUS_INIT = 0;

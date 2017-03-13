@@ -1,5 +1,21 @@
 package net.sudot.fdfs.service;
 
+import net.coobird.thumbnailator.Thumbnails;
+import net.sudot.fdfs.domain.MateData;
+import net.sudot.fdfs.domain.StorageNode;
+import net.sudot.fdfs.domain.StorePath;
+import net.sudot.fdfs.domain.ThumbImageConfig;
+import net.sudot.fdfs.exception.FdfsUnsupportImageTypeException;
+import net.sudot.fdfs.exception.FdfsUploadImageException;
+import net.sudot.fdfs.proto.storage.StorageSetMetadataCommand;
+import net.sudot.fdfs.proto.storage.StorageUploadFileCommand;
+import net.sudot.fdfs.proto.storage.StorageUploadSlaveFileCommand;
+import net.sudot.fdfs.proto.storage.enums.StorageMetdataSetType;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.Validate;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -8,36 +24,15 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
-import javax.annotation.Resource;
-
-import net.sudot.fdfs.domain.MateData;
-import net.sudot.fdfs.domain.StorageNode;
-import net.sudot.fdfs.domain.ThumbImageConfig;
-import net.sudot.fdfs.proto.storage.StorageUploadFileCommand;
-import net.sudot.fdfs.proto.storage.enums.StorageMetdataSetType;
-import net.sudot.fdfs.exception.FdfsUploadImageException;
-import net.sudot.fdfs.proto.storage.StorageUploadSlaveFileCommand;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.Validate;
-import org.springframework.stereotype.Component;
-
-import net.sudot.fdfs.domain.StorePath;
-import net.sudot.fdfs.exception.FdfsUnsupportImageTypeException;
-import net.sudot.fdfs.proto.storage.StorageSetMetadataCommand;
-
-import net.coobird.thumbnailator.Thumbnails;
-
 /**
  * 面向应用的接口实现
- * 
  * @author tobato
- *
  */
 @Component
 public class DefaultFastFileStorageClient extends DefaultGenerateStorageClient implements FastFileStorageClient {
 
     /** 支持的图片类型 */
-    private static final String[] SUPPORT_IMAGE_TYPE = { "JPG", "JPEG", "PNG", "GIF", "BMP", "WBMP" };
+    private static final String[] SUPPORT_IMAGE_TYPE = {"JPG", "JPEG", "PNG", "GIF", "BMP", "WBMP"};
     private static final List<String> SUPPORT_IMAGE_LIST = Arrays.asList(SUPPORT_IMAGE_TYPE);
     /** 缩略图生成配置 */
     @Resource
@@ -51,7 +46,7 @@ public class DefaultFastFileStorageClient extends DefaultGenerateStorageClient i
         Validate.notNull(inputStream, "上传文件流不能为空");
         Validate.notBlank(fileExtName, "文件扩展名不能为空");
         StorageNode client = trackerClient.getStoreStorage();
-        LOGGER.debug("获取到storageNode:{}",client);
+        LOGGER.debug("获取到storageNode:{}", client);
         return uploadFileAndMateData(client, inputStream, fileSize, fileExtName, metaDataSet);
     }
 
@@ -60,7 +55,7 @@ public class DefaultFastFileStorageClient extends DefaultGenerateStorageClient i
      */
     @Override
     public StorePath uploadImageAndCrtThumbImage(InputStream inputStream, long fileSize, String fileExtName,
-            Set<MateData> metaDataSet) {
+                                                 Set<MateData> metaDataSet) {
         Validate.notNull(inputStream, "上传文件流不能为空");
         Validate.notBlank(fileExtName, "文件扩展名不能为空");
         // 检查是否能处理此类图片
@@ -81,7 +76,6 @@ public class DefaultFastFileStorageClient extends DefaultGenerateStorageClient i
 
     /**
      * 获取byte流
-     * 
      * @param inputStream
      * @return
      */
@@ -96,7 +90,6 @@ public class DefaultFastFileStorageClient extends DefaultGenerateStorageClient i
 
     /**
      * 检查是否有MateData
-     * 
      * @param metaDataSet
      * @return
      */
@@ -106,7 +99,6 @@ public class DefaultFastFileStorageClient extends DefaultGenerateStorageClient i
 
     /**
      * 是否是支持的图片文件
-     * 
      * @param fileExtName
      * @return
      */
@@ -116,7 +108,6 @@ public class DefaultFastFileStorageClient extends DefaultGenerateStorageClient i
 
     /**
      * 上传文件和元数据
-     * 
      * @param client
      * @param inputStream
      * @param fileSize
@@ -125,7 +116,7 @@ public class DefaultFastFileStorageClient extends DefaultGenerateStorageClient i
      * @return
      */
     private StorePath uploadFileAndMateData(StorageNode client, InputStream inputStream, long fileSize,
-            String fileExtName, Set<MateData> metaDataSet) {
+                                            String fileExtName, Set<MateData> metaDataSet) {
         // 上传文件
         StorageUploadFileCommand command = new StorageUploadFileCommand(client.getStoreIndex(), inputStream,
                 fileExtName, fileSize, false);
@@ -141,7 +132,6 @@ public class DefaultFastFileStorageClient extends DefaultGenerateStorageClient i
 
     /**
      * 上传缩略图
-     * 
      * @param client
      * @param inputStream
      * @param fileSize
@@ -149,7 +139,7 @@ public class DefaultFastFileStorageClient extends DefaultGenerateStorageClient i
      * @param metaDataSet
      */
     private void uploadThumbImage(StorageNode client, InputStream inputStream, String masterFilename,
-            String fileExtName) {
+                                  String fileExtName) {
         ByteArrayInputStream thumbImageStream = null;
         try {
             thumbImageStream = getThumbImageStream(inputStream);// getFileInputStream
@@ -171,7 +161,6 @@ public class DefaultFastFileStorageClient extends DefaultGenerateStorageClient i
 
     /**
      * 获取缩略图
-     * 
      * @param filePath
      * @return
      * @throws IOException
@@ -181,9 +170,9 @@ public class DefaultFastFileStorageClient extends DefaultGenerateStorageClient i
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         //@formatter:off
         Thumbnails
-          .of(inputStream)
-          .size(thumbImageConfig.getWidth(), thumbImageConfig.getHeight())
-          .toOutputStream(out);
+                .of(inputStream)
+                .size(thumbImageConfig.getWidth(), thumbImageConfig.getHeight())
+                .toOutputStream(out);
         //@formatter:on
         return new ByteArrayInputStream(out.toByteArray());
     }

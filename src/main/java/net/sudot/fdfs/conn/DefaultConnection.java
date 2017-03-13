@@ -1,5 +1,13 @@
 package net.sudot.fdfs.conn;
 
+import net.sudot.fdfs.exception.FdfsConnectException;
+import net.sudot.fdfs.proto.CmdConstants;
+import net.sudot.fdfs.proto.OtherConstants;
+import net.sudot.fdfs.proto.mapper.BytesUtil;
+import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -8,35 +16,21 @@ import java.net.Socket;
 import java.nio.charset.Charset;
 import java.util.Arrays;
 
-import net.sudot.fdfs.exception.FdfsConnectException;
-import net.sudot.fdfs.proto.OtherConstants;
-import org.apache.commons.io.IOUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import net.sudot.fdfs.proto.CmdConstants;
-import net.sudot.fdfs.proto.mapper.BytesUtil;
-
 /**
  * 默认连接实现
- * 
  * @author tobato
- *
  */
 public class DefaultConnection implements Connection {
 
+    /** 日志 */
+    private static final Logger LOGGER = LoggerFactory.getLogger(DefaultConnection.class);
     /** 封装socket */
     private Socket socket;
-
     /** 字符集 */
     private Charset charset;
 
-    /** 日志 */
-    private static final Logger LOGGER = LoggerFactory.getLogger(DefaultConnection.class);
-
     /**
      * 创建与服务端连接
-     * 
      * @param address
      * @param soTimeout
      * @param connectTimeout
@@ -112,7 +106,6 @@ public class DefaultConnection implements Connection {
 
     /**
      * 获取输出流
-     * 
      * @return
      * @throws IOException
      */
@@ -122,7 +115,6 @@ public class DefaultConnection implements Connection {
 
     /**
      * 获取输入流
-     * 
      * @return
      * @throws IOException
      */
@@ -132,7 +124,6 @@ public class DefaultConnection implements Connection {
 
     /**
      * 获取字符集
-     * 
      * @return
      */
     public Charset getCharset() {

@@ -1,15 +1,13 @@
 package net.sudot.fdfs.domain;
 
-import java.util.Date;
-
 import net.sudot.fdfs.proto.OtherConstants;
 import net.sudot.fdfs.proto.mapper.FdfsColumn;
 
+import java.util.Date;
+
 /**
  * fastdfs中storage节点的状态信息
- * 
  * @author yuqih
- * 
  */
 public class StorageState {
 
@@ -206,8 +204,7 @@ public class StorageState {
     }
 
     /**
-     * @param status
-     *            the status to set
+     * @param status the status to set
      */
     public void setStatus(byte status) {
         this.status = status;
@@ -221,8 +218,7 @@ public class StorageState {
     }
 
     /**
-     * @param id
-     *            the id to set
+     * @param id the id to set
      */
     public void setId(String id) {
         this.id = id;
@@ -236,8 +232,7 @@ public class StorageState {
     }
 
     /**
-     * @param ipAddr
-     *            the ipAddr to set
+     * @param ipAddr the ipAddr to set
      */
     public void setIpAddr(String ipAddr) {
         this.ipAddr = ipAddr;
@@ -251,8 +246,7 @@ public class StorageState {
     }
 
     /**
-     * @param srcIpAddr
-     *            the srcIpAddr to set
+     * @param srcIpAddr the srcIpAddr to set
      */
     public void setSrcIpAddr(String srcIpAddr) {
         this.srcIpAddr = srcIpAddr;
@@ -266,8 +260,7 @@ public class StorageState {
     }
 
     /**
-     * @param domainName
-     *            the domainName to set
+     * @param domainName the domainName to set
      */
     public void setDomainName(String domainName) {
         this.domainName = domainName;
@@ -281,8 +274,7 @@ public class StorageState {
     }
 
     /**
-     * @param version
-     *            the version to set
+     * @param version the version to set
      */
     public void setVersion(String version) {
         this.version = version;
@@ -296,8 +288,7 @@ public class StorageState {
     }
 
     /**
-     * @param totalMB
-     *            the totalMB to set
+     * @param totalMB the totalMB to set
      */
     public void setTotalMB(long totalMB) {
         this.totalMB = totalMB;
@@ -311,8 +302,7 @@ public class StorageState {
     }
 
     /**
-     * @param freeMB
-     *            the freeMB to set
+     * @param freeMB the freeMB to set
      */
     public void setFreeMB(long freeMB) {
         this.freeMB = freeMB;
@@ -326,8 +316,7 @@ public class StorageState {
     }
 
     /**
-     * @param uploadPriority
-     *            the uploadPriority to set
+     * @param uploadPriority the uploadPriority to set
      */
     public void setUploadPriority(int uploadPriority) {
         this.uploadPriority = uploadPriority;
@@ -341,8 +330,7 @@ public class StorageState {
     }
 
     /**
-     * @param joinTime
-     *            the joinTime to set
+     * @param joinTime the joinTime to set
      */
     public void setJoinTime(Date joinTime) {
         this.joinTime = joinTime;
@@ -356,8 +344,7 @@ public class StorageState {
     }
 
     /**
-     * @param upTime
-     *            the upTime to set
+     * @param upTime the upTime to set
      */
     public void setUpTime(Date upTime) {
         this.upTime = upTime;
@@ -371,8 +358,7 @@ public class StorageState {
     }
 
     /**
-     * @param storePathCount
-     *            the storePathCount to set
+     * @param storePathCount the storePathCount to set
      */
     public void setStorePathCount(int storePathCount) {
         this.storePathCount = storePathCount;
@@ -386,8 +372,7 @@ public class StorageState {
     }
 
     /**
-     * @param subdirCountPerPath
-     *            the subdirCountPerPath to set
+     * @param subdirCountPerPath the subdirCountPerPath to set
      */
     public void setSubdirCountPerPath(int subdirCountPerPath) {
         this.subdirCountPerPath = subdirCountPerPath;
@@ -401,8 +386,7 @@ public class StorageState {
     }
 
     /**
-     * @param storagePort
-     *            the storagePort to set
+     * @param storagePort the storagePort to set
      */
     public void setStoragePort(int storagePort) {
         this.storagePort = storagePort;
@@ -416,8 +400,7 @@ public class StorageState {
     }
 
     /**
-     * @param storageHttpPort
-     *            the storageHttpPort to set
+     * @param storageHttpPort the storageHttpPort to set
      */
     public void setStorageHttpPort(int storageHttpPort) {
         this.storageHttpPort = storageHttpPort;
@@ -431,8 +414,7 @@ public class StorageState {
     }
 
     /**
-     * @param currentWritePath
-     *            the currentWritePath to set
+     * @param currentWritePath the currentWritePath to set
      */
     public void setCurrentWritePath(int currentWritePath) {
         this.currentWritePath = currentWritePath;
@@ -446,8 +428,7 @@ public class StorageState {
     }
 
     /**
-     * @param totalUploadCount
-     *            the totalUploadCount to set
+     * @param totalUploadCount the totalUploadCount to set
      */
     public void setTotalUploadCount(long totalUploadCount) {
         this.totalUploadCount = totalUploadCount;
@@ -461,8 +442,7 @@ public class StorageState {
     }
 
     /**
-     * @param successUploadCount
-     *            the successUploadCount to set
+     * @param successUploadCount the successUploadCount to set
      */
     public void setSuccessUploadCount(long successUploadCount) {
         this.successUploadCount = successUploadCount;
@@ -476,8 +456,7 @@ public class StorageState {
     }
 
     /**
-     * @param totalAppendCount
-     *            the totalAppendCount to set
+     * @param totalAppendCount the totalAppendCount to set
      */
     public void setTotalAppendCount(long totalAppendCount) {
         this.totalAppendCount = totalAppendCount;
@@ -491,8 +470,7 @@ public class StorageState {
     }
 
     /**
-     * @param successAppendCount
-     *            the successAppendCount to set
+     * @param successAppendCount the successAppendCount to set
      */
     public void setSuccessAppendCount(long successAppendCount) {
         this.successAppendCount = successAppendCount;
@@ -506,8 +484,7 @@ public class StorageState {
     }
 
     /**
-     * @param totalModifyCount
-     *            the totalModifyCount to set
+     * @param totalModifyCount the totalModifyCount to set
      */
     public void setTotalModifyCount(long totalModifyCount) {
         this.totalModifyCount = totalModifyCount;
@@ -521,8 +498,7 @@ public class StorageState {
     }
 
     /**
-     * @param successModifyCount
-     *            the successModifyCount to set
+     * @param successModifyCount the successModifyCount to set
      */
     public void setSuccessModifyCount(long successModifyCount) {
         this.successModifyCount = successModifyCount;
@@ -536,8 +512,7 @@ public class StorageState {
     }
 
     /**
-     * @param totalTruncateCount
-     *            the totalTruncateCount to set
+     * @param totalTruncateCount the totalTruncateCount to set
      */
     public void setTotalTruncateCount(long totalTruncateCount) {
         this.totalTruncateCount = totalTruncateCount;
@@ -551,8 +526,7 @@ public class StorageState {
     }
 
     /**
-     * @param successTruncateCount
-     *            the successTruncateCount to set
+     * @param successTruncateCount the successTruncateCount to set
      */
     public void setSuccessTruncateCount(long successTruncateCount) {
         this.successTruncateCount = successTruncateCount;
@@ -566,8 +540,7 @@ public class StorageState {
     }
 
     /**
-     * @param totalSetMetaCount
-     *            the totalSetMetaCount to set
+     * @param totalSetMetaCount the totalSetMetaCount to set
      */
     public void setTotalSetMetaCount(long totalSetMetaCount) {
         this.totalSetMetaCount = totalSetMetaCount;
@@ -581,8 +554,7 @@ public class StorageState {
     }
 
     /**
-     * @param successSetMetaCount
-     *            the successSetMetaCount to set
+     * @param successSetMetaCount the successSetMetaCount to set
      */
     public void setSuccessSetMetaCount(long successSetMetaCount) {
         this.successSetMetaCount = successSetMetaCount;
@@ -596,8 +568,7 @@ public class StorageState {
     }
 
     /**
-     * @param totalDeleteCount
-     *            the totalDeleteCount to set
+     * @param totalDeleteCount the totalDeleteCount to set
      */
     public void setTotalDeleteCount(long totalDeleteCount) {
         this.totalDeleteCount = totalDeleteCount;
@@ -611,8 +582,7 @@ public class StorageState {
     }
 
     /**
-     * @param successDeleteCount
-     *            the successDeleteCount to set
+     * @param successDeleteCount the successDeleteCount to set
      */
     public void setSuccessDeleteCount(long successDeleteCount) {
         this.successDeleteCount = successDeleteCount;
@@ -626,8 +596,7 @@ public class StorageState {
     }
 
     /**
-     * @param totalDownloadCount
-     *            the totalDownloadCount to set
+     * @param totalDownloadCount the totalDownloadCount to set
      */
     public void setTotalDownloadCount(long totalDownloadCount) {
         this.totalDownloadCount = totalDownloadCount;
@@ -641,8 +610,7 @@ public class StorageState {
     }
 
     /**
-     * @param successDownloadCount
-     *            the successDownloadCount to set
+     * @param successDownloadCount the successDownloadCount to set
      */
     public void setSuccessDownloadCount(long successDownloadCount) {
         this.successDownloadCount = successDownloadCount;
@@ -656,8 +624,7 @@ public class StorageState {
     }
 
     /**
-     * @param totalGetMetaCount
-     *            the totalGetMetaCount to set
+     * @param totalGetMetaCount the totalGetMetaCount to set
      */
     public void setTotalGetMetaCount(long totalGetMetaCount) {
         this.totalGetMetaCount = totalGetMetaCount;
@@ -671,8 +638,7 @@ public class StorageState {
     }
 
     /**
-     * @param successGetMetaCount
-     *            the successGetMetaCount to set
+     * @param successGetMetaCount the successGetMetaCount to set
      */
     public void setSuccessGetMetaCount(long successGetMetaCount) {
         this.successGetMetaCount = successGetMetaCount;
@@ -686,8 +652,7 @@ public class StorageState {
     }
 
     /**
-     * @param totalCreateLinkCount
-     *            the totalCreateLinkCount to set
+     * @param totalCreateLinkCount the totalCreateLinkCount to set
      */
     public void setTotalCreateLinkCount(long totalCreateLinkCount) {
         this.totalCreateLinkCount = totalCreateLinkCount;
@@ -701,8 +666,7 @@ public class StorageState {
     }
 
     /**
-     * @param successCreateLinkCount
-     *            the successCreateLinkCount to set
+     * @param successCreateLinkCount the successCreateLinkCount to set
      */
     public void setSuccessCreateLinkCount(long successCreateLinkCount) {
         this.successCreateLinkCount = successCreateLinkCount;
@@ -716,8 +680,7 @@ public class StorageState {
     }
 
     /**
-     * @param totalDeleteLinkCount
-     *            the totalDeleteLinkCount to set
+     * @param totalDeleteLinkCount the totalDeleteLinkCount to set
      */
     public void setTotalDeleteLinkCount(long totalDeleteLinkCount) {
         this.totalDeleteLinkCount = totalDeleteLinkCount;
@@ -731,8 +694,7 @@ public class StorageState {
     }
 
     /**
-     * @param successDeleteLinkCount
-     *            the successDeleteLinkCount to set
+     * @param successDeleteLinkCount the successDeleteLinkCount to set
      */
     public void setSuccessDeleteLinkCount(long successDeleteLinkCount) {
         this.successDeleteLinkCount = successDeleteLinkCount;
@@ -746,8 +708,7 @@ public class StorageState {
     }
 
     /**
-     * @param totalUploadBytes
-     *            the totalUploadBytes to set
+     * @param totalUploadBytes the totalUploadBytes to set
      */
     public void setTotalUploadBytes(long totalUploadBytes) {
         this.totalUploadBytes = totalUploadBytes;
@@ -761,8 +722,7 @@ public class StorageState {
     }
 
     /**
-     * @param successUploadBytes
-     *            the successUploadBytes to set
+     * @param successUploadBytes the successUploadBytes to set
      */
     public void setSuccessUploadBytes(long successUploadBytes) {
         this.successUploadBytes = successUploadBytes;
@@ -776,8 +736,7 @@ public class StorageState {
     }
 
     /**
-     * @param totalAppendBytes
-     *            the totalAppendBytes to set
+     * @param totalAppendBytes the totalAppendBytes to set
      */
     public void setTotalAppendBytes(long totalAppendBytes) {
         this.totalAppendBytes = totalAppendBytes;
@@ -791,8 +750,7 @@ public class StorageState {
     }
 
     /**
-     * @param successAppendBytes
-     *            the successAppendBytes to set
+     * @param successAppendBytes the successAppendBytes to set
      */
     public void setSuccessAppendBytes(long successAppendBytes) {
         this.successAppendBytes = successAppendBytes;
@@ -806,8 +764,7 @@ public class StorageState {
     }
 
     /**
-     * @param totalModifyBytes
-     *            the totalModifyBytes to set
+     * @param totalModifyBytes the totalModifyBytes to set
      */
     public void setTotalModifyBytes(long totalModifyBytes) {
         this.totalModifyBytes = totalModifyBytes;
@@ -821,8 +778,7 @@ public class StorageState {
     }
 
     /**
-     * @param successModifyBytes
-     *            the successModifyBytes to set
+     * @param successModifyBytes the successModifyBytes to set
      */
     public void setSuccessModifyBytes(long successModifyBytes) {
         this.successModifyBytes = successModifyBytes;
@@ -836,8 +792,7 @@ public class StorageState {
     }
 
     /**
-     * @param totalDownloadloadBytes
-     *            the totalDownloadloadBytes to set
+     * @param totalDownloadloadBytes the totalDownloadloadBytes to set
      */
     public void setTotalDownloadloadBytes(long totalDownloadloadBytes) {
         this.totalDownloadloadBytes = totalDownloadloadBytes;
@@ -851,8 +806,7 @@ public class StorageState {
     }
 
     /**
-     * @param successDownloadloadBytes
-     *            the successDownloadloadBytes to set
+     * @param successDownloadloadBytes the successDownloadloadBytes to set
      */
     public void setSuccessDownloadloadBytes(long successDownloadloadBytes) {
         this.successDownloadloadBytes = successDownloadloadBytes;
@@ -866,8 +820,7 @@ public class StorageState {
     }
 
     /**
-     * @param totalSyncInBytes
-     *            the totalSyncInBytes to set
+     * @param totalSyncInBytes the totalSyncInBytes to set
      */
     public void setTotalSyncInBytes(long totalSyncInBytes) {
         this.totalSyncInBytes = totalSyncInBytes;
@@ -881,8 +834,7 @@ public class StorageState {
     }
 
     /**
-     * @param successSyncInBytes
-     *            the successSyncInBytes to set
+     * @param successSyncInBytes the successSyncInBytes to set
      */
     public void setSuccessSyncInBytes(long successSyncInBytes) {
         this.successSyncInBytes = successSyncInBytes;
@@ -896,8 +848,7 @@ public class StorageState {
     }
 
     /**
-     * @param totalSyncOutBytes
-     *            the totalSyncOutBytes to set
+     * @param totalSyncOutBytes the totalSyncOutBytes to set
      */
     public void setTotalSyncOutBytes(long totalSyncOutBytes) {
         this.totalSyncOutBytes = totalSyncOutBytes;
@@ -911,8 +862,7 @@ public class StorageState {
     }
 
     /**
-     * @param successSyncOutBytes
-     *            the successSyncOutBytes to set
+     * @param successSyncOutBytes the successSyncOutBytes to set
      */
     public void setSuccessSyncOutBytes(long successSyncOutBytes) {
         this.successSyncOutBytes = successSyncOutBytes;
@@ -926,8 +876,7 @@ public class StorageState {
     }
 
     /**
-     * @param totalFileOpenCount
-     *            the totalFileOpenCount to set
+     * @param totalFileOpenCount the totalFileOpenCount to set
      */
     public void setTotalFileOpenCount(long totalFileOpenCount) {
         this.totalFileOpenCount = totalFileOpenCount;
@@ -941,8 +890,7 @@ public class StorageState {
     }
 
     /**
-     * @param successFileOpenCount
-     *            the successFileOpenCount to set
+     * @param successFileOpenCount the successFileOpenCount to set
      */
     public void setSuccessFileOpenCount(long successFileOpenCount) {
         this.successFileOpenCount = successFileOpenCount;
@@ -956,8 +904,7 @@ public class StorageState {
     }
 
     /**
-     * @param totalFileReadCount
-     *            the totalFileReadCount to set
+     * @param totalFileReadCount the totalFileReadCount to set
      */
     public void setTotalFileReadCount(long totalFileReadCount) {
         this.totalFileReadCount = totalFileReadCount;
@@ -971,8 +918,7 @@ public class StorageState {
     }
 
     /**
-     * @param successFileReadCount
-     *            the successFileReadCount to set
+     * @param successFileReadCount the successFileReadCount to set
      */
     public void setSuccessFileReadCount(long successFileReadCount) {
         this.successFileReadCount = successFileReadCount;
@@ -986,8 +932,7 @@ public class StorageState {
     }
 
     /**
-     * @param totalFileWriteCount
-     *            the totalFileWriteCount to set
+     * @param totalFileWriteCount the totalFileWriteCount to set
      */
     public void setTotalFileWriteCount(long totalFileWriteCount) {
         this.totalFileWriteCount = totalFileWriteCount;
@@ -1001,8 +946,7 @@ public class StorageState {
     }
 
     /**
-     * @param successFileWriteCount
-     *            the successFileWriteCount to set
+     * @param successFileWriteCount the successFileWriteCount to set
      */
     public void setSuccessFileWriteCount(long successFileWriteCount) {
         this.successFileWriteCount = successFileWriteCount;
@@ -1016,8 +960,7 @@ public class StorageState {
     }
 
     /**
-     * @param lastSourceUpdate
-     *            the lastSourceUpdate to set
+     * @param lastSourceUpdate the lastSourceUpdate to set
      */
     public void setLastSourceUpdate(Date lastSourceUpdate) {
         this.lastSourceUpdate = lastSourceUpdate;
@@ -1031,8 +974,7 @@ public class StorageState {
     }
 
     /**
-     * @param lastSyncUpdate
-     *            the lastSyncUpdate to set
+     * @param lastSyncUpdate the lastSyncUpdate to set
      */
     public void setLastSyncUpdate(Date lastSyncUpdate) {
         this.lastSyncUpdate = lastSyncUpdate;
@@ -1046,8 +988,7 @@ public class StorageState {
     }
 
     /**
-     * @param lastSyncedTimestamp
-     *            the lastSyncedTimestamp to set
+     * @param lastSyncedTimestamp the lastSyncedTimestamp to set
      */
     public void setLastSyncedTimestamp(Date lastSyncedTimestamp) {
         this.lastSyncedTimestamp = lastSyncedTimestamp;
@@ -1061,8 +1002,7 @@ public class StorageState {
     }
 
     /**
-     * @param lastHeartBeatTime
-     *            the lastHeartBeatTime to set
+     * @param lastHeartBeatTime the lastHeartBeatTime to set
      */
     public void setLastHeartBeatTime(Date lastHeartBeatTime) {
         this.lastHeartBeatTime = lastHeartBeatTime;
@@ -1076,8 +1016,7 @@ public class StorageState {
     }
 
     /**
-     * @param isTrunkServer
-     *            the isTrunkServer to set
+     * @param isTrunkServer the isTrunkServer to set
      */
     public void setTrunkServer(boolean isTrunkServer) {
         this.isTrunkServer = isTrunkServer;

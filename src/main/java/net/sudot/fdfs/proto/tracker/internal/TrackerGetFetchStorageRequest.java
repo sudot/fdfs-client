@@ -1,19 +1,16 @@
 package net.sudot.fdfs.proto.tracker.internal;
 
-import net.sudot.fdfs.proto.mapper.DynamicFieldType;
-import net.sudot.fdfs.proto.mapper.FdfsColumn;
+import net.sudot.fdfs.proto.CmdConstants;
 import net.sudot.fdfs.proto.FdfsRequest;
 import net.sudot.fdfs.proto.OtherConstants;
-import org.apache.commons.lang3.Validate;
-
-import net.sudot.fdfs.proto.CmdConstants;
 import net.sudot.fdfs.proto.ProtoHead;
+import net.sudot.fdfs.proto.mapper.DynamicFieldType;
+import net.sudot.fdfs.proto.mapper.FdfsColumn;
+import org.apache.commons.lang3.Validate;
 
 /**
  * 获取源服务器
- * 
  * @author tobato
- *
  */
 public class TrackerGetFetchStorageRequest extends FdfsRequest {
 
@@ -29,7 +26,6 @@ public class TrackerGetFetchStorageRequest extends FdfsRequest {
 
     /**
      * 获取文件源服务器
-     * 
      * @param groupName
      * @param path
      */

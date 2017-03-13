@@ -1,25 +1,22 @@
 package net.sudot.fdfs.proto.storage.internal;
 
-import java.nio.charset.Charset;
-import java.util.Set;
-
 import net.sudot.fdfs.domain.MateData;
+import net.sudot.fdfs.proto.CmdConstants;
+import net.sudot.fdfs.proto.FdfsRequest;
+import net.sudot.fdfs.proto.OtherConstants;
+import net.sudot.fdfs.proto.ProtoHead;
 import net.sudot.fdfs.proto.mapper.DynamicFieldType;
 import net.sudot.fdfs.proto.mapper.FdfsColumn;
 import net.sudot.fdfs.proto.mapper.MetadataMapper;
 import net.sudot.fdfs.proto.storage.enums.StorageMetdataSetType;
-import net.sudot.fdfs.proto.FdfsRequest;
 import org.apache.commons.lang3.Validate;
 
-import net.sudot.fdfs.proto.CmdConstants;
-import net.sudot.fdfs.proto.OtherConstants;
-import net.sudot.fdfs.proto.ProtoHead;
+import java.nio.charset.Charset;
+import java.util.Set;
 
 /**
  * 设置文件标签
- * 
  * @author tobato
- *
  */
 public class StorageSetMetadataRequest extends FdfsRequest {
 
@@ -44,14 +41,13 @@ public class StorageSetMetadataRequest extends FdfsRequest {
 
     /**
      * 设置文件元数据
-     * 
      * @param groupName
      * @param path
      * @param metaDataSet
      * @param type
      */
     public StorageSetMetadataRequest(String groupName, String path, Set<MateData> metaDataSet,
-            StorageMetdataSetType type) {
+                                     StorageMetdataSetType type) {
         super();
         Validate.notBlank(groupName, "分组不能为空");
         Validate.notBlank(path, "分组不能为空");
@@ -77,8 +73,6 @@ public class StorageSetMetadataRequest extends FdfsRequest {
 
     /**
      * 获取metaDataSet长度
-     * 
-     * @param metaDataSet
      * @param charset
      * @return
      */

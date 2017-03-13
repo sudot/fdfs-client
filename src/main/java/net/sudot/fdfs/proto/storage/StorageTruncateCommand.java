@@ -6,15 +6,12 @@ import net.sudot.fdfs.proto.storage.internal.StorageTruncateRequest;
 
 /**
  * 文件Truncate命令
- * 
  * @author tobato
- *
  */
 public class StorageTruncateCommand extends AbstractFdfsCommand<Void> {
 
     /**
      * 文件Truncate命令
-     * 
      * @param groupName
      * @param path
      */

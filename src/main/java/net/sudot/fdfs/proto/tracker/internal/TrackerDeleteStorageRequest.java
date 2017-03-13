@@ -9,9 +9,7 @@ import org.apache.commons.lang3.Validate;
 
 /**
  * 移除存储服务器
- * 
  * @author tobato
- *
  */
 public class TrackerDeleteStorageRequest extends FdfsRequest {
 
@@ -24,9 +22,8 @@ public class TrackerDeleteStorageRequest extends FdfsRequest {
 
     /**
      * 获取文件源服务器
-     * 
      * @param groupName
-     * @param path
+     * @param storageIpAddr
      */
     public TrackerDeleteStorageRequest(String groupName, String storageIpAddr) {
         Validate.notBlank(groupName, "分组不能为空");

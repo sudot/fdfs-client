@@ -1,16 +1,14 @@
 package net.sudot.fdfs.proto.storage;
 
-import java.io.InputStream;
-
 import net.sudot.fdfs.proto.AbstractFdfsCommand;
 import net.sudot.fdfs.proto.FdfsResponse;
 import net.sudot.fdfs.proto.storage.internal.StorageAppendFileRequest;
 
+import java.io.InputStream;
+
 /**
  * 添加文件命令
- * 
  * @author tobato
- *
  */
 public class StorageAppendFileCommand extends AbstractFdfsCommand<Void> {
 

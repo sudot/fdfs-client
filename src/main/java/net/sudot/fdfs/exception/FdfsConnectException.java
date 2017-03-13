@@ -2,10 +2,8 @@ package net.sudot.fdfs.exception;
 
 /**
  * 非fastdfs本身的错误码抛出的异常，socket连不上时抛出的异常
- * 
  * @author yuqihuang
  * @author tobato
- * 
  */
 public class FdfsConnectException extends FdfsUnavailableException {
 

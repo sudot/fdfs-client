@@ -1,7 +1,5 @@
 package net.sudot.fdfs.service;
 
-import java.io.InputStream;
-
 import net.sudot.fdfs.domain.StorageNode;
 import net.sudot.fdfs.domain.StorageNodeInfo;
 import net.sudot.fdfs.domain.StorePath;
@@ -11,11 +9,11 @@ import net.sudot.fdfs.proto.storage.StorageTruncateCommand;
 import net.sudot.fdfs.proto.storage.StorageUploadFileCommand;
 import org.springframework.stereotype.Component;
 
+import java.io.InputStream;
+
 /**
  * 存储服务客户端接口实现
- * 
  * @author tobato
- *
  */
 @Component
 public class DefaultAppendFileStorageClient extends DefaultGenerateStorageClient implements AppendFileStorageClient {

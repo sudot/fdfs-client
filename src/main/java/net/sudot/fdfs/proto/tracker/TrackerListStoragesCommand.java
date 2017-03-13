@@ -1,17 +1,15 @@
 package net.sudot.fdfs.proto.tracker;
 
-import java.util.List;
-
+import net.sudot.fdfs.domain.StorageState;
 import net.sudot.fdfs.proto.AbstractFdfsCommand;
 import net.sudot.fdfs.proto.tracker.internal.TrackerListStoragesRequest;
 import net.sudot.fdfs.proto.tracker.internal.TrackerListStoragesResponse;
-import net.sudot.fdfs.domain.StorageState;
+
+import java.util.List;
 
 /**
  * 列出组命令
- * 
  * @author tobato
- *
  */
 public class TrackerListStoragesCommand extends AbstractFdfsCommand<List<StorageState>> {
 

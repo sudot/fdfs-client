@@ -4,9 +4,7 @@ import net.sudot.fdfs.conn.Connection;
 
 /**
  * Fdfs交易命令抽象
- * 
  * @author tobato
- *
  */
 public interface FdfsCommand<T> {
 

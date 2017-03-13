@@ -1,21 +1,19 @@
 package net.sudot.fdfs.proto;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.nio.charset.Charset;
-
 import net.sudot.fdfs.conn.Connection;
 import net.sudot.fdfs.exception.FdfsIOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.charset.Charset;
+
 /**
  * 交易命令抽象类
- * 
- * @author tobato
  * @param <T>
- *
+ * @author tobato
  */
 public abstract class AbstractFdfsCommand<T> implements FdfsCommand<T> {
 
@@ -51,13 +49,12 @@ public abstract class AbstractFdfsCommand<T> implements FdfsCommand<T> {
 
     /**
      * 将报文输出规范为模板方法
-     * 
+     *
      * <pre>
      * 1.输出报文头
      * 2.输出报文参数
      * 3.输出文件内容
      * </pre>
-     * 
      * @param out
      * @throws IOException
      */
@@ -87,7 +84,6 @@ public abstract class AbstractFdfsCommand<T> implements FdfsCommand<T> {
 
     /**
      * 接收这里只能确切知道报文头，报文内容(参数+文件)只能靠接收对象分析
-     * 
      * @param in
      * @return
      * @throws IOException
@@ -107,7 +103,6 @@ public abstract class AbstractFdfsCommand<T> implements FdfsCommand<T> {
 
     /**
      * 发送文件
-     * 
      * @param ins
      * @param size
      * @param ous

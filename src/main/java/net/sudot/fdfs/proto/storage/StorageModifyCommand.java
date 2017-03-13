@@ -1,22 +1,19 @@
 package net.sudot.fdfs.proto.storage;
 
-import java.io.InputStream;
-
 import net.sudot.fdfs.proto.AbstractFdfsCommand;
 import net.sudot.fdfs.proto.FdfsResponse;
 import net.sudot.fdfs.proto.storage.internal.StorageModifyRequest;
 
+import java.io.InputStream;
+
 /**
  * 文件修改命令
- * 
  * @author tobato
- *
  */
 public class StorageModifyCommand extends AbstractFdfsCommand<Void> {
 
     /**
      * 文件修改命令
-     * 
      * @param path
      * @param inputStream
      * @param fileSize

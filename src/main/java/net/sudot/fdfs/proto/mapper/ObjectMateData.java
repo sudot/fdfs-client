@@ -1,5 +1,8 @@
 package net.sudot.fdfs.proto.mapper;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.Charset;
@@ -7,18 +10,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * 映射对象元数据
- * 
+ *
  * <pre>
  * 映射对象元数据必须由{@code @FdfsColumn}注解
  * </pre>
- * 
  * @author tobato
- *
  */
 public class ObjectMateData {
 
@@ -39,7 +37,6 @@ public class ObjectMateData {
 
     /**
      * 映射对象元数据构造函数
-     * 
      * @param genericType
      */
     public <T> ObjectMateData(Class<T> genericType) {
@@ -60,22 +57,44 @@ public class ObjectMateData {
 
     /**
      * 解析映射对象数据映射情况
-     * 
      * @return
      */
     private <T> List<FieldMateData> praseFieldList(Class<T> genericType) {
+//        原代码(包含隐藏BUG,实体中定义的列顺序和FdfsColumn.index标记顺序不一致,会导致参数错误)
+//        Field[] fields = genericType.getDeclaredFields();
+//        List<FieldMateData> mapedFieldList = new ArrayList<FieldMateData>();
+//        for (int i = 0; i < fields.length; i++) {
+//            if (fields[i].isAnnotationPresent(FdfsColumn.class)) {
+//                FieldMateData fieldMateData = new FieldMateData(fields[i], fieldsTotalSize);
+//                mapedFieldList.add(fieldMateData);
+//                // 计算偏移量
+//                fieldsTotalSize += fieldMateData.getRealeSize();
+//                // 如果是动态计算列
+//                if (fieldMateData.isDynamicField()) {
+//                    dynamicFieldList.add(fieldMateData);
+//                }
+//            }
+//        }
+        // 修改后(修复实体类中列顺序与FdfsColumn.index标记顺序一致性)
         Field[] fields = genericType.getDeclaredFields();
-        List<FieldMateData> mapedFieldList = new ArrayList<FieldMateData>();
-        for (int i = 0; i < fields.length; i++) {
-            if (fields[i].isAnnotationPresent(FdfsColumn.class)) {
-                FieldMateData fieldMateData = new FieldMateData(fields[i], fieldsTotalSize);
-                mapedFieldList.add(fieldMateData);
+        int length = fields.length;
+        FieldMateData[] mapedFieldArrays = new FieldMateData[length];
+        for (Field field : fields) {
+            FdfsColumn annotation = field.getAnnotation(FdfsColumn.class);
+            if (annotation != null) {
+                FieldMateData fieldMateData = new FieldMateData(field, fieldsTotalSize);
+                mapedFieldArrays[annotation.index()] = fieldMateData;
                 // 计算偏移量
                 fieldsTotalSize += fieldMateData.getRealeSize();
-                // 如果是动态计算列
-                if (fieldMateData.isDynamicField()) {
-                    dynamicFieldList.add(fieldMateData);
-                }
+            }
+        }
+        List<FieldMateData> mapedFieldList = new ArrayList<FieldMateData>();
+        for (FieldMateData fieldMateData : mapedFieldArrays) {
+            if (fieldMateData == null) { continue; }
+            mapedFieldList.add(fieldMateData);
+            // 如果是动态计算列
+            if (fieldMateData.isDynamicField()) {
+                dynamicFieldList.add(fieldMateData);
             }
         }
         return mapedFieldList;
@@ -83,7 +102,7 @@ public class ObjectMateData {
 
     /**
      * 检查数据列定义
-     * 
+     *
      * <pre>
      * 为了减少编码的错误，检查数据列定义是否存在列名相同或者索引定义相同(多个大于0相同的)的
      * </pre>
@@ -96,13 +115,12 @@ public class ObjectMateData {
 
     /**
      * 检查按索引映射
-     * 
      * @param field
      */
     private void validatFieldItemDefineByIndex(FieldMateData field) {
         for (FieldMateData otherfield : fieldList) {
             if (!field.equals(otherfield) && (field.getIndex() == otherfield.getIndex())) {
-                Object[] param = { className, field.getFieldName(), otherfield.getFieldName(), field.getIndex() };
+                Object[] param = {className, field.getFieldName(), otherfield.getFieldName(), field.getIndex()};
                 LOGGER.warn("在类{}映射定义中{}与{}索引定义相同为{}(请检查是否为程序错误)", param);
             }
         }
@@ -110,7 +128,6 @@ public class ObjectMateData {
 
     /**
      * 是否有动态数据列
-     * 
      * @return
      */
     private boolean hasDynamicField() {
@@ -124,7 +141,6 @@ public class ObjectMateData {
 
     /**
      * 获取动态数据列长度
-     * 
      * @return
      * @throws NoSuchMethodException
      * @throws InvocationTargetException
@@ -141,7 +157,6 @@ public class ObjectMateData {
 
     /**
      * 获取固定参数对象总长度
-     * 
      * @return
      */
     public int getFieldsFixTotalSize() {
@@ -154,8 +169,7 @@ public class ObjectMateData {
 
     /**
      * 获取需要发送的报文长度
-     * 
-     * @param obj
+     * @param bean
      * @param charset
      * @return
      * @throws NoSuchMethodException
@@ -172,7 +186,6 @@ public class ObjectMateData {
 
     /**
      * 获取动态属性长度
-     * 
      * @param bean
      * @param charset
      * @return
@@ -195,8 +208,6 @@ public class ObjectMateData {
 
     /**
      * 导出调试信息
-     * 
-     * @param objectMap
      */
     public void dumpObjectMateData() {
         LOGGER.debug("dump class={}", className);

@@ -1,14 +1,13 @@
 package net.sudot.fdfs.exception;
 
+import net.sudot.fdfs.proto.ErrorCodeConstants;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.sudot.fdfs.proto.ErrorCodeConstants;
-
 /**
  * fastdfs服务端返回的错误码构成的异常
- * 
  * @author yuqih
  * @author tobato
  */
@@ -37,7 +36,7 @@ public class FdfsServerException extends FdfsException {
     private int errorCode;
 
     /**
-     * 
+     *
      */
     private FdfsServerException(int errorCode, String message) {
         super(message);

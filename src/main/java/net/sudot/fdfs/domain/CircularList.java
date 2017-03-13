@@ -5,9 +5,7 @@ import java.util.ArrayList;
 /**
  * 基于ArrayList的循环链表类<br>
  * 第一次调用next()将返回第一个元素，调用previous()将返回最后一个元素
- * 
  * @author yuqih
- * 
  */
 class CircularList<E> extends ArrayList<E> {
 
@@ -29,7 +27,6 @@ class CircularList<E> extends ArrayList<E> {
 
     /**
      * 下一个元素
-     * 
      * @return
      */
     public E next() {
@@ -58,7 +55,6 @@ class CircularList<E> extends ArrayList<E> {
 
     /**
      * 上一个元素
-     * 
      * @return
      */
     public E previous() {

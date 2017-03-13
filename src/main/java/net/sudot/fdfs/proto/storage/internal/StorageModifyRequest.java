@@ -1,19 +1,17 @@
 package net.sudot.fdfs.proto.storage.internal;
 
+import net.sudot.fdfs.proto.CmdConstants;
+import net.sudot.fdfs.proto.FdfsRequest;
+import net.sudot.fdfs.proto.ProtoHead;
+import net.sudot.fdfs.proto.mapper.DynamicFieldType;
+import net.sudot.fdfs.proto.mapper.FdfsColumn;
+
 import java.io.InputStream;
 import java.nio.charset.Charset;
 
-import net.sudot.fdfs.proto.FdfsRequest;
-import net.sudot.fdfs.proto.mapper.DynamicFieldType;
-import net.sudot.fdfs.proto.mapper.FdfsColumn;
-import net.sudot.fdfs.proto.ProtoHead;
-import net.sudot.fdfs.proto.CmdConstants;
-
 /**
  * 文件修改请求
- * 
  * @author tobato
- *
  */
 public class StorageModifyRequest extends FdfsRequest {
 
@@ -32,12 +30,10 @@ public class StorageModifyRequest extends FdfsRequest {
 
     /**
      * 构造函数
-     * 
      * @param inputStream
-     * @param fileExtName
      * @param fileSize
-     * @param storeIndex
-     * @param isAppenderFile
+     * @param path
+     * @param fileOffset
      */
     public StorageModifyRequest(InputStream inputStream, long fileSize, String path, long fileOffset) {
         super();

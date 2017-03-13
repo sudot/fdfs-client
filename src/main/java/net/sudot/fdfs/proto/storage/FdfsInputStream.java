@@ -5,9 +5,7 @@ import java.io.InputStream;
 
 /**
  * FdfsInputStream包装类
- * 
  * @author tobato
- *
  */
 public class FdfsInputStream extends InputStream {
 
@@ -47,7 +45,6 @@ public class FdfsInputStream extends InputStream {
 
     /**
      * 是否已完成读取
-     * 
      * @return
      */
     public boolean isReadCompleted() {

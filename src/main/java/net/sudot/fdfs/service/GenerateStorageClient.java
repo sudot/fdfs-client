@@ -1,28 +1,25 @@
 package net.sudot.fdfs.service;
 
+import net.sudot.fdfs.domain.FileInfo;
+import net.sudot.fdfs.domain.MateData;
+import net.sudot.fdfs.domain.StorePath;
+import net.sudot.fdfs.proto.storage.DownloadCallback;
+
 import java.io.InputStream;
 import java.util.Set;
 
-import net.sudot.fdfs.domain.MateData;
-import net.sudot.fdfs.proto.storage.DownloadCallback;
-import net.sudot.fdfs.domain.StorePath;
-import net.sudot.fdfs.domain.FileInfo;
-
 /**
  * 基本文件存储客户端操作
- * 
  * @author tobato
- *
  */
 public interface GenerateStorageClient {
 
     /**
      * 上传文件(文件不可修改)
-     * 
+     *
      * <pre>
      * 文件上传后不可以修改，如果要修改则删除以后重新上传
      * </pre>
-     * 
      * @param groupName
      * @param inputStream
      * @param fileSize
@@ -33,7 +30,6 @@ public interface GenerateStorageClient {
 
     /**
      * 上传从文件
-     * 
      * @param groupName
      * @param masterFilename
      * @param inputStream
@@ -43,11 +39,10 @@ public interface GenerateStorageClient {
      * @return
      */
     StorePath uploadSlaveFile(String groupName, String masterFilename, InputStream inputStream, long fileSize,
-            String prefixName, String fileExtName);
+                              String prefixName, String fileExtName);
 
     /**
      * 获取文件元信息
-     * 
      * @param groupName
      * @param path
      * @return
@@ -56,7 +51,6 @@ public interface GenerateStorageClient {
 
     /**
      * 修改文件元信息（覆盖）
-     * 
      * @param groupName
      * @param path
      * @param metaDataSet
@@ -65,7 +59,6 @@ public interface GenerateStorageClient {
 
     /**
      * 修改文件元信息（合并）
-     * 
      * @param groupName
      * @param path
      * @param metaDataSet
@@ -74,7 +67,6 @@ public interface GenerateStorageClient {
 
     /**
      * 查看文件的信息
-     * 
      * @param groupName
      * @param path
      * @return
@@ -83,7 +75,6 @@ public interface GenerateStorageClient {
 
     /**
      * 删除文件
-     * 
      * @param groupName
      * @param path
      */
@@ -91,7 +82,6 @@ public interface GenerateStorageClient {
 
     /**
      * 下载整个文件
-     * 
      * @param groupName
      * @param path
      * @param callback
@@ -101,7 +91,6 @@ public interface GenerateStorageClient {
 
     /**
      * 下载文件片段
-     * 
      * @param groupName
      * @param path
      * @param fileOffset

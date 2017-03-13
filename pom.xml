@@ -1,5 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>net.sudot.fdfs</groupId>
@@ -9,7 +9,7 @@
 
 	<name>fdfs-client</name>
 	<description>将tobato发布的的版本从spring-boot框架转为spring框架</description>
-	<url>https://github.com/tobato/FastDFS_Client</url>
+	<url>https://github.com/sudot/fdfs-client</url>
 
 	<licenses>
 		<license>
@@ -25,7 +25,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<commons-lang3.version>3.3.2</commons-lang3.version>
 		<commons-beanutils.version>1.9.1</commons-beanutils.version>
-		<java.version>1.7</java.version>
+		<maven.compiler.encoding>1.7</maven.compiler.encoding>
 	</properties>
 	<dependencies>
 		<!-- ======== commons UTILS begin ======== -->
@@ -122,8 +122,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.5</version>
 				<configuration>
-					<source>${java.version}</source>
-					<target>${java.version}</target>
+					<source>${maven.compiler.encoding}</source>
+					<target>${maven.compiler.encoding}</target>
 					<encoding>${project.build.sourceEncoding}</encoding>
 				</configuration>
 			</plugin>

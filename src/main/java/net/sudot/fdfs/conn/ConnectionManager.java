@@ -20,11 +20,11 @@ import java.net.InetSocketAddress;
 @Component
 public class ConnectionManager {
 
+    /** 日志 */
+    protected static final Logger LOGGER = LoggerFactory.getLogger(ConnectionManager.class);
     /** 连接池 */
     @Autowired
     private FdfsConnectionPool pool;
-    /** 日志 */
-    protected static final Logger LOGGER = LoggerFactory.getLogger(ConnectionManager.class);
 
     /**
      * 构造函数

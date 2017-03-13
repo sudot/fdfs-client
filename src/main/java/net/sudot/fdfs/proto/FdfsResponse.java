@@ -1,35 +1,24 @@
 package net.sudot.fdfs.proto;
 
+import net.sudot.fdfs.proto.mapper.FdfsParamMapper;
+import org.springframework.core.GenericTypeResolver;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 
-import org.springframework.core.GenericTypeResolver;
-
-import net.sudot.fdfs.proto.mapper.FdfsParamMapper;
-
 /**
  * Fdfs交易应答基类
- * 
  * @author tobato
- *
  */
 public abstract class FdfsResponse<T> {
+    /** 返回值类型 */
+    protected final Class<T> genericType;
     /** 报文头 */
     protected ProtoHead head;
 
-    /** 返回值类型 */
-    protected final Class<T> genericType;
-
-    /** 获取报文长度 */
-    protected long getContentLength() {
-        return head.getContentLength();
-    }
-
     /**
      * 构造函数
-     * 
-     * @param genericType
      */
     @SuppressWarnings("unchecked")
     public FdfsResponse() {
@@ -40,9 +29,13 @@ public abstract class FdfsResponse<T> {
         // theclass).getActualTypeArguments()[0];
     }
 
+    /** 获取报文长度 */
+    protected long getContentLength() {
+        return head.getContentLength();
+    }
+
     /**
      * 解析反馈结果,head已经被解析过
-     * 
      * @param head
      * @param in
      * @param charset
@@ -56,7 +49,6 @@ public abstract class FdfsResponse<T> {
 
     /**
      * 解析反馈内容
-     * 
      * @param in
      * @param charset
      * @return

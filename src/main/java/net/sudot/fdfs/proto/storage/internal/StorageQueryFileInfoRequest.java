@@ -1,17 +1,15 @@
 package net.sudot.fdfs.proto.storage.internal;
 
-import net.sudot.fdfs.proto.mapper.DynamicFieldType;
-import net.sudot.fdfs.proto.mapper.FdfsColumn;
+import net.sudot.fdfs.proto.CmdConstants;
 import net.sudot.fdfs.proto.FdfsRequest;
 import net.sudot.fdfs.proto.OtherConstants;
-import net.sudot.fdfs.proto.CmdConstants;
 import net.sudot.fdfs.proto.ProtoHead;
+import net.sudot.fdfs.proto.mapper.DynamicFieldType;
+import net.sudot.fdfs.proto.mapper.FdfsColumn;
 
 /**
  * 查询文件信息命令
- * 
  * @author tobato
- *
  */
 public class StorageQueryFileInfoRequest extends FdfsRequest {
 
@@ -24,7 +22,6 @@ public class StorageQueryFileInfoRequest extends FdfsRequest {
 
     /**
      * 删除文件命令
-     * 
      * @param groupName
      * @param path
      */
@@ -39,16 +36,18 @@ public class StorageQueryFileInfoRequest extends FdfsRequest {
         return groupName;
     }
 
-    public void setGroupName(String groupName) {
+    public StorageQueryFileInfoRequest setGroupName(String groupName) {
         this.groupName = groupName;
+        return this;
     }
 
     public String getPath() {
         return path;
     }
 
-    public void setPath(String path) {
+    public StorageQueryFileInfoRequest setPath(String path) {
         this.path = path;
+        return this;
     }
 
 }

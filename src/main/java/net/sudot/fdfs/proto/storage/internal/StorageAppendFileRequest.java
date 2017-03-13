@@ -1,19 +1,17 @@
 package net.sudot.fdfs.proto.storage.internal;
 
+import net.sudot.fdfs.proto.CmdConstants;
+import net.sudot.fdfs.proto.FdfsRequest;
+import net.sudot.fdfs.proto.ProtoHead;
+import net.sudot.fdfs.proto.mapper.DynamicFieldType;
+import net.sudot.fdfs.proto.mapper.FdfsColumn;
+
 import java.io.InputStream;
 import java.nio.charset.Charset;
 
-import net.sudot.fdfs.proto.mapper.DynamicFieldType;
-import net.sudot.fdfs.proto.mapper.FdfsColumn;
-import net.sudot.fdfs.proto.FdfsRequest;
-import net.sudot.fdfs.proto.CmdConstants;
-import net.sudot.fdfs.proto.ProtoHead;
-
 /**
  * 文件上传命令
- * 
  * @author tobato
- *
  */
 public class StorageAppendFileRequest extends FdfsRequest {
 
@@ -29,12 +27,9 @@ public class StorageAppendFileRequest extends FdfsRequest {
 
     /**
      * 构造函数
-     * 
      * @param inputStream
-     * @param fileExtName
      * @param fileSize
-     * @param storeIndex
-     * @param isAppenderFile
+     * @param path
      */
     public StorageAppendFileRequest(InputStream inputStream, long fileSize, String path) {
         super();
@@ -58,25 +53,28 @@ public class StorageAppendFileRequest extends FdfsRequest {
         return pathSize;
     }
 
-    public void setPathSize(long pathSize) {
+    public StorageAppendFileRequest setPathSize(long pathSize) {
         this.pathSize = pathSize;
+        return this;
     }
 
     public String getPath() {
         return path;
     }
 
-    public void setPath(String path) {
+    public StorageAppendFileRequest setPath(String path) {
         this.path = path;
-    }
-
-    public void setFileSize(long fileSize) {
-        this.fileSize = fileSize;
+        return this;
     }
 
     @Override
     public long getFileSize() {
         return fileSize;
+    }
+
+    public StorageAppendFileRequest setFileSize(long fileSize) {
+        this.fileSize = fileSize;
+        return this;
     }
 
     @Override

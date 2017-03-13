@@ -1,16 +1,14 @@
 package net.sudot.fdfs.proto;
 
-import java.io.InputStream;
-import java.nio.charset.Charset;
-
 import net.sudot.fdfs.proto.mapper.FdfsParamMapper;
 import net.sudot.fdfs.proto.mapper.ObjectMateData;
 
+import java.io.InputStream;
+import java.nio.charset.Charset;
+
 /**
  * Fdfs交易请求基类
- * 
  * @author tobato
- *
  */
 public abstract class FdfsRequest {
 
@@ -21,7 +19,6 @@ public abstract class FdfsRequest {
 
     /**
      * 获取报文头(包内可见)
-     * 
      * @return
      */
     ProtoHead getHead() {
@@ -30,7 +27,6 @@ public abstract class FdfsRequest {
 
     /**
      * 获取报文头
-     * 
      * @param charset
      * @return
      */
@@ -43,7 +39,6 @@ public abstract class FdfsRequest {
 
     /**
      * 打包参数
-     * 
      * @param charset
      * @return
      */
@@ -53,7 +48,6 @@ public abstract class FdfsRequest {
 
     /**
      * 获取参数域长度
-     * 
      * @return
      */
     protected long getBodyLength(Charset charset) {

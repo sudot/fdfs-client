@@ -1,15 +1,13 @@
 package net.sudot.fdfs.domain;
 
-import java.text.SimpleDateFormat;
-
-import net.sudot.fdfs.proto.mapper.FdfsColumn;
 import net.sudot.fdfs.proto.OtherConstants;
+import net.sudot.fdfs.proto.mapper.FdfsColumn;
+
+import java.text.SimpleDateFormat;
 
 /**
  * 文件的基础信息
- * 
  * @author yuqih
- * 
  */
 public class FileInfo {
     /** 长度 */
@@ -26,7 +24,7 @@ public class FileInfo {
     private String sourceIpAddr;
 
     /**
-     * 
+     *
      */
     public FileInfo() {
         super();
@@ -34,7 +32,7 @@ public class FileInfo {
 
     /**
      * @param sourceIpAddr
-     * @param size
+     * @param fileSize
      * @param createTime
      * @param crc32
      */
@@ -54,8 +52,7 @@ public class FileInfo {
     }
 
     /**
-     * @param sourceIpAddr
-     *            the sourceIpAddr to set
+     * @param sourceIpAddr the sourceIpAddr to set
      */
     public void setSourceIpAddr(String sourceIpAddr) {
         this.sourceIpAddr = sourceIpAddr;
@@ -69,8 +66,7 @@ public class FileInfo {
     }
 
     /**
-     * @param size
-     *            the size to set
+     * @param size the size to set
      */
     public void setFileSize(long fileSize) {
         this.fileSize = fileSize;
@@ -84,8 +80,7 @@ public class FileInfo {
     }
 
     /**
-     * @param createTime
-     *            the createTime to set
+     * @param createTime the createTime to set
      */
     public void setCreateTime(int createTime) {
         this.createTime = createTime;
@@ -99,8 +94,7 @@ public class FileInfo {
     }
 
     /**
-     * @param crc32
-     *            the crc32 to set
+     * @param crc32 the crc32 to set
      */
     public void setCrc32(int crc32) {
         this.crc32 = crc32;

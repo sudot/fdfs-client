@@ -8,9 +8,7 @@ import java.lang.annotation.Target;
 
 /**
  * 传输参数定义标签
- * 
  * @author tobato
- *
  */
 @Documented
 @Target(ElementType.FIELD)

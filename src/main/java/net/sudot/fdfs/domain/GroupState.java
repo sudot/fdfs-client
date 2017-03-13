@@ -1,14 +1,12 @@
 package net.sudot.fdfs.domain;
 
-import net.sudot.fdfs.proto.mapper.FdfsColumn;
 import net.sudot.fdfs.proto.OtherConstants;
+import net.sudot.fdfs.proto.mapper.FdfsColumn;
 
 /**
  * fastdfs中group的状态信息
- * 
  * @author yuqih
  * @author tobato
- * 
  */
 public class GroupState {
 
@@ -59,8 +57,7 @@ public class GroupState {
     }
 
     /**
-     * @param groupName
-     *            the groupName to set
+     * @param groupName the groupName to set
      */
     public void setGroupName(String groupName) {
         this.groupName = groupName;
@@ -74,8 +71,7 @@ public class GroupState {
     }
 
     /**
-     * @param totalMB
-     *            the totalMB to set
+     * @param totalMB the totalMB to set
      */
     public void setTotalMB(long totalMB) {
         this.totalMB = totalMB;
@@ -89,8 +85,7 @@ public class GroupState {
     }
 
     /**
-     * @param freeMB
-     *            the freeMB to set
+     * @param freeMB the freeMB to set
      */
     public void setFreeMB(long freeMB) {
         this.freeMB = freeMB;
@@ -104,8 +99,7 @@ public class GroupState {
     }
 
     /**
-     * @param trunkFreeMB
-     *            the trunkFreeMB to set
+     * @param trunkFreeMB the trunkFreeMB to set
      */
     public void setTrunkFreeMB(long trunkFreeMB) {
         this.trunkFreeMB = trunkFreeMB;
@@ -119,8 +113,7 @@ public class GroupState {
     }
 
     /**
-     * @param storageCount
-     *            the storageCount to set
+     * @param storageCount the storageCount to set
      */
     public void setStorageCount(int storageCount) {
         this.storageCount = storageCount;
@@ -134,8 +127,7 @@ public class GroupState {
     }
 
     /**
-     * @param storagePort
-     *            the storagePort to set
+     * @param storagePort the storagePort to set
      */
     public void setStoragePort(int storagePort) {
         this.storagePort = storagePort;
@@ -149,8 +141,7 @@ public class GroupState {
     }
 
     /**
-     * @param storageHttpPort
-     *            the storageHttpPort to set
+     * @param storageHttpPort the storageHttpPort to set
      */
     public void setStorageHttpPort(int storageHttpPort) {
         this.storageHttpPort = storageHttpPort;
@@ -164,8 +155,7 @@ public class GroupState {
     }
 
     /**
-     * @param activeCount
-     *            the activeCount to set
+     * @param activeCount the activeCount to set
      */
     public void setActiveCount(int activeCount) {
         this.activeCount = activeCount;
@@ -179,8 +169,7 @@ public class GroupState {
     }
 
     /**
-     * @param currentWriteServer
-     *            the currentWriteServer to set
+     * @param currentWriteServer the currentWriteServer to set
      */
     public void setCurrentWriteServer(int currentWriteServer) {
         this.currentWriteServer = currentWriteServer;
@@ -194,8 +183,7 @@ public class GroupState {
     }
 
     /**
-     * @param storePathCount
-     *            the storePathCount to set
+     * @param storePathCount the storePathCount to set
      */
     public void setStorePathCount(int storePathCount) {
         this.storePathCount = storePathCount;
@@ -209,8 +197,7 @@ public class GroupState {
     }
 
     /**
-     * @param subdirCountPerPath
-     *            the subdirCountPerPath to set
+     * @param subdirCountPerPath the subdirCountPerPath to set
      */
     public void setSubdirCountPerPath(int subdirCountPerPath) {
         this.subdirCountPerPath = subdirCountPerPath;
@@ -224,8 +211,7 @@ public class GroupState {
     }
 
     /**
-     * @param currentTrunkFileId
-     *            the currentTrunkFileId to set
+     * @param currentTrunkFileId the currentTrunkFileId to set
      */
     public void setCurrentTrunkFileId(int currentTrunkFileId) {
         this.currentTrunkFileId = currentTrunkFileId;

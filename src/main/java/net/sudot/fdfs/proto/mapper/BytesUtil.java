@@ -6,16 +6,12 @@ import java.util.Arrays;
 
 /**
  * java与C服务端数据交换时byte数组与int,long转换的工具类
- * 
  * @author yuqih
- *
  */
 public class BytesUtil {
     /**
      * long convert to buff (big-endian)
-     * 
-     * @param n
-     *            long number
+     * @param n long number
      * @return 8 bytes buff
      */
     public static byte[] long2buff(long n) {
@@ -36,11 +32,8 @@ public class BytesUtil {
 
     /**
      * buff convert to long
-     * 
-     * @param bs
-     *            the buffer (big-endian)
-     * @param offset
-     *            the start position based 0
+     * @param bs     the buffer (big-endian)
+     * @param offset the start position based 0
      * @return long number
      */
     public static long buff2long(byte[] bs, int offset) {
@@ -56,11 +49,8 @@ public class BytesUtil {
 
     /**
      * buff convert to int
-     * 
-     * @param bs
-     *            the buffer (big-endian)
-     * @param offset
-     *            the start position based 0
+     * @param bs     the buffer (big-endian)
+     * @param offset the start position based 0
      * @return int number
      */
     public static int buff2int(byte[] bs, int offset) {
@@ -72,7 +62,6 @@ public class BytesUtil {
 
     /**
      * 将String转换为byte
-     * 
      * @return
      * @throws NoSuchMethodException
      * @throws InvocationTargetException
@@ -100,7 +89,6 @@ public class BytesUtil {
 
     /**
      * 将String转换为byte
-     * 
      * @param value
      * @param charset
      * @return

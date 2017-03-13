@@ -7,11 +7,9 @@ import java.nio.charset.Charset;
 
 /**
  * 表示一个客户端与服务端的连接
- * 
- * 负责连接的管理
- * 
- * @author tobato
  *
+ * 负责连接的管理
+ * @author tobato
  */
 public interface Connection {
 
@@ -22,21 +20,18 @@ public interface Connection {
 
     /**
      * 连接是否关闭
-     * 
      * @return
      */
     boolean isClosed();
 
     /**
      * 测试连接是否有效
-     * 
      * @return
      */
     boolean isValid();
 
     /**
      * 获取输出流
-     * 
      * @return
      * @throws IOException
      */
@@ -44,7 +39,6 @@ public interface Connection {
 
     /**
      * 获取输入流
-     * 
      * @return 输入流
      * @throws IOException 获取输入流错误
      */
@@ -52,7 +46,6 @@ public interface Connection {
 
     /**
      * 获取字符集
-     * 
      * @return 字符集
      */
     public Charset getCharset();

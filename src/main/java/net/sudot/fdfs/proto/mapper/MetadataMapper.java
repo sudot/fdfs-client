@@ -1,17 +1,15 @@
 package net.sudot.fdfs.proto.mapper;
 
+import net.sudot.fdfs.domain.MateData;
+import net.sudot.fdfs.proto.OtherConstants;
+
 import java.nio.charset.Charset;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.sudot.fdfs.proto.OtherConstants;
-import net.sudot.fdfs.domain.MateData;
-
 /**
  * 文件标签（元数据）映射对象
- * 
  * @author tobato
- *
  */
 public class MetadataMapper {
 
@@ -21,8 +19,7 @@ public class MetadataMapper {
 
     /**
      * 将元数据映射为byte
-     * 
-     * @param list
+     * @param metadataSet
      * @param charset
      * @return
      */
@@ -42,7 +39,6 @@ public class MetadataMapper {
 
     /**
      * 将byte映射为对象
-     * 
      * @param content
      * @param charset
      * @return

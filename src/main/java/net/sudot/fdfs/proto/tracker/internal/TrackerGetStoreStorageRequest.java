@@ -6,9 +6,7 @@ import net.sudot.fdfs.proto.ProtoHead;
 
 /**
  * 获取存储节点请求
- * 
  * @author tobato
- *
  */
 public class TrackerGetStoreStorageRequest extends FdfsRequest {
 
@@ -16,8 +14,6 @@ public class TrackerGetStoreStorageRequest extends FdfsRequest {
 
     /**
      * 获取存储节点
-     * 
-     * @param groupName
      */
     public TrackerGetStoreStorageRequest() {
         super();

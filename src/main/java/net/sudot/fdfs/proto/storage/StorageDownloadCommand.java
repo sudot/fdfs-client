@@ -6,23 +6,20 @@ import net.sudot.fdfs.proto.storage.internal.StorageDownloadResponse;
 
 /**
  * 文件下载命令
- * 
- * @author tobato
  * @param <T>
- *
+ * @author tobato
  */
 public class StorageDownloadCommand<T> extends AbstractFdfsCommand<T> {
 
     /**
      * 下载文件
-     * 
      * @param groupName
      * @param path
      * @param fileOffset
      * @param fileSize
      */
     public StorageDownloadCommand(String groupName, String path, long fileOffset, long fileSize,
-            DownloadCallback<T> callback) {
+                                  DownloadCallback<T> callback) {
         super();
         this.request = new StorageDownloadRequest(groupName, path, fileOffset, fileSize);
         // 输出响应
@@ -31,7 +28,6 @@ public class StorageDownloadCommand<T> extends AbstractFdfsCommand<T> {
 
     /**
      * 下载文件
-     * 
      * @param groupName
      * @param path
      */

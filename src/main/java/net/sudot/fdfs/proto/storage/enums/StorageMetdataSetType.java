@@ -2,9 +2,7 @@ package net.sudot.fdfs.proto.storage.enums;
 
 /**
  * 元数据设置方式
- * 
  * @author tobato
- *
  */
 public enum StorageMetdataSetType {
 

@@ -1,19 +1,17 @@
 package net.sudot.fdfs.proto.storage.internal;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.Charset;
-
 import net.sudot.fdfs.proto.FdfsResponse;
 import net.sudot.fdfs.proto.storage.DownloadCallback;
 import net.sudot.fdfs.proto.storage.FdfsInputStream;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.Charset;
+
 /**
  * 文件下载结果
- * 
- * @author tobato
  * @param <T>
- *
+ * @author tobato
  */
 public class StorageDownloadResponse<T> extends FdfsResponse<T> {
 

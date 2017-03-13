@@ -2,9 +2,7 @@ package net.sudot.fdfs.domain;
 
 /**
  * 文件元数据(MateData)
- * 
  * @author tobato
- *
  */
 public class MateData {
 
@@ -28,12 +26,12 @@ public class MateData {
         return this.name;
     }
 
-    public String getValue() {
-        return this.value;
-    }
-
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getValue() {
+        return this.value;
     }
 
     public void setValue(String value) {

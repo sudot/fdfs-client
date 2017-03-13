@@ -1,21 +1,19 @@
 package net.sudot.fdfs.proto.tracker.internal;
 
+import net.sudot.fdfs.domain.GroupState;
+import net.sudot.fdfs.proto.FdfsResponse;
+import net.sudot.fdfs.proto.mapper.FdfsParamMapper;
+import net.sudot.fdfs.proto.mapper.ObjectMateData;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sudot.fdfs.domain.GroupState;
-import net.sudot.fdfs.proto.FdfsResponse;
-import net.sudot.fdfs.proto.mapper.ObjectMateData;
-import net.sudot.fdfs.proto.mapper.FdfsParamMapper;
-
 /**
  * 列出分组信息执行结果
- * 
  * @author tobato
- *
  */
 public class TrackerListGroupsResponse extends FdfsResponse<List<GroupState>> {
 
@@ -42,7 +40,6 @@ public class TrackerListGroupsResponse extends FdfsResponse<List<GroupState>> {
 
     /**
      * 解析Group
-     * 
      * @param bs
      * @param charset
      * @return

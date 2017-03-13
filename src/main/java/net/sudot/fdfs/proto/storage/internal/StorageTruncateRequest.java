@@ -1,23 +1,21 @@
 package net.sudot.fdfs.proto.storage.internal;
 
-import java.nio.charset.Charset;
-
+import net.sudot.fdfs.proto.CmdConstants;
+import net.sudot.fdfs.proto.FdfsRequest;
+import net.sudot.fdfs.proto.ProtoHead;
 import net.sudot.fdfs.proto.mapper.DynamicFieldType;
 import net.sudot.fdfs.proto.mapper.FdfsColumn;
-import net.sudot.fdfs.proto.FdfsRequest;
-import net.sudot.fdfs.proto.CmdConstants;
-import net.sudot.fdfs.proto.ProtoHead;
+
+import java.nio.charset.Charset;
 
 /**
  * 文件Truncate命令
- * 
+ *
  * <pre>
  * 使用限制：创建文件时候需要采用<<源追加>>模式,之后才能Truncate
  * size使用也有限制
  * </pre>
- * 
  * @author tobato
- *
  */
 public class StorageTruncateRequest extends FdfsRequest {
 
@@ -33,7 +31,6 @@ public class StorageTruncateRequest extends FdfsRequest {
 
     /**
      * 文件Truncate命令
-     * 
      * @param path
      * @param fileSize 截取文件长度
      */
@@ -58,25 +55,28 @@ public class StorageTruncateRequest extends FdfsRequest {
         return pathSize;
     }
 
-    public void setPathSize(long pathSize) {
+    public StorageTruncateRequest setPathSize(long pathSize) {
         this.pathSize = pathSize;
+        return this;
     }
 
     public String getPath() {
         return path;
     }
 
-    public void setPath(String path) {
+    public StorageTruncateRequest setPath(String path) {
         this.path = path;
-    }
-
-    public void setFileSize(long fileSize) {
-        this.fileSize = fileSize;
+        return this;
     }
 
     @Override
     public long getFileSize() {
         return fileSize;
+    }
+
+    public StorageTruncateRequest setFileSize(long fileSize) {
+        this.fileSize = fileSize;
+        return this;
     }
 
     @Override

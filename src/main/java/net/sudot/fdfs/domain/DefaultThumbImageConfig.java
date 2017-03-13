@@ -7,18 +7,14 @@ import org.springframework.stereotype.Component;
 
 /**
  * 缩略图配置参数
- * 
  * @author tobato
- *
  */
 @Component
 public class DefaultThumbImageConfig implements ThumbImageConfig {
 
-    private int width;
-
-    private int height;
-
     private static String cachedPrefixName;
+    private int width;
+    private int height;
 
     /**
      * 生成前缀如:_150x150
@@ -44,23 +40,23 @@ public class DefaultThumbImageConfig implements ThumbImageConfig {
         buff.insert(index, getPrefixName());
         return buff.toString();
     }
-    
-    @Value("${fdfs.thumbImage.width}")
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    @Value("${fdfs.thumbImage.height}")
-    public void setHeight(int height) {
-        this.height = height;
-    }
 
     public int getWidth() {
         return width;
     }
 
+    @Value("${fdfs.thumbImage.width}")
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
     public int getHeight() {
         return height;
+    }
+
+    @Value("${fdfs.thumbImage.height}")
+    public void setHeight(int height) {
+        this.height = height;
     }
 
 }

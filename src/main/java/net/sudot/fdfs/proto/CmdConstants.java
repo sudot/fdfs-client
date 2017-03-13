@@ -2,9 +2,7 @@ package net.sudot.fdfs.proto;
 
 /**
  * fastdfs协议命令的常量
- * 
  * @author yuqih
- * 
  */
 public final class CmdConstants {
     /** 客户端关闭连接命令 */
@@ -35,16 +33,16 @@ public final class CmdConstants {
     public static final byte STORAGE_PROTO_CMD_QUERY_FILE_INFO = 22;
     /** 创建一个支持断点续传的文件 */
     public static final byte STORAGE_PROTO_CMD_UPLOAD_APPENDER_FILE = 23; // create
-                                                                          // appender
-                                                                          // file
+    // appender
+    // file
     /** 对文件断点续传(附加在原来为上传完全的文件后面) */
     public static final byte STORAGE_PROTO_CMD_APPEND_FILE = 24; // append file
     /** 修改支持断点续传的文件 */
     public static final byte STORAGE_PROTO_CMD_MODIFY_FILE = 34; // modify
-                                                                 // appender
-                                                                 // file
+    // appender
+    // file
     /** 清空支持断点的文件 */
     public static final byte STORAGE_PROTO_CMD_TRUNCATE_FILE = 36; // truncate
-                                                                   // appender
-                                                                   // file
+    // appender
+    // file
 }

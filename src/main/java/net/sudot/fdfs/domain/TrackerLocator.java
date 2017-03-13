@@ -1,5 +1,8 @@
 package net.sudot.fdfs.domain;
 
+import net.sudot.fdfs.exception.FdfsUnavailableException;
+import org.apache.commons.lang3.StringUtils;
+
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,18 +12,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import net.sudot.fdfs.exception.FdfsUnavailableException;
-import org.apache.commons.lang3.StringUtils;
-
 /**
  * 表示Tracker服务器位置
- * 
+ *
  * <pre>
  * 支持负载均衡对IP轮询
  * </pre>
- * 
  * @author tobato
- *
  */
 public class TrackerLocator {
 
@@ -42,7 +40,6 @@ public class TrackerLocator {
     /**
      * 初始化Tracker服务器地址
      * 配置方式为 ip:port 如 192.168.1.2:21000
-     * 
      * @param trackerList
      */
     public TrackerLocator(List<String> trackerList) {
@@ -77,17 +74,12 @@ public class TrackerLocator {
 
     }
 
-    public void setTrackerList(List<String> trackerList) {
-        this.trackerList = trackerList;
-    }
-
     public void setRetryAfterSecend(int retryAfterSecend) {
         this.retryAfterSecend = retryAfterSecend;
     }
 
     /**
      * 获取Tracker服务器地址
-     * 
      * @return
      */
     public InetSocketAddress getTrackerAddress() {
@@ -104,7 +96,6 @@ public class TrackerLocator {
 
     /**
      * 获取配置地址列表
-     * 
      * @return
      */
     private String getTrackerAddressConfigString() {
@@ -119,7 +110,6 @@ public class TrackerLocator {
 
     /**
      * 设置连接有效
-     * 
      * @param address
      */
     public void setActive(InetSocketAddress address) {
@@ -129,7 +119,6 @@ public class TrackerLocator {
 
     /**
      * 设置连接无效
-     * 
      * @param address
      */
     public void setInActive(InetSocketAddress address) {
@@ -139,6 +128,10 @@ public class TrackerLocator {
 
     public List<String> getTrackerList() {
         return Collections.unmodifiableList(trackerList);
+    }
+
+    public void setTrackerList(List<String> trackerList) {
+        this.trackerList = trackerList;
     }
 
 }

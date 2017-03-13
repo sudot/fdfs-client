@@ -2,9 +2,7 @@ package net.sudot.fdfs.proto;
 
 /**
  * fastdfs协议暂时未分类的常量
- * 
  * @author yuqih
- * 
  */
 public final class OtherConstants {
     /**

@@ -56,28 +56,9 @@ public class StorageUploadSlaveFileRequest extends FdfsRequest {
         return masterFileNameSize;
     }
 
-    public void setMasterFileNameSize(long masterFileNameSize) {
+    public StorageUploadSlaveFileRequest setMasterFileNameSize(long masterFileNameSize) {
         this.masterFileNameSize = masterFileNameSize;
-    }
-
-    public String getPrefixName() {
-        return prefixName;
-    }
-
-    public String getMasterFilename() {
-        return masterFilename;
-    }
-
-    public void setFileSize(long fileSize) {
-        this.fileSize = fileSize;
-    }
-
-    public String getFileExtName() {
-        return fileExtName;
-    }
-
-    public void setFileExtName(String fileExtName) {
-        this.fileExtName = fileExtName;
+        return this;
     }
 
     @Override
@@ -85,4 +66,25 @@ public class StorageUploadSlaveFileRequest extends FdfsRequest {
         return fileSize;
     }
 
+    public StorageUploadSlaveFileRequest setFileSize(long fileSize) {
+        this.fileSize = fileSize;
+        return this;
+    }
+
+    public String getPrefixName() {
+        return prefixName;
+    }
+
+    public String getFileExtName() {
+        return fileExtName;
+    }
+
+    public StorageUploadSlaveFileRequest setFileExtName(String fileExtName) {
+        this.fileExtName = fileExtName;
+        return this;
+    }
+
+    public String getMasterFilename() {
+        return masterFilename;
+    }
 }

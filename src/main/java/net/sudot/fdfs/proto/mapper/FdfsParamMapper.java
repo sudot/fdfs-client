@@ -1,36 +1,32 @@
 package net.sudot.fdfs.proto.mapper;
 
+import org.apache.commons.beanutils.BeanUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.beanutils.BeanUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * param对象与byte映射器
- * 
  * @author tobato
- *
  */
 public class FdfsParamMapper {
+
+    /** 对象映射缓存 */
+    private static Map<String, ObjectMateData> mapCache = new HashMap<String, ObjectMateData>();
+    /** 日志 */
+    private static Logger LOGGER = LoggerFactory.getLogger(FdfsParamMapper.class);
 
     private FdfsParamMapper() {
         // hide for utils
     }
 
-    /** 对象映射缓存 */
-    private static Map<String, ObjectMateData> mapCache = new HashMap<String, ObjectMateData>();
-
-    /** 日志 */
-    private static Logger LOGGER = LoggerFactory.getLogger(FdfsParamMapper.class);
-
     /**
      * 将byte解码为对象
-     * 
      * @param objectArrayList
      * @param genericType
      * @return
@@ -58,7 +54,6 @@ public class FdfsParamMapper {
 
     /**
      * 获取对象映射定义
-     * 
      * @param genericType
      * @return
      */
@@ -72,7 +67,6 @@ public class FdfsParamMapper {
 
     /**
      * 按列顺序映射
-     * 
      * @param content
      * @param genericType
      * @param objectMap
@@ -98,7 +92,6 @@ public class FdfsParamMapper {
 
     /**
      * 序列化为Byte
-     * 
      * @param object
      * @param charset
      * @return
@@ -122,7 +115,6 @@ public class FdfsParamMapper {
 
     /**
      * 将属性转换为byte
-     * 
      * @param objectMap
      * @param object
      * @param charset

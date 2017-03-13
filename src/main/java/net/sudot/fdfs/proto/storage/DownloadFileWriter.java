@@ -1,17 +1,15 @@
 package net.sudot.fdfs.proto.storage;
 
+import org.apache.commons.io.IOUtils;
+
 import java.io.BufferedInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import org.apache.commons.io.IOUtils;
-
 /**
  * 文件下载回调方法
- * 
  * @author tobato
- *
  */
 public class DownloadFileWriter implements DownloadCallback<String> {
 

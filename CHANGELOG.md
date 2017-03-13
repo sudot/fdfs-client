@@ -1,4 +1,10 @@
-## 1.25.2 (2016-09-01)
+## 1.0.1 (2017-03-13)
+
+Bugfixes:
+
+  - 修正ObjectMateData.praseFieldList解析字段顺序和FdfsColumn.indeex保持顺序一致性
+
+## 1.0.0 (2016-09-01)
 
 Features:
 

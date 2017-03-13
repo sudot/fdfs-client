@@ -1,49 +1,43 @@
 package net.sudot.fdfs.service;
 
-import java.io.InputStream;
-import java.util.Set;
-
-import javax.annotation.Resource;
-
+import net.sudot.fdfs.conn.ConnectionManager;
+import net.sudot.fdfs.domain.FileInfo;
 import net.sudot.fdfs.domain.MateData;
 import net.sudot.fdfs.domain.StorageNode;
+import net.sudot.fdfs.domain.StorageNodeInfo;
+import net.sudot.fdfs.domain.StorePath;
 import net.sudot.fdfs.proto.storage.DownloadCallback;
+import net.sudot.fdfs.proto.storage.StorageDeleteFileCommand;
 import net.sudot.fdfs.proto.storage.StorageDownloadCommand;
 import net.sudot.fdfs.proto.storage.StorageGetMetadataCommand;
-import net.sudot.fdfs.proto.storage.StorageUploadFileCommand;
-import net.sudot.fdfs.proto.storage.enums.StorageMetdataSetType;
-import net.sudot.fdfs.domain.StorageNodeInfo;
 import net.sudot.fdfs.proto.storage.StorageQueryFileInfoCommand;
 import net.sudot.fdfs.proto.storage.StorageSetMetadataCommand;
+import net.sudot.fdfs.proto.storage.StorageUploadFileCommand;
 import net.sudot.fdfs.proto.storage.StorageUploadSlaveFileCommand;
+import net.sudot.fdfs.proto.storage.enums.StorageMetdataSetType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import net.sudot.fdfs.conn.ConnectionManager;
-import net.sudot.fdfs.domain.FileInfo;
-import net.sudot.fdfs.domain.StorePath;
-import net.sudot.fdfs.proto.storage.StorageDeleteFileCommand;
+import javax.annotation.Resource;
+import java.io.InputStream;
+import java.util.Set;
 
 /**
  * 基本存储客户端操作实现
- * 
  * @author tobato
- *
  */
 @Component
 public class DefaultGenerateStorageClient implements GenerateStorageClient {
 
+    /** 日志 */
+    protected static Logger LOGGER = LoggerFactory.getLogger(DefaultGenerateStorageClient.class);
     /** trackerClient */
     @Resource
     protected TrackerClient trackerClient;
-
     /** connectManager */
     @Resource
     protected ConnectionManager connectionManager;
-
-    /** 日志 */
-    protected static Logger LOGGER = LoggerFactory.getLogger(DefaultGenerateStorageClient.class);
 
     /**
      * 上传不支持断点续传的文件
@@ -61,7 +55,7 @@ public class DefaultGenerateStorageClient implements GenerateStorageClient {
      */
     @Override
     public StorePath uploadSlaveFile(String groupName, String masterFilename, InputStream inputStream, long fileSize,
-            String prefixName, String fileExtName) {
+                                     String prefixName, String fileExtName) {
         StorageNodeInfo client = trackerClient.getUpdateStorage(groupName, masterFilename);
         StorageUploadSlaveFileCommand command = new StorageUploadSlaveFileCommand(inputStream, fileSize, masterFilename,
                 prefixName, fileExtName);
@@ -135,7 +129,7 @@ public class DefaultGenerateStorageClient implements GenerateStorageClient {
      */
     @Override
     public <T> T downloadFile(String groupName, String path, long fileOffset, long fileSize,
-            DownloadCallback<T> callback) {
+                              DownloadCallback<T> callback) {
         StorageNodeInfo client = trackerClient.getFetchStorage(groupName, path);
         StorageDownloadCommand<T> command = new StorageDownloadCommand<T>(groupName, path, 0, 0, callback);
         return connectionManager.executeFdfsCmd(client.getInetSocketAddress(), command);

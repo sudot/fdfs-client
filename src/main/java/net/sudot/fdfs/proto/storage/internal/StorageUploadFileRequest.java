@@ -1,18 +1,16 @@
 package net.sudot.fdfs.proto.storage.internal;
 
-import java.io.InputStream;
-
-import net.sudot.fdfs.proto.OtherConstants;
-import net.sudot.fdfs.proto.mapper.FdfsColumn;
-import net.sudot.fdfs.proto.FdfsRequest;
 import net.sudot.fdfs.proto.CmdConstants;
+import net.sudot.fdfs.proto.FdfsRequest;
+import net.sudot.fdfs.proto.OtherConstants;
 import net.sudot.fdfs.proto.ProtoHead;
+import net.sudot.fdfs.proto.mapper.FdfsColumn;
+
+import java.io.InputStream;
 
 /**
  * 文件上传命令
- * 
  * @author tobato
- *
  */
 public class StorageUploadFileRequest extends FdfsRequest {
 
@@ -31,7 +29,6 @@ public class StorageUploadFileRequest extends FdfsRequest {
 
     /**
      * 构造函数
-     * 
      * @param inputStream
      * @param fileExtName
      * @param fileSize
@@ -39,7 +36,7 @@ public class StorageUploadFileRequest extends FdfsRequest {
      * @param isAppenderFile
      */
     public StorageUploadFileRequest(byte storeIndex, InputStream inputStream, String fileExtName, long fileSize,
-            boolean isAppenderFile) {
+                                    boolean isAppenderFile) {
         super();
         this.inputFile = inputStream;
         this.fileSize = fileSize;
@@ -56,16 +53,18 @@ public class StorageUploadFileRequest extends FdfsRequest {
         return storeIndex;
     }
 
-    public void setStoreIndex(byte storeIndex) {
+    public StorageUploadFileRequest setStoreIndex(byte storeIndex) {
         this.storeIndex = storeIndex;
+        return this;
     }
 
     public String getFileExtName() {
         return fileExtName;
     }
 
-    public void setFileExtName(String fileExtName) {
+    public StorageUploadFileRequest setFileExtName(String fileExtName) {
         this.fileExtName = fileExtName;
+        return this;
     }
 
     @Override

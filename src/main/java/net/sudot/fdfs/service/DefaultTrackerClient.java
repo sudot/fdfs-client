@@ -1,28 +1,24 @@
 package net.sudot.fdfs.service;
 
-import java.util.List;
-
-import javax.annotation.Resource;
-
 import net.sudot.fdfs.conn.TrackerConnectionManager;
 import net.sudot.fdfs.domain.GroupState;
 import net.sudot.fdfs.domain.StorageNode;
 import net.sudot.fdfs.domain.StorageNodeInfo;
 import net.sudot.fdfs.domain.StorageState;
-import net.sudot.fdfs.proto.tracker.TrackerGetStoreStorageCommand;
+import net.sudot.fdfs.proto.tracker.TrackerDeleteStorageCommand;
 import net.sudot.fdfs.proto.tracker.TrackerGetFetchStorageCommand;
+import net.sudot.fdfs.proto.tracker.TrackerGetStoreStorageCommand;
+import net.sudot.fdfs.proto.tracker.TrackerListGroupsCommand;
+import net.sudot.fdfs.proto.tracker.TrackerListStoragesCommand;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
-import net.sudot.fdfs.proto.tracker.TrackerDeleteStorageCommand;
-import net.sudot.fdfs.proto.tracker.TrackerListGroupsCommand;
-import net.sudot.fdfs.proto.tracker.TrackerListStoragesCommand;
+import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * 目录服务客户端默认实现
- * 
  * @author tobato
- *
  */
 @Service
 public class DefaultTrackerClient implements TrackerClient {

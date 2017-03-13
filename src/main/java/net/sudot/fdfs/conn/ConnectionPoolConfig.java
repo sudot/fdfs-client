@@ -5,9 +5,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * 连接池配置
- * 
  * @author tobato
- *
  */
 @Component
 public class ConnectionPoolConfig extends GenericKeyedObjectPoolConfig {

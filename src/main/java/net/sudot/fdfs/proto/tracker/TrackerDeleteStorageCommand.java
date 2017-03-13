@@ -6,9 +6,7 @@ import net.sudot.fdfs.proto.tracker.internal.TrackerDeleteStorageRequest;
 
 /**
  * 移除存储服务器命令
- * 
  * @author tobato
- *
  */
 public class TrackerDeleteStorageCommand extends AbstractFdfsCommand<Void> {
 

@@ -9,9 +9,7 @@ import net.sudot.fdfs.proto.mapper.FdfsColumn;
 
 /**
  * 查询文件信息命令
- * 
  * @author tobato
- *
  */
 public class StorageGetMetadataRequest extends FdfsRequest {
 
@@ -24,7 +22,6 @@ public class StorageGetMetadataRequest extends FdfsRequest {
 
     /**
      * 删除文件命令
-     * 
      * @param groupName
      * @param path
      */
@@ -39,16 +36,18 @@ public class StorageGetMetadataRequest extends FdfsRequest {
         return groupName;
     }
 
-    public void setGroupName(String groupName) {
+    public StorageGetMetadataRequest setGroupName(String groupName) {
         this.groupName = groupName;
+        return this;
     }
 
     public String getPath() {
         return path;
     }
 
-    public void setPath(String path) {
+    public StorageGetMetadataRequest setPath(String path) {
         this.path = path;
+        return this;
     }
 
 }

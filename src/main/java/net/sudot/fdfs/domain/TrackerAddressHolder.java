@@ -4,9 +4,7 @@ import java.net.InetSocketAddress;
 
 /**
  * 管理TrackerAddress当前状态
- * 
  * @author tobato
- *
  */
 public class TrackerAddressHolder {
     /** 连接地址 */
@@ -18,7 +16,6 @@ public class TrackerAddressHolder {
 
     /**
      * 构造函数
-     * 
      * @param address
      */
     public TrackerAddressHolder(InetSocketAddress address) {
@@ -53,7 +50,6 @@ public class TrackerAddressHolder {
 
     /**
      * 是否可以尝试连接
-     * 
      * @param retryAfterSecend 在n秒后重试
      * @return
      */

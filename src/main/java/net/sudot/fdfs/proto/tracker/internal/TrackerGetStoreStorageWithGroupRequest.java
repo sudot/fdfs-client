@@ -1,18 +1,15 @@
 package net.sudot.fdfs.proto.tracker.internal;
 
-import net.sudot.fdfs.proto.mapper.FdfsColumn;
+import net.sudot.fdfs.proto.CmdConstants;
 import net.sudot.fdfs.proto.FdfsRequest;
 import net.sudot.fdfs.proto.OtherConstants;
-import org.apache.commons.lang3.Validate;
-
-import net.sudot.fdfs.proto.CmdConstants;
 import net.sudot.fdfs.proto.ProtoHead;
+import net.sudot.fdfs.proto.mapper.FdfsColumn;
+import org.apache.commons.lang3.Validate;
 
 /**
  * 按分组获取存储节点
- * 
  * @author tobato
- *
  */
 public class TrackerGetStoreStorageWithGroupRequest extends FdfsRequest {
 
@@ -26,7 +23,6 @@ public class TrackerGetStoreStorageWithGroupRequest extends FdfsRequest {
 
     /**
      * 获取存储节点
-     * 
      * @param groupName
      */
     public TrackerGetStoreStorageWithGroupRequest(String groupName) {

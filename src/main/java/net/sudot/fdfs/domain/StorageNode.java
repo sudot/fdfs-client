@@ -1,15 +1,13 @@
 package net.sudot.fdfs.domain;
 
-import java.net.InetSocketAddress;
-
 import net.sudot.fdfs.proto.OtherConstants;
 import net.sudot.fdfs.proto.mapper.FdfsColumn;
 
+import java.net.InetSocketAddress;
+
 /**
  * 向tracker请求上传、下载文件或其他文件请求时，tracker返回的文件storage节点的信息
- * 
  * @author yuqih
- *
  */
 public class StorageNode {
 
@@ -24,7 +22,6 @@ public class StorageNode {
 
     /**
      * 存储节点
-     * 
      * @param ip
      * @param port
      * @param storeIndex
@@ -54,32 +51,32 @@ public class StorageNode {
         return storeIndex;
     }
 
+    public void setStoreIndex(byte storeIndex) {
+        this.storeIndex = storeIndex;
+    }
+
     public String getGroupName() {
         return groupName;
-    }
-
-    public String getIp() {
-        return ip;
-    }
-
-    public int getPort() {
-        return port;
     }
 
     public void setGroupName(String groupName) {
         this.groupName = groupName;
     }
 
+    public String getIp() {
+        return ip;
+    }
+
     public void setIp(String ip) {
         this.ip = ip;
     }
 
-    public void setPort(int port) {
-        this.port = port;
+    public int getPort() {
+        return port;
     }
 
-    public void setStoreIndex(byte storeIndex) {
-        this.storeIndex = storeIndex;
+    public void setPort(int port) {
+        this.port = port;
     }
 
     @Override

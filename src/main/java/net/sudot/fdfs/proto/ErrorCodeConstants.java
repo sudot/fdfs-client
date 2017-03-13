@@ -2,9 +2,7 @@ package net.sudot.fdfs.proto;
 
 /**
  * fastdfs协议错误码的常量
- * 
  * @author yuqih
- * 
  */
 public final class ErrorCodeConstants {
 

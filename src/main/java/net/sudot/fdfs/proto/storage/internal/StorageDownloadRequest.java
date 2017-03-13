@@ -1,17 +1,15 @@
 package net.sudot.fdfs.proto.storage.internal;
 
-import net.sudot.fdfs.proto.mapper.DynamicFieldType;
+import net.sudot.fdfs.proto.CmdConstants;
 import net.sudot.fdfs.proto.FdfsRequest;
 import net.sudot.fdfs.proto.OtherConstants;
 import net.sudot.fdfs.proto.ProtoHead;
+import net.sudot.fdfs.proto.mapper.DynamicFieldType;
 import net.sudot.fdfs.proto.mapper.FdfsColumn;
-import net.sudot.fdfs.proto.CmdConstants;
 
 /**
  * 文件下载请求
- * 
  * @author tobato
- *
  */
 public class StorageDownloadRequest extends FdfsRequest {
 
@@ -30,7 +28,6 @@ public class StorageDownloadRequest extends FdfsRequest {
 
     /**
      * 文件下载请求
-     * 
      * @param groupName
      * @param path
      * @param fileOffset
