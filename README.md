@@ -61,7 +61,7 @@ Maven依赖为
     <dependency>
         <groupId>net.sudot.fdfs</groupId>
         <artifactId>fdfs-client</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>1.0.1-SNAPSHOT</version>
     </dependency>
 
 
