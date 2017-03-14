@@ -4,9 +4,9 @@ import net.sudot.fdfs.exception.FdfsException;
 import net.sudot.fdfs.proto.FdfsCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.net.InetSocketAddress;
 
 /**
@@ -23,7 +23,7 @@ public class ConnectionManager {
     /** 日志 */
     protected static final Logger LOGGER = LoggerFactory.getLogger(ConnectionManager.class);
     /** 连接池 */
-    @Autowired
+    @Resource
     private FdfsConnectionPool pool;
 
     /**

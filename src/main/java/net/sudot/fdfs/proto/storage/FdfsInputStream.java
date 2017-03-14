@@ -38,9 +38,23 @@ public class FdfsInputStream extends InputStream {
         return byteSize;
     }
 
+    /**
+     * 关闭输入流
+     * <pre>
+     * 注意:
+     * 此处不能关闭ins
+     * 因为socket是"全双工"通信
+     * 其中任意一个流(包含输入流和输出流)关闭
+     * 都会导致socket连接断掉,引发socket io异常
+     * </pre>
+     * @throws IOException
+     * @see java.net.ServerSocket
+     * @see net.sudot.socket.client.ClientDemo#main(java.lang.String[])
+     */
     @Override
     public void close() throws IOException {
         // do nothing
+        super.close();
     }
 
     /**

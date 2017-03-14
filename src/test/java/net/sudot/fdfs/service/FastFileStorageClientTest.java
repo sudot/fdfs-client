@@ -8,6 +8,7 @@ import net.sudot.fdfs.domain.MateData;
 import net.sudot.fdfs.domain.RandomTextFile;
 import net.sudot.fdfs.domain.StorePath;
 import net.sudot.fdfs.domain.ThumbImageConfig;
+import net.sudot.fdfs.proto.storage.DownloadByteArray;
 import net.sudot.fdfs.proto.storage.DownloadCallback;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
@@ -87,7 +88,7 @@ public class FastFileStorageClientTest extends FastdfsTestBase {
      * 上传图片，并且生成缩略图
      */
     @Test
-    public void testUploadImageAndCrtThumbImage() {
+    public void testUploadImageAndCrtThumbImage() throws IOException {
         LOGGER.debug("##上传文件..##");
         Set<MateData> metaDataSet = createMateData();
         StorePath path = uploadImageAndCrtThumbImage(TestConstants.PERFORM_FILE_PATH, metaDataSet);
@@ -98,7 +99,9 @@ public class FastFileStorageClientTest extends FastdfsTestBase {
         Set<MateData> fetchMateData = storageClient.getMetadata(path.getGroup(), path.getPath());
         assertEquals(fetchMateData, metaDataSet);
 
-        // 验证获取从文件
+        LOGGER.debug("##下载文件##");
+        byte[] bytes = storageClient.downloadFile(path.getGroup(), path.getPath(), new DownloadByteArray());
+//        IOUtils.write(bytes, new FileOutputStream("D:\\sss.jpg"));
         LOGGER.debug("##获取Metadata##");
         // 这里需要一个获取从文件名的能力，所以从文件名配置以后就最好不要改了
         String slavePath = thumbImageConfig.getThumbImagePath(path.getPath());

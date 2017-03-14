@@ -44,7 +44,6 @@ public class TrackerConnectionManager extends ConnectionManager {
 
     /**
      * 获取连接并执行交易
-     * @param address
      * @param command
      * @return
      */

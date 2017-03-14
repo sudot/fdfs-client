@@ -13,6 +13,8 @@ public class DownloadByteArray implements DownloadCallback<byte[]> {
 
     @Override
     public byte[] recv(InputStream ins) throws IOException {
-        return IOUtils.toByteArray(ins);
+        byte[] bytes = IOUtils.toByteArray(ins);
+        IOUtils.closeQuietly(ins);
+        return bytes;
     }
 }

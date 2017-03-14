@@ -32,7 +32,7 @@ public class DownloadFileWriter implements DownloadCallback<String> {
         try {
             out = new FileOutputStream(fileName);
             in = new BufferedInputStream(ins);
-            // 通过ioutil 对接输入输出流，实现文件下载
+            // 通过IOUtils对接输入输出流，实现文件下载
             IOUtils.copy(in, out);
             out.flush();
         } catch (IOException e) {
