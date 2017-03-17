@@ -26,6 +26,7 @@ import java.util.Set;
 /**
  * 基本存储客户端操作实现
  * @author tobato
+ * Update by sudot on 2017-03-17 0017.
  */
 @Component
 public class DefaultGenerateStorageClient implements GenerateStorageClient {
@@ -39,9 +40,14 @@ public class DefaultGenerateStorageClient implements GenerateStorageClient {
     @Resource
     protected ConnectionManager connectionManager;
 
-    /**
-     * 上传不支持断点续传的文件
-     */
+    @Override
+    public StorePath uploadFile(InputStream inputStream, long fileSize, String fileExtName) {
+        StorageNode client = trackerClient.getStoreStorage();
+        StorageUploadFileCommand command = new StorageUploadFileCommand(client.getStoreIndex(), inputStream,
+                fileExtName, fileSize, false);
+        return connectionManager.executeFdfsCmd(client.getInetSocketAddress(), command);
+    }
+
     @Override
     public StorePath uploadFile(String groupName, InputStream inputStream, long fileSize, String fileExtName) {
         StorageNode client = trackerClient.getStoreStorage(groupName);
@@ -50,21 +56,15 @@ public class DefaultGenerateStorageClient implements GenerateStorageClient {
         return connectionManager.executeFdfsCmd(client.getInetSocketAddress(), command);
     }
 
-    /**
-     * 上传从文件
-     */
     @Override
     public StorePath uploadSlaveFile(String groupName, String masterFilename, InputStream inputStream, long fileSize,
-                                     String prefixName, String fileExtName) {
+                                     String suffixName, String fileExtName) {
         StorageNodeInfo client = trackerClient.getUpdateStorage(groupName, masterFilename);
         StorageUploadSlaveFileCommand command = new StorageUploadSlaveFileCommand(inputStream, fileSize, masterFilename,
-                prefixName, fileExtName);
+                suffixName, fileExtName);
         return connectionManager.executeFdfsCmd(client.getInetSocketAddress(), command);
     }
 
-    /**
-     * 获取metadata
-     */
     @Override
     public Set<MateData> getMetadata(String groupName, String path) {
         StorageNodeInfo client = trackerClient.getFetchStorage(groupName, path);
@@ -72,9 +72,6 @@ public class DefaultGenerateStorageClient implements GenerateStorageClient {
         return connectionManager.executeFdfsCmd(client.getInetSocketAddress(), command);
     }
 
-    /**
-     * 覆盖metadata
-     */
     @Override
     public void overwriteMetadata(String groupName, String path, Set<MateData> metaDataSet) {
         StorageNodeInfo client = trackerClient.getUpdateStorage(groupName, path);
@@ -83,9 +80,6 @@ public class DefaultGenerateStorageClient implements GenerateStorageClient {
         connectionManager.executeFdfsCmd(client.getInetSocketAddress(), command);
     }
 
-    /**
-     * 合并metadata
-     */
     @Override
     public void mergeMetadata(String groupName, String path, Set<MateData> metaDataSet) {
         StorageNodeInfo client = trackerClient.getUpdateStorage(groupName, path);
@@ -94,9 +88,6 @@ public class DefaultGenerateStorageClient implements GenerateStorageClient {
         connectionManager.executeFdfsCmd(client.getInetSocketAddress(), command);
     }
 
-    /**
-     * 查询文件信息
-     */
     @Override
     public FileInfo queryFileInfo(String groupName, String path) {
         StorageNodeInfo client = trackerClient.getFetchStorage(groupName, path);
@@ -104,9 +95,6 @@ public class DefaultGenerateStorageClient implements GenerateStorageClient {
         return connectionManager.executeFdfsCmd(client.getInetSocketAddress(), command);
     }
 
-    /**
-     * 删除文件
-     */
     @Override
     public void deleteFile(String groupName, String path) {
         StorageNodeInfo client = trackerClient.getUpdateStorage(groupName, path);
@@ -114,9 +102,6 @@ public class DefaultGenerateStorageClient implements GenerateStorageClient {
         connectionManager.executeFdfsCmd(client.getInetSocketAddress(), command);
     }
 
-    /**
-     * 下载整个文件
-     */
     @Override
     public <T> T downloadFile(String groupName, String path, DownloadCallback<T> callback) {
         long fileOffset = 0;
@@ -124,14 +109,11 @@ public class DefaultGenerateStorageClient implements GenerateStorageClient {
         return downloadFile(groupName, path, fileOffset, fileSize, callback);
     }
 
-    /**
-     * 下载文件片段
-     */
     @Override
     public <T> T downloadFile(String groupName, String path, long fileOffset, long fileSize,
                               DownloadCallback<T> callback) {
         StorageNodeInfo client = trackerClient.getFetchStorage(groupName, path);
-        StorageDownloadCommand<T> command = new StorageDownloadCommand<T>(groupName, path, 0, 0, callback);
+        StorageDownloadCommand<T> command = new StorageDownloadCommand<T>(groupName, path, fileOffset, fileSize, callback);
         return connectionManager.executeFdfsCmd(client.getInetSocketAddress(), command);
     }
 

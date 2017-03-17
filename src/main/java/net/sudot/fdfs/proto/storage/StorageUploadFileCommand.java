@@ -10,6 +10,7 @@ import java.io.InputStream;
 /**
  * 文件上传命令
  * @author tobato
+ * Update by sudot on 2017-03-17 0017.
  */
 public class StorageUploadFileCommand extends AbstractFdfsCommand<StorePath> {
 
@@ -18,7 +19,7 @@ public class StorageUploadFileCommand extends AbstractFdfsCommand<StorePath> {
      * @param storeIndex     存储节点
      * @param inputStream    输入流
      * @param fileExtName    文件扩展名
-     * @param size           文件大小
+     * @param fileSize       文件大小
      * @param isAppenderFile 是否支持断点续传
      */
     public StorageUploadFileCommand(byte storeIndex, InputStream inputStream, String fileExtName, long fileSize,
