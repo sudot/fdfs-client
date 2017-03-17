@@ -1,12 +1,14 @@
 package net.sudot.fdfs.service;
 
 import net.coobird.thumbnailator.Thumbnails;
+import net.sudot.fdfs.domain.FileInfo;
 import net.sudot.fdfs.domain.MateData;
 import net.sudot.fdfs.domain.StorageNode;
 import net.sudot.fdfs.domain.StorePath;
 import net.sudot.fdfs.domain.ThumbImageConfig;
 import net.sudot.fdfs.exception.FdfsUnsupportImageTypeException;
 import net.sudot.fdfs.exception.FdfsUploadImageException;
+import net.sudot.fdfs.proto.storage.DownloadCallback;
 import net.sudot.fdfs.proto.storage.StorageSetMetadataCommand;
 import net.sudot.fdfs.proto.storage.StorageUploadFileCommand;
 import net.sudot.fdfs.proto.storage.StorageUploadSlaveFileCommand;
@@ -27,6 +29,7 @@ import java.util.Set;
 /**
  * 面向应用的接口实现
  * @author tobato
+ * Update by sudot on 2017-03-17 0017.
  */
 @Component
 public class DefaultFastFileStorageClient extends DefaultGenerateStorageClient implements FastFileStorageClient {
@@ -38,21 +41,35 @@ public class DefaultFastFileStorageClient extends DefaultGenerateStorageClient i
     @Resource
     private ThumbImageConfig thumbImageConfig;
 
-    /**
-     * 上传文件
-     */
     @Override
     public StorePath uploadFile(InputStream inputStream, long fileSize, String fileExtName, Set<MateData> metaDataSet) {
         Validate.notNull(inputStream, "上传文件流不能为空");
         Validate.notBlank(fileExtName, "文件扩展名不能为空");
         StorageNode client = trackerClient.getStoreStorage();
-        LOGGER.debug("获取到storageNode:{}", client);
+        if (LOGGER.isDebugEnabled()) { LOGGER.debug("获取到storageNode:{}", client); }
         return uploadFileAndMateData(client, inputStream, fileSize, fileExtName, metaDataSet);
     }
 
-    /**
-     * 上传图片并且生成缩略图
-     */
+    @Override
+    public StorePath uploadFile(String groupName, InputStream inputStream, long fileSize, String fileExtName, Set<MateData> metaDataSet) {
+        Validate.notNull(inputStream, "上传文件流不能为空");
+        Validate.notBlank(fileExtName, "文件扩展名不能为空");
+        StorageNode client = trackerClient.getStoreStorage(groupName);
+        if (LOGGER.isDebugEnabled()) { LOGGER.debug("获取到storageNode:{}", client); }
+        return uploadFileAndMateData(client, inputStream, fileSize, fileExtName, metaDataSet);
+    }
+
+    @Override
+    public StorePath uploadSlaveFile(String masterFullPath, InputStream inputStream, long fileSize, String suffixName, String fileExtName) {
+        StorePath storePath = StorePath.parseFullPath(masterFullPath);
+        return uploadSlaveFile(storePath.getGroup(), storePath.getPath(), inputStream, fileSize, suffixName, fileExtName);
+    }
+
+    @Override
+    public StorePath uploadSlaveFile(StorePath masterStorePath, InputStream inputStream, long fileSize, String suffixName, String fileExtName) {
+        return uploadSlaveFile(masterStorePath.getGroup(), masterStorePath.getPath(), inputStream, fileSize, suffixName, fileExtName);
+    }
+
     @Override
     public StorePath uploadImageAndCrtThumbImage(InputStream inputStream, long fileSize, String fileExtName,
                                                  Set<MateData> metaDataSet) {
@@ -66,13 +83,91 @@ public class DefaultFastFileStorageClient extends DefaultGenerateStorageClient i
         byte[] bytes = inputStreamToByte(inputStream);
 
         // 上传文件和mateData
-        StorePath path = uploadFileAndMateData(client, new ByteArrayInputStream(bytes), fileSize, fileExtName,
+        StorePath storePath = uploadFileAndMateData(client, new ByteArrayInputStream(bytes), fileSize, fileExtName,
                 metaDataSet);
         // 上传缩略图
-        uploadThumbImage(client, new ByteArrayInputStream(bytes), path.getPath(), fileExtName);
+        uploadThumbImage(client, new ByteArrayInputStream(bytes), storePath.getPath(), fileExtName);
         bytes = null;
-        return path;
+        return storePath;
     }
+
+    @Override
+    public Set<MateData> getMetadata(String fullPath) {
+        StorePath storePath = StorePath.parseFullPath(fullPath);
+        return super.getMetadata(storePath.getGroup(), storePath.getPath());
+    }
+
+    @Override
+    public Set<MateData> getMetadata(StorePath storePath) {
+        return super.getMetadata(storePath.getGroup(), storePath.getPath());
+    }
+
+    @Override
+    public void overwriteMetadata(String fullPath, Set<MateData> metaDataSet) {
+        StorePath storePath = StorePath.parseFullPath(fullPath);
+        super.overwriteMetadata(storePath.getGroup(), storePath.getPath(), metaDataSet);
+    }
+
+    @Override
+    public void overwriteMetadata(StorePath storePath, Set<MateData> metaDataSet) {
+        super.overwriteMetadata(storePath.getGroup(), storePath.getPath(), metaDataSet);
+    }
+
+    @Override
+    public void mergeMetadata(String fullPath, Set<MateData> metaDataSet) {
+        StorePath storePath = StorePath.parseFullPath(fullPath);
+        super.mergeMetadata(storePath.getGroup(), storePath.getPath(), metaDataSet);
+    }
+
+    @Override
+    public void mergeMetadata(StorePath storePath, Set<MateData> metaDataSet) {
+        super.mergeMetadata(storePath.getGroup(), storePath.getPath(), metaDataSet);
+    }
+
+    @Override
+    public FileInfo queryFileInfo(String fullPath) {
+        StorePath storePath = StorePath.parseFullPath(fullPath);
+        return super.queryFileInfo(storePath.getGroup(), storePath.getPath());
+    }
+
+    @Override
+    public FileInfo queryFileInfo(StorePath storePath) {
+        return super.queryFileInfo(storePath.getGroup(), storePath.getPath());
+    }
+
+    @Override
+    public void deleteFile(String fullPath) {
+        StorePath storePath = StorePath.parseFullPath(fullPath);
+        super.deleteFile(storePath.getGroup(), storePath.getPath());
+    }
+
+    @Override
+    public void deleteFile(StorePath storePath) {
+        super.deleteFile(storePath.getGroup(), storePath.getPath());
+    }
+
+    @Override
+    public <T> T downloadFile(String fullPath, DownloadCallback<T> callback) {
+        StorePath storePath = StorePath.parseFullPath(fullPath);
+        return super.downloadFile(storePath.getGroup(), storePath.getPath(), callback);
+    }
+
+    @Override
+    public <T> T downloadFile(StorePath storePath, DownloadCallback<T> callback) {
+        return super.downloadFile(storePath.getGroup(), storePath.getPath(), callback);
+    }
+
+    @Override
+    public <T> T downloadFile(String fullPath, long fileOffset, long fileSize, DownloadCallback<T> callback) {
+        StorePath storePath = StorePath.parseFullPath(fullPath);
+        return super.downloadFile(storePath.getGroup(), storePath.getPath(),fileOffset, fileSize, callback);
+    }
+
+    @Override
+    public <T> T downloadFile(StorePath storePath, long fileOffset, long fileSize, DownloadCallback<T> callback) {
+        return super.downloadFile(storePath.getGroup(), storePath.getPath(),fileOffset, fileSize, callback);
+    }
+
 
     /**
      * 获取byte流
@@ -134,11 +229,10 @@ public class DefaultFastFileStorageClient extends DefaultGenerateStorageClient i
      * 上传缩略图
      * @param client
      * @param inputStream
-     * @param fileSize
+     * @param masterFilePath
      * @param fileExtName
-     * @param metaDataSet
      */
-    private void uploadThumbImage(StorageNode client, InputStream inputStream, String masterFilename,
+    private void uploadThumbImage(StorageNode client, InputStream inputStream, String masterFilePath,
                                   String fileExtName) {
         ByteArrayInputStream thumbImageStream = null;
         try {
@@ -146,9 +240,9 @@ public class DefaultFastFileStorageClient extends DefaultGenerateStorageClient i
             // 获取文件大小
             long fileSize = thumbImageStream.available();
             // 获取缩略图前缀
-            String prefixName = thumbImageConfig.getPrefixName();
+            String prefixName = thumbImageConfig.getSuffixName();
             StorageUploadSlaveFileCommand command = new StorageUploadSlaveFileCommand(thumbImageStream, fileSize,
-                    masterFilename, prefixName, fileExtName);
+                    masterFilePath, prefixName, fileExtName);
             connectionManager.executeFdfsCmd(client.getInetSocketAddress(), command);
 
         } catch (IOException e) {
@@ -161,7 +255,7 @@ public class DefaultFastFileStorageClient extends DefaultGenerateStorageClient i
 
     /**
      * 获取缩略图
-     * @param filePath
+     * @param inputStream 源图信息
      * @return
      * @throws IOException
      */
@@ -175,15 +269,6 @@ public class DefaultFastFileStorageClient extends DefaultGenerateStorageClient i
                 .toOutputStream(out);
         //@formatter:on
         return new ByteArrayInputStream(out.toByteArray());
-    }
-
-    /**
-     * 删除文件
-     */
-    @Override
-    public void deleteFile(String filePath) {
-        StorePath storePath = StorePath.praseFromUrl(filePath);
-        super.deleteFile(storePath.getGroup(), storePath.getPath());
     }
 
 }

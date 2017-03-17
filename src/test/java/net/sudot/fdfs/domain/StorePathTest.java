@@ -14,6 +14,7 @@ import static org.junit.Assert.fail;
 /**
  * 文件路径对象
  * @author tobato
+ *         Update by sudot on 2017-03-17 0017.
  */
 public class StorePathTest extends FastdfsTestBase {
 
@@ -26,7 +27,7 @@ public class StorePathTest extends FastdfsTestBase {
     @Test
     public void testPraseFromUrl() {
         String filePath = "group1/huex_sjuej/3hjshf.jpg";
-        StorePath path = StorePath.praseFromUrl(filePath);
+        StorePath path = StorePath.parseFullPath(filePath);
         assertNotNull(path);
         assertEquals(path.getGroup(), "group1");
         assertEquals(path.getPath(), "huex_sjuej/3hjshf.jpg");
@@ -39,7 +40,7 @@ public class StorePathTest extends FastdfsTestBase {
     public void testPraseFromUrlWithErr() {
         String filePath = "group1jshf.jpg";
         try {
-            StorePath.praseFromUrl(filePath);
+            StorePath.parseFullPath(filePath);
             fail("No exception thrown.");
         } catch (Exception e) {
             assertTrue(e instanceof FdfsUnsupportStorePathException);
@@ -53,7 +54,7 @@ public class StorePathTest extends FastdfsTestBase {
     @Test
     public void testPraseFromUrlWithFullPathErr() {
         String filePath = "http://192.1.1.2/group1/jshf.jpg";
-        StorePath path = StorePath.praseFromUrl(filePath);
+        StorePath path = StorePath.parseFullPath(filePath);
         assertNotNull(path);
         assertEquals(path.getGroup(), "group1");
         assertEquals(path.getPath(), "jshf.jpg");

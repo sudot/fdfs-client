@@ -3,6 +3,7 @@ package net.sudot.fdfs.domain;
 /**
  * 缩略图生成配置支持
  * @author tobato
+ * Update by sudot on 2017-03-17 0017.
  */
 public interface ThumbImageConfig {
 
@@ -19,17 +20,16 @@ public interface ThumbImageConfig {
     int getHeight();
 
     /**
-     * 获得缩略图前缀
-     * @param path
+     * 获得缩略图后缀
      * @return
      */
-    String getPrefixName();
+    String getSuffixName();
 
     /**
      * 获得缩略图路径
-     * @param masterFilename
+     * @param masterFilePath
      * @return
      */
-    String getThumbImagePath(String masterFilename);
+    String getThumbImagePath(String masterFilePath);
 
 }

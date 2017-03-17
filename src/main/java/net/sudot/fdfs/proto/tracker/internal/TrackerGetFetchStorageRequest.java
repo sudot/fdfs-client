@@ -11,6 +11,7 @@ import org.apache.commons.lang3.Validate;
 /**
  * 获取源服务器
  * @author tobato
+ * Update by sudot on 2017-03-17 0017.
  */
 public class TrackerGetFetchStorageRequest extends FdfsRequest {
 
@@ -26,8 +27,9 @@ public class TrackerGetFetchStorageRequest extends FdfsRequest {
 
     /**
      * 获取文件源服务器
-     * @param groupName
-     * @param path
+     * @param groupName 组名
+     * @param path      路径
+     * @param toUpdate  是否支持更新
      */
     public TrackerGetFetchStorageRequest(String groupName, String path, boolean toUpdate) {
         Validate.notBlank(groupName, "分组不能为空");
