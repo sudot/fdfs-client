@@ -117,12 +117,4 @@ public class DefaultGenerateStorageClient implements GenerateStorageClient {
         return connectionManager.executeFdfsCmd(client.getInetSocketAddress(), command);
     }
 
-    public void setTrackerClientService(TrackerClient trackerClientService) {
-        this.trackerClient = trackerClientService;
-    }
-
-    public void setConnectionManager(ConnectionManager connectionManager) {
-        this.connectionManager = connectionManager;
-    }
-
 }

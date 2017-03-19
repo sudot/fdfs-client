@@ -13,6 +13,7 @@ import java.util.Map;
 /**
  * param对象与byte映射器
  * @author tobato
+ * Update by sudot on 2017-03-19 0019.
  */
 public class FdfsParamMapper {
 
@@ -27,8 +28,10 @@ public class FdfsParamMapper {
 
     /**
      * 将byte解码为对象
-     * @param objectArrayList
+     * @param content
      * @param genericType
+     * @param charset
+     * @param <T>
      * @return
      */
     public static <T> T map(byte[] content, Class<T> genericType, Charset charset) {
@@ -82,9 +85,17 @@ public class FdfsParamMapper {
         T obj = genericType.newInstance();
         for (int i = 0; i < mappingFields.size(); i++) {
             FieldMateData field = mappingFields.get(i);
+            Object value = field.getValue(content, charset);
             // 设置属性值
-            LOGGER.debug("设置值是 " + field + field.getValue(content, charset));
-            BeanUtils.setProperty(obj, field.getFieldName(), field.getValue(content, charset));
+            if (LOGGER.isDebugEnabled()) { LOGGER.debug("设置值是 " + field + value); }
+//            try {
+//                Field declaredField = genericType.getDeclaredField(field.getFieldName());
+//                declaredField.setAccessible(true);
+//                declaredField.set(obj, value);
+//            } catch (NoSuchFieldException e) {
+//                e.printStackTrace();
+//            }
+            BeanUtils.setProperty(obj, field.getFieldName(), value);
         }
 
         return obj;

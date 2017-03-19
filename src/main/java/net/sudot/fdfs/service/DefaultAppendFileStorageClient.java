@@ -14,13 +14,19 @@ import java.io.InputStream;
 /**
  * 存储服务客户端接口实现
  * @author tobato
+ * Update by sudot on 2017-03-19 0019.
  */
 @Component
 public class DefaultAppendFileStorageClient extends DefaultGenerateStorageClient implements AppendFileStorageClient {
 
-    /**
-     * 上传支持断点续传的文件
-     */
+    @Override
+    public StorePath uploadAppenderFile(InputStream inputStream, long fileSize, String fileExtName) {
+        StorageNode client = trackerClient.getStoreStorage();
+        StorageUploadFileCommand command = new StorageUploadFileCommand(client.getStoreIndex(), inputStream,
+                fileExtName, fileSize, true);
+        return connectionManager.executeFdfsCmd(client.getInetSocketAddress(), command);
+    }
+
     @Override
     public StorePath uploadAppenderFile(String groupName, InputStream inputStream, long fileSize, String fileExtName) {
         StorageNode client = trackerClient.getStoreStorage(groupName);
@@ -29,9 +35,6 @@ public class DefaultAppendFileStorageClient extends DefaultGenerateStorageClient
         return connectionManager.executeFdfsCmd(client.getInetSocketAddress(), command);
     }
 
-    /**
-     * 继续上载文件
-     */
     @Override
     public void appendFile(String groupName, String path, InputStream inputStream, long fileSize) {
         StorageNodeInfo client = trackerClient.getUpdateStorage(groupName, path);
@@ -39,20 +42,43 @@ public class DefaultAppendFileStorageClient extends DefaultGenerateStorageClient
         connectionManager.executeFdfsCmd(client.getInetSocketAddress(), command);
     }
 
-    /**
-     * 修改文件
-     */
+    @Override
+    public void appendFile(String fullPath, InputStream inputStream, long fileSize) {
+        StorePath storePath = StorePath.parseFullPath(fullPath);
+        StorageNodeInfo client = trackerClient.getUpdateStorage(storePath.getGroup(), storePath.getPath());
+        StorageAppendFileCommand command = new StorageAppendFileCommand(inputStream, fileSize, storePath.getPath());
+        connectionManager.executeFdfsCmd(client.getInetSocketAddress(), command);
+    }
+
+    @Override
+    public void appendFile(StorePath storePath, InputStream inputStream, long fileSize) {
+        StorageNodeInfo client = trackerClient.getUpdateStorage(storePath.getGroup(), storePath.getPath());
+        StorageAppendFileCommand command = new StorageAppendFileCommand(inputStream, fileSize, storePath.getPath());
+        connectionManager.executeFdfsCmd(client.getInetSocketAddress(), command);
+    }
+
     @Override
     public void modifyFile(String groupName, String path, InputStream inputStream, long fileSize, long fileOffset) {
         StorageNodeInfo client = trackerClient.getUpdateStorage(groupName, path);
         StorageModifyCommand command = new StorageModifyCommand(path, inputStream, fileSize, fileOffset);
         connectionManager.executeFdfsCmd(client.getInetSocketAddress(), command);
-
     }
 
-    /**
-     * 清除文件
-     */
+    @Override
+    public void modifyFile(String fullPath, InputStream inputStream, long fileSize, long fileOffset) {
+        StorePath storePath = StorePath.parseFullPath(fullPath);
+        StorageNodeInfo client = trackerClient.getUpdateStorage(storePath.getGroup(), storePath.getPath());
+        StorageModifyCommand command = new StorageModifyCommand(storePath.getPath(), inputStream, fileSize, fileOffset);
+        connectionManager.executeFdfsCmd(client.getInetSocketAddress(), command);
+    }
+
+    @Override
+    public void modifyFile(StorePath storePath, InputStream inputStream, long fileSize, long fileOffset) {
+        StorageNodeInfo client = trackerClient.getUpdateStorage(storePath.getGroup(), storePath.getPath());
+        StorageModifyCommand command = new StorageModifyCommand(storePath.getPath(), inputStream, fileSize, fileOffset);
+        connectionManager.executeFdfsCmd(client.getInetSocketAddress(), command);
+    }
+
     @Override
     public void truncateFile(String groupName, String path, long truncatedFileSize) {
         StorageNodeInfo client = trackerClient.getUpdateStorage(groupName, path);
@@ -60,13 +86,44 @@ public class DefaultAppendFileStorageClient extends DefaultGenerateStorageClient
         connectionManager.executeFdfsCmd(client.getInetSocketAddress(), command);
     }
 
-    /**
-     * 清除文件
-     */
+    @Override
+    public void truncateFile(String fullPath, long truncatedFileSize) {
+        StorePath storePath = StorePath.parseFullPath(fullPath);
+        StorageNodeInfo client = trackerClient.getUpdateStorage(storePath.getGroup(), storePath.getPath());
+        StorageTruncateCommand command = new StorageTruncateCommand(storePath.getPath(), truncatedFileSize);
+        connectionManager.executeFdfsCmd(client.getInetSocketAddress(), command);
+    }
+
+    @Override
+    public void truncateFile(StorePath storePath, long truncatedFileSize) {
+        StorageNodeInfo client = trackerClient.getUpdateStorage(storePath.getGroup(), storePath.getPath());
+        StorageTruncateCommand command = new StorageTruncateCommand(storePath.getPath(), truncatedFileSize);
+        connectionManager.executeFdfsCmd(client.getInetSocketAddress(), command);
+    }
+
     @Override
     public void truncateFile(String groupName, String path) {
         long truncatedFileSize = 0;
-        truncateFile(groupName, path, truncatedFileSize);
+        StorageNodeInfo client = trackerClient.getUpdateStorage(groupName, path);
+        StorageTruncateCommand command = new StorageTruncateCommand(path, truncatedFileSize);
+        connectionManager.executeFdfsCmd(client.getInetSocketAddress(), command);
+    }
+
+    @Override
+    public void truncateFile(String fullPath) {
+        StorePath storePath = StorePath.parseFullPath(fullPath);
+        long truncatedFileSize = 0;
+        StorageNodeInfo client = trackerClient.getUpdateStorage(storePath.getGroup(), storePath.getPath());
+        StorageTruncateCommand command = new StorageTruncateCommand(storePath.getPath(), truncatedFileSize);
+        connectionManager.executeFdfsCmd(client.getInetSocketAddress(), command);
+    }
+
+    @Override
+    public void truncateFile(StorePath storePath) {
+        long truncatedFileSize = 0;
+        StorageNodeInfo client = trackerClient.getUpdateStorage(storePath.getGroup(), storePath.getPath());
+        StorageTruncateCommand command = new StorageTruncateCommand(storePath.getPath(), truncatedFileSize);
+        connectionManager.executeFdfsCmd(client.getInetSocketAddress(), command);
     }
 
 }

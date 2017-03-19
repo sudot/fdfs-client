@@ -86,9 +86,8 @@ public class StorePath {
     /**
      * @param group the group to set
      */
-    public StorePath setGroup(String group) {
+    public void setGroup(String group) {
         this.group = group;
-        return this;
     }
 
     /**
@@ -101,9 +100,8 @@ public class StorePath {
     /**
      * @param path the path to set
      */
-    public StorePath setPath(String path) {
+    public void setPath(String path) {
         this.path = path;
-        return this;
     }
 
     /**
