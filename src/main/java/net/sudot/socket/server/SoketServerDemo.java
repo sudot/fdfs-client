@@ -8,7 +8,7 @@ public class SoketServerDemo {
     private int port = 22122;
     private ServerSocket serverSocket;
 
-    public static void main() throws Exception {
+    public static void main(String[] args) throws Exception {
         SoketServerDemo server = new SoketServerDemo();
         System.out.println("------服务启动--------");
         server.service();
