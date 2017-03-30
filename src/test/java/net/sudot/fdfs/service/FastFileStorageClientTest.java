@@ -3,6 +3,7 @@ package net.sudot.fdfs.service;
 import net.sudot.fdfs.FastdfsTestBase;
 import net.sudot.fdfs.TestConstants;
 import net.sudot.fdfs.TestUtils;
+import net.sudot.fdfs.ThreadExecuteUtil;
 import net.sudot.fdfs.domain.FileInfo;
 import net.sudot.fdfs.domain.MateData;
 import net.sudot.fdfs.domain.RandomTextFile;
@@ -129,6 +130,14 @@ public class FastFileStorageClientTest extends FastdfsTestBase {
 
         LOGGER.debug("##是否为异步下载##" + downloadFile);
     }
+    /**
+     * 下载图片
+     */
+    @Test
+    public void testDelete() {
+        LOGGER.debug("##删除文件..##");
+        storageClient.deleteFile("group1/M00/00/00/wKgKgFjcj1aAR2JyAAHYvQQn-YE163_150x150.jpg");
+    }
 
     /**
      * 上传文件
@@ -156,6 +165,35 @@ public class FastFileStorageClientTest extends FastdfsTestBase {
         }
         return null;
 
+    }
+
+    /**
+     * 并发下载
+     * @return
+     */
+    private int count = 0;
+    @Test
+    public void downloadThread() {
+        int total = 100;
+        for (int i = 0; i < total; i ++) {
+            ThreadExecuteUtil.execute(new Runnable() {
+                @Override
+                public void run() {
+                    for (int n = 20; n > 0; n --) {
+                        storageClient.downloadFile("group1/M00/00/00/wKgKgFjcn-uAN0KsAAh0KA_A1Y0095.pdf", new DownloadByteArray());
+                    }
+                    count++;
+                }
+            });
+        }
+        while (count < total) {
+            try {
+                Thread.sleep(1000L * 10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        ThreadExecuteUtil.close();
     }
 
     private Set<MateData> createMateData() {
