@@ -1,6 +1,16 @@
 # fdfs-client
 java版fastdfs客户端操作工具
 
+此项目代码已通过工具库方式投入正式商业环境使用(2017-03-31)
+更新日志详见CHANGELOG.md
+
+主要特性
+
+1.增加不同地址对文件的操作.包括文件上传、下载、删除
+2.增加不同地址路径参数的文件操作方法.包括上传、下载、删除等
+3.调整连接池参考超时设置,soTime(连接成功后数据读取或发送时长):3000毫秒,connectTimeout(整个socket的连接超时时长):5000毫秒
+
+
 ######
 
 基于[chulung同学的版本](https://github.com/chulung/FastDFS_Client),根据项目环境针对调整

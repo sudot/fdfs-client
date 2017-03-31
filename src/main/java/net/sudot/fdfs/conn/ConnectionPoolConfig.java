@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 public class ConnectionPoolConfig extends GenericKeyedObjectPoolConfig {
 
     public ConnectionPoolConfig() {
-        setMaxTotal(50); // 从池中借出的对象的最大数目50
+        setMaxTotal(20); // 从池中借出的对象的最大数目20
         setTestWhileIdle(true); // 清理休眠时间过长的链接时测试一下
         setBlockWhenExhausted(true);
         setMaxWaitMillis(1000);
