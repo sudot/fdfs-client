@@ -30,13 +30,13 @@ java版fastdfs客户端操作工具
 >>3. 支持对服务端的连接池管理(commons-pool2)
 >>4. 支持上传图片时候检查图片格式，并且自动生成缩略图
 
-##运行环境要求
+## 运行环境要求
 
 Spirng4
     
 JDK环境要求  1.7+
 
-##单元测试
+## 单元测试
 
 由于工作时间关系与解析原代码的复杂性，单元测试无法完全做到脱离FastDFS服务端，请见谅。
 
@@ -60,9 +60,9 @@ JDK环境要求  1.7+
 ```
 
 
-##FastDFS-Client使用方式
+## FastDFS-Client使用方式
 
-###1.在项目Pom当中加入依赖
+### 1.在项目Pom当中加入依赖
 
 Maven依赖为
 ```xml
@@ -74,7 +74,7 @@ Maven依赖为
 ```
 
 
-###2.将Fdfs配置引入项目
+### 2.将Fdfs配置引入项目
 
 在spring中配置扫描
 ```xml
@@ -92,11 +92,11 @@ Maven依赖为
 ```java
     //注入storageClient类
 	
-    @Autowired
+    @Resource
     protected FastFileStorageClient storageClient;
 ```
 
-###3.在fastdfs.properties当中配置相关参数
+### 3.在fastdfs.properties当中配置相关参数
 ```
     # ===================================================================
     # fastdfs配置
@@ -114,8 +114,22 @@ Maven依赖为
 
     #无需配置
     fast.webServerUrl=
+    
+    #连接池设置
+    fdfs.pool.maxTotal=2
+    #设置为true时,池中无可用连接,borrow时进行阻塞;为false时,当池中无可用连接,抛出NoSuchElementException异常
+    fdfs.pool.blockWhenExhausted=true
+    #最大等待时间(单位:毫秒),当 blockWhenExhausted 配置为 true 时,此值有效.当需要borrow一个连接时,最大的等待时间,如果超出时间,抛出NoSuchElementException异常,-1为不限制时间
+    fdfs.pool.maxWaitMillis=5000
+    #空闲时进行连接测试,会启动异步evict线程进行失效检测
+    fdfs.pool.testWhileIdle=true
+    #资源最小空闲时间(单位:毫秒),视休眠时间超过的对象为过期.需要testWhileIdle为true
+    fdfs.pool.minEvictableIdleTimeMillis=600000
+    #回收资源线程的执行周期(单位:毫秒),需要testWhileIdle为true
+    fdfs.pool.timeBetweenEvictionRunsMillis=600000
 ```
-###4.使用接口服务对Fdfs服务端进行操作
+
+### 4.使用接口服务对Fdfs服务端进行操作
 
 主要接口包括
 
