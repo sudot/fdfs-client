@@ -4,9 +4,9 @@ import net.sudot.fdfs.domain.StorePath;
 import net.sudot.fdfs.service.AppendFileStorageClient;
 import org.apache.commons.io.FileUtils;
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
+import javax.annotation.Resource;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -17,7 +17,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class PerformanceTest extends FastdfsTestBase {
 
-    @Autowired
+    @Resource
     protected AppendFileStorageClient storageClient;
 
     @Test

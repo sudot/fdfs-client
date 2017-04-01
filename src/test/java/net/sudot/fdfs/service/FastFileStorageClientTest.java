@@ -16,8 +16,8 @@ import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.annotation.Resource;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -37,9 +37,9 @@ public class FastFileStorageClientTest extends FastdfsTestBase {
 
     /** 日志 */
     protected static Logger LOGGER = LoggerFactory.getLogger(FastFileStorageClientTest.class);
-    @Autowired
+    @Resource
     protected FastFileStorageClient storageClient;
-    @Autowired
+    @Resource
     private ThumbImageConfig thumbImageConfig;
 
     /**
