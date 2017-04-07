@@ -1,9 +1,9 @@
 package net.sudot.fdfs.proto.mapper;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.Charset;
 import java.util.HashMap;
@@ -43,15 +43,15 @@ public class FdfsParamMapper {
 
         try {
             return mapByIndex(content, genericType, objectMap, charset);
-        } catch (InstantiationException ie) {
-            LOGGER.debug("Cannot instantiate: ", ie);
-            throw new FdfsColumnMapException(ie);
-        } catch (IllegalAccessException iae) {
-            LOGGER.debug("Illegal access: ", iae);
-            throw new FdfsColumnMapException(iae);
-        } catch (InvocationTargetException ite) {
-            LOGGER.debug("Cannot invoke method: ", ite);
-            throw new FdfsColumnMapException(ite);
+        } catch (InstantiationException e) {
+            LOGGER.debug("Cannot instantiate: ", e);
+            throw new FdfsColumnMapException(e);
+        } catch (IllegalAccessException e) {
+            LOGGER.debug("Illegal access: ", e);
+            throw new FdfsColumnMapException(e);
+        } catch (NoSuchFieldException e) {
+            LOGGER.debug("No Such Field: ", e);
+            throw new FdfsColumnMapException(e);
         }
     }
 
@@ -74,30 +74,24 @@ public class FdfsParamMapper {
      * @param genericType
      * @param objectMap
      * @return
-     * @throws InstantiationException
      * @throws IllegalAccessException
-     * @throws InvocationTargetException
+     * @throws InstantiationException
+     * @throws NoSuchFieldException
      */
     private static <T> T mapByIndex(byte[] content, Class<T> genericType, ObjectMateData objectMap, Charset charset)
-            throws InstantiationException, IllegalAccessException, InvocationTargetException {
+            throws IllegalAccessException, InstantiationException, NoSuchFieldException {
 
         List<FieldMateData> mappingFields = objectMap.getFieldList();
         T obj = genericType.newInstance();
-        for (int i = 0; i < mappingFields.size(); i++) {
-            FieldMateData field = mappingFields.get(i);
+        for (FieldMateData field : mappingFields) {
             Object value = field.getValue(content, charset);
             // 设置属性值
-            if (LOGGER.isDebugEnabled()) { LOGGER.debug("设置值是 " + field + value); }
-//            try {
-//                Field declaredField = genericType.getDeclaredField(field.getFieldName());
-//                declaredField.setAccessible(true);
-//                declaredField.set(obj, value);
-//            } catch (NoSuchFieldException e) {
-//                e.printStackTrace();
-//            }
-            BeanUtils.setProperty(obj, field.getFieldName(), value);
+            if (LOGGER.isDebugEnabled()) { LOGGER.debug("设置值是 {} {}", field, value); }
+            Field declaredField = genericType.getDeclaredField(field.getFieldName());
+            declaredField.setAccessible(true);
+            declaredField.set(obj, value);
+//            BeanUtils.setProperty(obj, field.getFieldName(), value);
         }
-
         return obj;
     }
 
@@ -141,8 +135,7 @@ public class FdfsParamMapper {
         int size = objectMap.getFieldsSendTotalByteSize(object, charset);
         byte[] result = new byte[size];
         int offsize = 0;
-        for (int i = 0; i < mappingFields.size(); i++) {
-            FieldMateData field = mappingFields.get(i);
+        for (FieldMateData field : mappingFields) {
             byte[] fieldByte = field.toByte(object, charset);
             if (null != fieldByte) {
                 System.arraycopy(fieldByte, 0, result, offsize, fieldByte.length);

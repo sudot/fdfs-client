@@ -2,7 +2,6 @@ package net.sudot.fdfs.proto.mapper;
 
 import net.sudot.fdfs.domain.MateData;
 import net.sudot.fdfs.proto.OtherConstants;
-import org.apache.commons.beanutils.PropertyUtils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -54,22 +53,23 @@ class FieldMateData {
      * @return
      */
     private int getFieldSize(Field field) {//
-        if (String.class == field.getType()) {
+        Class<?> fieldType = field.getType();
+        if (String.class == fieldType) {
             return this.max;
-        } else if (long.class == field.getType()) {
+        } else if (long.class == fieldType) {
             return OtherConstants.FDFS_PROTO_PKG_LEN_SIZE;
-        } else if (int.class == field.getType()) {
+        } else if (int.class == fieldType) {
             return OtherConstants.FDFS_PROTO_PKG_LEN_SIZE;
-        } else if (java.util.Date.class == field.getType()) {
+        } else if (java.util.Date.class == fieldType) {
             return OtherConstants.FDFS_PROTO_PKG_LEN_SIZE;
-        } else if (byte.class == field.getType()) {
+        } else if (byte.class == fieldType) {
             return 1;
-        } else if (boolean.class == field.getType()) {
+        } else if (boolean.class == fieldType) {
             return 1;
-        } else if (Set.class == field.getType()) {
+        } else if (Set.class == fieldType) {
             return 0;
         }
-        throw new FdfsColumnMapException(field.getName() + "获取Field大小时未识别的FdfsColumn类型" + field.getType());
+        throw new FdfsColumnMapException(field.getName() + "获取Field大小时未识别的FdfsColumn类型" + fieldType);
     }
 
     /**
@@ -196,12 +196,11 @@ class FieldMateData {
      * @param bean
      * @return
      * @throws IllegalAccessException
-     * @throws InvocationTargetException
-     * @throws NoSuchMethodException
      */
     private Object getFieldValue(Object bean)
-            throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
-        return PropertyUtils.getProperty(bean, field.getName());
+            throws IllegalAccessException {
+//        return PropertyUtils.getProperty(bean, field.getName());
+        return field.get(bean);
     }
 
     /**
@@ -210,16 +209,11 @@ class FieldMateData {
      * @param charset
      * @return
      * @throws IllegalAccessException
-     * @throws InvocationTargetException
-     * @throws NoSuchMethodException
      */
     @SuppressWarnings("unchecked")
-    public int getDynamicFieldByteSize(Object bean, Charset charset)
-            throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
-        Object value = PropertyUtils.getProperty(bean, field.getName());
-        if (null == value) {
-            return 0;
-        }
+    public int getDynamicFieldByteSize(Object bean, Charset charset) throws IllegalAccessException {
+        Object value = getFieldValue(bean);
+        if (null == value) { return 0; }
         switch (dynamicFieldType) {
             // 如果是打包剩余的所有Byte
             case allRestByte:
