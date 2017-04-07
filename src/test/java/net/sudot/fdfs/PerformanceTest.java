@@ -2,13 +2,13 @@ package net.sudot.fdfs;
 
 import net.sudot.fdfs.domain.StorePath;
 import net.sudot.fdfs.service.AppendFileStorageClient;
-import org.apache.commons.io.FileUtils;
+import net.sudot.fdfs.util.IOUtils;
 import org.junit.Test;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import javax.annotation.Resource;
-import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -33,14 +33,16 @@ public class PerformanceTest extends FastdfsTestBase {
 
                 @Override
                 public void run() {
+                    FileInputStream inputStream = null;
                     try {
-                        byte[] bytes = FileUtils.readFileToByteArray(new File(TestConstants.PERFORM_FILE_PATH));
-                        StorePath storePath = storageClient.uploadFile(null, new ByteArrayInputStream(bytes),
-                                bytes.length, "jpg");
+                        File file = new File(TestConstants.PERFORM_FILE_PATH);
+                        inputStream = new FileInputStream(file);
+                        StorePath storePath = storageClient.uploadFile(null, inputStream, file.length(), "jpg");
                     } catch (Exception e) {
                         e.printStackTrace();
                         failCount.incrementAndGet();
                     } finally {
+                        IOUtils.closeQuietly(inputStream);
                         count.incrementAndGet();
                     }
 

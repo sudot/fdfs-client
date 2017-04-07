@@ -1,6 +1,6 @@
 package net.sudot.fdfs.socket;
 
-import org.apache.commons.io.IOUtils;
+import net.sudot.fdfs.util.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

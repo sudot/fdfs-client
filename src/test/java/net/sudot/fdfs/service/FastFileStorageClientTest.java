@@ -11,8 +11,8 @@ import net.sudot.fdfs.domain.StorePath;
 import net.sudot.fdfs.domain.ThumbImageConfig;
 import net.sudot.fdfs.proto.storage.DownloadByteArray;
 import net.sudot.fdfs.proto.storage.DownloadCallback;
-import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.io.IOUtils;
+import net.sudot.fdfs.util.FdfsUtil;
+import net.sudot.fdfs.util.IOUtils;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -147,7 +147,7 @@ public class FastFileStorageClientTest extends FastdfsTestBase {
     private StorePath uploadImageAndCrtThumbImage(String filePath, Set<MateData> metaDataSet) {
         InputStream in = null;
         File file = TestUtils.getFile(filePath);
-        String fileExtName = FilenameUtils.getExtension(file.getName());
+        String fileExtName = FdfsUtil.getExtension(file.getName());
         long fileSize = file.length();
         try {
             in = TestUtils.getFileInputStream(filePath);

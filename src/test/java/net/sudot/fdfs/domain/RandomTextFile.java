@@ -2,9 +2,9 @@ package net.sudot.fdfs.domain;
 
 import net.sudot.fdfs.TestConstants;
 import net.sudot.fdfs.TestUtils;
-import org.apache.commons.lang3.RandomStringUtils;
 
 import java.io.InputStream;
+import java.util.Random;
 
 /**
  * 测试用随机字符文件
@@ -21,7 +21,14 @@ public class RandomTextFile {
     private String fileExtName = "text";
 
     public RandomTextFile() {
-        this.text = RandomStringUtils.random(30, "762830abdcefghijklmnopqrstuvwxyz0991822-");
+        String temple = "762830abdcefghijklmnopqrstuvwxyz0991822-";
+        int len = temple.length();
+        Random random = new Random();
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < 30; i ++) {
+            builder.append(temple.charAt(random.nextInt() % len));
+        }
+        this.text = builder.toString();
         this.fileSize = TestUtils.getTextLength(text);
     }
 

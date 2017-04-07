@@ -1,6 +1,6 @@
 package net.sudot.fdfs.proto.storage;
 
-import org.apache.commons.io.IOUtils;
+import net.sudot.fdfs.util.IOUtils;
 
 import java.io.BufferedInputStream;
 import java.io.FileOutputStream;
@@ -36,7 +36,7 @@ public class DownloadFileWriter implements DownloadCallback<String> {
             IOUtils.copy(in, out);
             out.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw e;
         } finally {
             // 关闭流
             IOUtils.closeQuietly(in);

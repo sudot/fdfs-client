@@ -26,13 +26,6 @@
 		<maven.compiler.encoding>1.7</maven.compiler.encoding>
 	</properties>
 	<dependencies>
-		<!-- ======== commons UTILS begin ======== -->
-		<dependency>
-			<groupId>commons-io</groupId>
-			<artifactId>commons-io</artifactId>
-			<version>2.4</version>
-		</dependency>
-		<!-- ======== commons UTILS end ======== -->
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-pool2</artifactId>

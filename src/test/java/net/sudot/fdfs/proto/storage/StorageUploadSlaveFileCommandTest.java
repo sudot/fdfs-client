@@ -5,7 +5,7 @@ import net.sudot.fdfs.TestConstants;
 import net.sudot.fdfs.TestUtils;
 import net.sudot.fdfs.domain.StorePath;
 import net.sudot.fdfs.proto.StorageCommandTestBase;
-import org.apache.commons.io.FilenameUtils;
+import net.sudot.fdfs.util.FdfsUtil;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
@@ -46,7 +46,7 @@ public class StorageUploadSlaveFileCommandTest extends StorageCommandTestBase {
 
         InputStream in = null;
         File file = TestUtils.getFile(filePath);
-        String fileExtName = FilenameUtils.getExtension(file.getName());
+        String fileExtName = FdfsUtil.getExtension(file.getName());
 
         try {
             in = getThumbImageStream(filePath);// getFileInputStream

@@ -4,7 +4,7 @@ import net.sudot.fdfs.exception.FdfsConnectException;
 import net.sudot.fdfs.proto.CmdConstants;
 import net.sudot.fdfs.proto.OtherConstants;
 import net.sudot.fdfs.proto.mapper.BytesUtil;
-import org.apache.commons.io.IOUtils;
+import net.sudot.fdfs.util.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -83,7 +83,7 @@ public class DefaultConnection implements Connection {
      */
     @Override
     public boolean isValid() {
-        LOGGER.debug("check connection status of {} ", this);
+        if (LOGGER.isDebugEnabled()) { LOGGER.debug("check connection status of {} ", this); }
         try {
             byte[] header = new byte[OtherConstants.FDFS_PROTO_PKG_LEN_SIZE + 2];
             Arrays.fill(header, (byte) 0);

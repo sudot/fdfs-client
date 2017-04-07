@@ -4,7 +4,7 @@ import net.sudot.fdfs.TestConstants;
 import net.sudot.fdfs.TestUtils;
 import net.sudot.fdfs.domain.StorePath;
 import net.sudot.fdfs.proto.storage.StorageUploadFileCommand;
-import org.apache.commons.io.FilenameUtils;
+import net.sudot.fdfs.util.FdfsUtil;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -27,7 +27,7 @@ public abstract class StorageCommandTestBase extends CommandTestBase {
     public StorePath execStorageUploadFileCommand(String filePath, boolean isAppenderFile) {
         InputStream in = null;
         File file = TestUtils.getFile(filePath);
-        String fileExtName = FilenameUtils.getExtension(file.getName());
+        String fileExtName = FdfsUtil.getExtension(file.getName());
         long fileSize = file.length();
 
         try {

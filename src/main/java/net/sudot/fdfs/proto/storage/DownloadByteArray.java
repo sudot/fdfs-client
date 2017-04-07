@@ -1,6 +1,7 @@
 package net.sudot.fdfs.proto.storage;
 
-import org.apache.commons.io.IOUtils;
+
+import net.sudot.fdfs.util.IOUtils;
 
 import java.io.IOException;
 import java.io.InputStream;

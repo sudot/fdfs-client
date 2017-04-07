@@ -7,6 +7,21 @@ import java.security.NoSuchAlgorithmException;
  * Created by chulung on 2016/10/28.
  */
 public class FdfsUtil {
+    /**
+     * The extension separator character.
+     * @since 1.4
+     */
+    public static final char EXTENSION_SEPARATOR = '.';
+
+    /**
+     * The Unix separator character.
+     */
+    private static final char UNIX_SEPARATOR = '/';
+
+    /**
+     * The Windows separator character.
+     */
+    private static final char WINDOWS_SEPARATOR = '\\';
 
     /**
      * get token for file URL
@@ -43,5 +58,39 @@ public class FdfsUtil {
             str[k++] = hexDigits[tmp[i] & 0xf];
         }
         return new String(str);
+    }
+
+    /**
+     * Gets the extension of a filename.
+     * <p>
+     * This method returns the textual part of the filename after the last dot.
+     * There must be no directory separator after the dot.
+     * <pre>
+     * foo.txt      --> "txt"
+     * a/b/c.jpg    --> "jpg"
+     * a/b.txt/c    --> ""
+     * a/b/c        --> ""
+     * </pre>
+     * <p>
+     * The output will be the same irrespective of the machine that the code is running on.
+     *
+     * @param filename the filename to retrieve the extension of.
+     * @return the extension of the file or an empty string if none exists or {@code null}
+     * if the filename is {@code null}.
+     */
+    public static String getExtension(String filename) {
+        if (filename == null) {
+            return null;
+        }
+        int extensionPos = filename.lastIndexOf(EXTENSION_SEPARATOR);
+        int lastUnixPos = filename.lastIndexOf(UNIX_SEPARATOR);
+        int lastWindowsPos = filename.lastIndexOf(WINDOWS_SEPARATOR);
+        int lastSeparator = lastUnixPos > lastWindowsPos ? lastUnixPos : lastWindowsPos;
+        int index = lastSeparator > extensionPos ? -1 : extensionPos;
+        if (index == -1) {
+            return "";
+        } else {
+            return filename.substring(index + 1);
+        }
     }
 }
