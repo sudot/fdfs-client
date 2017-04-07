@@ -13,8 +13,8 @@ import net.sudot.fdfs.proto.storage.StorageSetMetadataCommand;
 import net.sudot.fdfs.proto.storage.StorageUploadFileCommand;
 import net.sudot.fdfs.proto.storage.StorageUploadSlaveFileCommand;
 import net.sudot.fdfs.proto.storage.enums.StorageMetdataSetType;
+import net.sudot.fdfs.util.Validate;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.Validate;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;

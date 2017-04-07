@@ -1,7 +1,7 @@
 package net.sudot.fdfs.domain;
 
 import net.sudot.fdfs.exception.FdfsUnavailableException;
-import org.apache.commons.lang3.StringUtils;
+import net.sudot.fdfs.util.Validate;
 
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
@@ -54,10 +54,10 @@ public class TrackerLocator {
     private void buildTrackerAddresses() {
         Set<InetSocketAddress> addressSet = new HashSet<InetSocketAddress>();
         for (String item : trackerList) {
-            if (StringUtils.isBlank(item)) {
+            if (Validate.isBlank(item)) {
                 continue;
             }
-            String[] parts = StringUtils.split(item, ":", 2);
+            String[] parts = item.split(":");
             if (parts.length != 2) {
                 throw new IllegalArgumentException(
                         "the value of item \"tracker_server\" is invalid, the correct format is host:port");

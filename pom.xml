@@ -23,17 +23,10 @@
 		<mockito.version>1.9.5</mockito.version>
 		<!-- Plugin的属性定义 -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<commons-lang3.version>3.3.2</commons-lang3.version>
-		<commons-beanutils.version>1.9.1</commons-beanutils.version>
 		<maven.compiler.encoding>1.7</maven.compiler.encoding>
 	</properties>
 	<dependencies>
 		<!-- ======== commons UTILS begin ======== -->
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-			<version>${commons-lang3.version}</version>
-		</dependency>
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>

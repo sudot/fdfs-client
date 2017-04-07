@@ -6,7 +6,7 @@ import net.sudot.fdfs.proto.OtherConstants;
 import net.sudot.fdfs.proto.ProtoHead;
 import net.sudot.fdfs.proto.mapper.DynamicFieldType;
 import net.sudot.fdfs.proto.mapper.FdfsColumn;
-import org.apache.commons.lang3.Validate;
+import net.sudot.fdfs.util.Validate;
 
 /**
  * 列出存储状态

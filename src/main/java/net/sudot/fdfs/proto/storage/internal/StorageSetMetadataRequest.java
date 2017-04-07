@@ -9,7 +9,7 @@ import net.sudot.fdfs.proto.mapper.DynamicFieldType;
 import net.sudot.fdfs.proto.mapper.FdfsColumn;
 import net.sudot.fdfs.proto.mapper.MetadataMapper;
 import net.sudot.fdfs.proto.storage.enums.StorageMetdataSetType;
-import org.apache.commons.lang3.Validate;
+import net.sudot.fdfs.util.Validate;
 
 import java.nio.charset.Charset;
 import java.util.Set;

@@ -10,7 +10,7 @@ import net.sudot.fdfs.proto.tracker.TrackerGetFetchStorageCommand;
 import net.sudot.fdfs.proto.tracker.TrackerGetStoreStorageCommand;
 import net.sudot.fdfs.proto.tracker.TrackerListGroupsCommand;
 import net.sudot.fdfs.proto.tracker.TrackerListStoragesCommand;
-import org.apache.commons.lang3.StringUtils;
+import net.sudot.fdfs.util.Validate;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -41,7 +41,7 @@ public class DefaultTrackerClient implements TrackerClient {
     @Override
     public StorageNode getStoreStorage(String groupName) {
         TrackerGetStoreStorageCommand command;
-        if (StringUtils.isBlank(groupName)) {
+        if (Validate.isBlank(groupName)) {
             command = new TrackerGetStoreStorageCommand();
         } else {
             command = new TrackerGetStoreStorageCommand(groupName);
