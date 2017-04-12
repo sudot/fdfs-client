@@ -200,6 +200,7 @@ class FieldMateData {
     private Object getFieldValue(Object bean)
             throws IllegalAccessException {
 //        return PropertyUtils.getProperty(bean, field.getName());
+        field.setAccessible(true);
         return field.get(bean);
     }
 
