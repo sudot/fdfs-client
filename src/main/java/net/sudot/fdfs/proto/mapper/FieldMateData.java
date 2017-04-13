@@ -78,23 +78,24 @@ class FieldMateData {
      * @return
      */
     public Object getValue(byte[] bs, Charset charset) {
-        if (String.class == field.getType()) {
+        Class<?> fieldType = field.getType();
+        if (String.class == fieldType) {
             if (isDynamicField()) {
                 return (new String(bs, offsize, bs.length - offsize, charset)).trim();
             }
             return (new String(bs, offsize, size, charset)).trim();
-        } else if (long.class == field.getType()) {
+        } else if (long.class == fieldType) {
             return BytesUtil.buff2long(bs, offsize);
-        } else if (int.class == field.getType()) {
+        } else if (int.class == fieldType) {
             return (int) BytesUtil.buff2long(bs, offsize);
-        } else if (java.util.Date.class == field.getType()) {
+        } else if (java.util.Date.class == fieldType) {
             return new Date(BytesUtil.buff2long(bs, offsize) * 1000);
-        } else if (byte.class == field.getType()) {
+        } else if (byte.class == fieldType) {
             return bs[offsize];
-        } else if (boolean.class == field.getType()) {
+        } else if (boolean.class == fieldType) {
             return bs[offsize] != 0;
         }
-        throw new FdfsColumnMapException(field.getName() + "获取值时未识别的FdfsColumn类型" + field.getType());
+        throw new FdfsColumnMapException(field.getName() + "获取值时未识别的FdfsColumn类型" + fieldType);
     }
 
     public Field getField() {
@@ -150,25 +151,26 @@ class FieldMateData {
     public byte[] toByte(Object bean, Charset charset)
             throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
         Object value = this.getFieldValue(bean);
+        Class<?> fieldType = field.getType();
         if (isDynamicField()) {
             return getDynamicFieldByteValue(value, charset);
-        } else if (String.class.equals(field.getType())) {
+        } else if (String.class == fieldType) {
             // 如果是动态属性
             return BytesUtil.objString2Byte((String) value, max, charset);
-        } else if (long.class == field.getType() || Long.class == field.getType()) {
+        } else if (long.class == fieldType || Long.class == fieldType) {
             return BytesUtil.long2buff((Long) value);
-        } else if (int.class.equals(field.getType()) || Integer.class.equals(field.getType())) {
+        } else if (int.class == fieldType || Integer.class == fieldType) {
             return BytesUtil.long2buff((Integer) value);
-        } else if (Date.class.equals(field.getType())) {
+        } else if (Date.class == fieldType) {
             throw new FdfsColumnMapException("Date 还不支持");
-        } else if (byte.class == field.getType() || Byte.class == field.getType()) {
+        } else if (byte.class == fieldType || Byte.class == fieldType) {
             byte[] result = new byte[1];
             result[0] = (Byte) value;
             return result;
-        } else if (boolean.class.equals(field.getType())) {
+        } else if (boolean.class == fieldType) {
             throw new FdfsColumnMapException("boolean 还不支持");
         }
-        throw new FdfsColumnMapException("将属性值转换为byte时未识别的FdfsColumn类型" + field.getName() + ":" + field.getType());
+        throw new FdfsColumnMapException("将属性值转换为byte时未识别的FdfsColumn类型" + field.getName() + ":" + fieldType);
     }
 
     /**

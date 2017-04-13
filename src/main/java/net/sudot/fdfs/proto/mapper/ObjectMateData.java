@@ -77,27 +77,25 @@ public class ObjectMateData {
 //        }
         // 修改后(修复实体类中列顺序与FdfsColumn.index标记顺序一致性)
         Field[] fields = genericType.getDeclaredFields();
-        int length = fields.length;
-        FieldMateData[] mapedFieldArrays = new FieldMateData[length];
+        FieldMateData[] mateFieldArrays = new FieldMateData[fields.length];
         for (Field field : fields) {
             FdfsColumn annotation = field.getAnnotation(FdfsColumn.class);
-            if (annotation != null) {
-                FieldMateData fieldMateData = new FieldMateData(field, fieldsTotalSize);
-                mapedFieldArrays[annotation.index()] = fieldMateData;
-                // 计算偏移量
-                fieldsTotalSize += fieldMateData.getRealeSize();
-            }
+            if (annotation == null) { continue; }
+            FieldMateData fieldMateData = new FieldMateData(field, fieldsTotalSize);
+            mateFieldArrays[annotation.index()] = fieldMateData;
+            // 计算偏移量
+            fieldsTotalSize += fieldMateData.getRealeSize();
         }
-        List<FieldMateData> mapedFieldList = new ArrayList<FieldMateData>();
-        for (FieldMateData fieldMateData : mapedFieldArrays) {
+        List<FieldMateData> mateFieldList = new ArrayList<FieldMateData>();
+        for (FieldMateData fieldMateData : mateFieldArrays) {
             if (fieldMateData == null) { continue; }
-            mapedFieldList.add(fieldMateData);
+            mateFieldList.add(fieldMateData);
             // 如果是动态计算列
             if (fieldMateData.isDynamicField()) {
                 dynamicFieldList.add(fieldMateData);
             }
         }
-        return mapedFieldList;
+        return mateFieldList;
     }
 
     /**
@@ -118,9 +116,9 @@ public class ObjectMateData {
      * @param field
      */
     private void validatFieldItemDefineByIndex(FieldMateData field) {
-        for (FieldMateData otherfield : fieldList) {
-            if (!field.equals(otherfield) && (field.getIndex() == otherfield.getIndex())) {
-                Object[] param = {className, field.getFieldName(), otherfield.getFieldName(), field.getIndex()};
+        for (FieldMateData otherField : fieldList) {
+            if (!field.equals(otherField) && (field.getIndex() == otherField.getIndex())) {
+                Object[] param = {className, field.getFieldName(), otherField.getFieldName(), field.getIndex()};
                 LOGGER.warn("在类{}映射定义中{}与{}索引定义相同为{}(请检查是否为程序错误)", param);
             }
         }
