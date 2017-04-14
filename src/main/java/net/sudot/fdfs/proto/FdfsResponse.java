@@ -1,10 +1,10 @@
 package net.sudot.fdfs.proto;
 
 import net.sudot.fdfs.proto.mapper.FdfsParamMapper;
-import org.springframework.core.GenericTypeResolver;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.ParameterizedType;
 import java.nio.charset.Charset;
 
 /**
@@ -23,10 +23,8 @@ public abstract class FdfsResponse<T> {
     @SuppressWarnings("unchecked")
     public FdfsResponse() {
         super();
-        this.genericType = (Class<T>) GenericTypeResolver.resolveTypeArgument(getClass(), FdfsResponse.class);
-        // Type theclass = this.getClass().getGenericSuperclass();
-        // this.genericType = ((ParameterizedType)
-        // theclass).getActualTypeArguments()[0];
+        ParameterizedType type = (ParameterizedType) getClass().getGenericSuperclass();
+        this.genericType = (Class<T>) type.getActualTypeArguments()[0];
     }
 
     /** 获取报文长度 */

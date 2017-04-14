@@ -15,7 +15,6 @@ import net.sudot.fdfs.proto.storage.StorageUploadSlaveFileCommand;
 import net.sudot.fdfs.proto.storage.enums.StorageMetdataSetType;
 import net.sudot.fdfs.util.IOUtils;
 import net.sudot.fdfs.util.Validate;
-import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.io.ByteArrayInputStream;
@@ -31,7 +30,6 @@ import java.util.Set;
  * @author tobato
  * Update by sudot on 2017-03-17 0017.
  */
-@Component
 public class DefaultFastFileStorageClient extends DefaultGenerateStorageClient implements FastFileStorageClient {
 
     /** 支持的图片类型 */

@@ -2,10 +2,8 @@ package net.sudot.fdfs.domain;
 
 import net.sudot.fdfs.FastdfsTestBase;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
 
@@ -17,7 +15,6 @@ import static org.junit.Assert.assertNotNull;
  * @author tobato
  * Update by sudot on 2017-03-17 0017.
  */
-@RunWith(SpringJUnit4ClassRunner.class)
 public class DefaultThumbImageConfigTest extends FastdfsTestBase {
 
     /** 日志 */

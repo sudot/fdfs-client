@@ -11,7 +11,6 @@ import net.sudot.fdfs.proto.tracker.TrackerGetStoreStorageCommand;
 import net.sudot.fdfs.proto.tracker.TrackerListGroupsCommand;
 import net.sudot.fdfs.proto.tracker.TrackerListStoragesCommand;
 import net.sudot.fdfs.util.Validate;
-import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -20,7 +19,6 @@ import java.util.List;
  * 目录服务客户端默认实现
  * @author tobato
  */
-@Service
 public class DefaultTrackerClient implements TrackerClient {
 
     @Resource

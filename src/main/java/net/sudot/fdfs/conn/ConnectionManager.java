@@ -4,7 +4,6 @@ import net.sudot.fdfs.exception.FdfsException;
 import net.sudot.fdfs.proto.FdfsCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.net.InetSocketAddress;
@@ -17,7 +16,6 @@ import java.net.InetSocketAddress;
  * </pre>
  * @author tobato
  */
-@Component
 public class ConnectionManager {
 
     /** 日志 */

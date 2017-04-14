@@ -3,8 +3,6 @@ package net.sudot.fdfs.conn;
 import net.sudot.fdfs.domain.TrackerLocator;
 import net.sudot.fdfs.exception.FdfsConnectException;
 import net.sudot.fdfs.proto.FdfsCommand;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.net.InetSocketAddress;
@@ -16,7 +14,6 @@ import java.util.List;
  * 管理TrackerClient连接池分配
  * @author tobato
  */
-@Component
 public class TrackerConnectionManager extends ConnectionManager {
 
     /** Tracker定位 */
@@ -75,7 +72,6 @@ public class TrackerConnectionManager extends ConnectionManager {
         this.trackerList = trackerList;
     }
 
-    @Value("${fdfs.trackerList}")
     public void setTrackerListFromString(String trackerListStr) {
         this.trackerList = Arrays.asList(trackerListStr.split(","));
     }

@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -171,29 +172,38 @@ public class FastFileStorageClientTest extends FastdfsTestBase {
      * 并发下载
      * @return
      */
-    private int count = 0;
     @Test
     public void downloadThread() {
+        final AtomicInteger failCount = new AtomicInteger(0);
+        final AtomicInteger count = new AtomicInteger(0);
         int total = 100;
         for (int i = 0; i < total; i ++) {
             ThreadExecuteUtil.execute(new Runnable() {
                 @Override
                 public void run() {
                     for (int n = 20; n > 0; n --) {
-                        storageClient.downloadFile("group1/M00/00/00/wKgKgFjcn-uAN0KsAAh0KA_A1Y0095.pdf", new DownloadByteArray());
+                        try {
+                            storageClient.downloadFile("group1/M00/00/00/wKgKgFjcn-uAN0KsAAh0KA_A1Y0095.pdf", new DownloadByteArray());
+                        } catch (Exception e) {
+                            failCount.getAndDecrement();
+                            e.printStackTrace();
+                        } finally {
+                            count.getAndDecrement();
+                        }
                     }
-                    count++;
                 }
             });
         }
-        while (count < total) {
+        while (count.get() < total) {
             try {
                 Thread.sleep(1000L * 10);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
-        ThreadExecuteUtil.close();
+        ThreadExecuteUtil.destroy();
+        System.out.println("success count: " + count.get());
+        System.out.println("fail count: " + failCount.get());
     }
 
     private Set<MateData> createMateData() {

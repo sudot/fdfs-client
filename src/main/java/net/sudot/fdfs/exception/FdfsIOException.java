@@ -20,7 +20,7 @@ public class FdfsIOException extends FdfsException {
     }
 
     /**
-     * @param message
+     * @param messge
      * @param cause
      */
     public FdfsIOException(String messge, Throwable cause) {

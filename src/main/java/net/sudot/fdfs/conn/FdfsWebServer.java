@@ -1,9 +1,5 @@
 package net.sudot.fdfs.conn;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
-
-
 /**
  * 表示文件Web服务器对象
  *
@@ -12,7 +8,6 @@ import org.springframework.stereotype.Component;
  * </pre>
  * @author tobato
  */
-@Component
 public class FdfsWebServer {
 
     private String webServerUrl;
@@ -21,7 +16,6 @@ public class FdfsWebServer {
         return webServerUrl;
     }
 
-    @Value("${fast.webServerUrl}")
     public void setWebServerUrl(String webServerUrl) {
         this.webServerUrl = webServerUrl;
     }

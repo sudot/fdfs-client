@@ -4,7 +4,6 @@ import net.sudot.fdfs.domain.StorePath;
 import net.sudot.fdfs.service.AppendFileStorageClient;
 import net.sudot.fdfs.util.IOUtils;
 import org.junit.Test;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import javax.annotation.Resource;
 import java.io.File;
@@ -25,11 +24,8 @@ public class PerformanceTest extends FastdfsTestBase {
         final AtomicInteger failCount = new AtomicInteger(0);
         final AtomicInteger count = new AtomicInteger(0);
         int totalCount = 1000;
-        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-        executor.setCorePoolSize(100);
-        executor.afterPropertiesSet();
         for (int i = 0; i < totalCount; i++) {
-            executor.execute(new Runnable() {
+            ThreadExecuteUtil.execute(new Runnable() {
 
                 @Override
                 public void run() {
@@ -54,10 +50,10 @@ public class PerformanceTest extends FastdfsTestBase {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
-                return;
+                e.printStackTrace();
             }
         }
-        executor.destroy();
+        ThreadExecuteUtil.destroy();
         System.out.println("success count: " + count.get());
         System.out.println("fail count: " + failCount.get());
     }

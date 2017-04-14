@@ -12,8 +12,8 @@ public class StorageTruncateCommand extends AbstractFdfsCommand<Void> {
 
     /**
      * 文件Truncate命令
-     * @param groupName
-     * @param path
+     * @param path     文件路径
+     * @param fileSize 文件大小
      */
     public StorageTruncateCommand(String path, long fileSize) {
         super();

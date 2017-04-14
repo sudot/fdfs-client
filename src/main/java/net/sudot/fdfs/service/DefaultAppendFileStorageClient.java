@@ -7,7 +7,6 @@ import net.sudot.fdfs.proto.storage.StorageAppendFileCommand;
 import net.sudot.fdfs.proto.storage.StorageModifyCommand;
 import net.sudot.fdfs.proto.storage.StorageTruncateCommand;
 import net.sudot.fdfs.proto.storage.StorageUploadFileCommand;
-import org.springframework.stereotype.Component;
 
 import java.io.InputStream;
 
@@ -16,7 +15,6 @@ import java.io.InputStream;
  * @author tobato
  * Update by sudot on 2017-03-19 0019.
  */
-@Component
 public class DefaultAppendFileStorageClient extends DefaultGenerateStorageClient implements AppendFileStorageClient {
 
     @Override

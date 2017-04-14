@@ -34,7 +34,7 @@ public class ThreadExecuteUtil {
         THREAD_POOL_EXECUTOR.execute(runnable);
     }
 
-    public static void close() {
+    public static void destroy() {
         THREAD_POOL_EXECUTOR.shutdown();
     }
 }

@@ -3,8 +3,6 @@ package net.sudot.fdfs.conn;
 import org.apache.commons.pool2.KeyedPooledObjectFactory;
 import org.apache.commons.pool2.impl.GenericKeyedObjectPool;
 import org.apache.commons.pool2.impl.GenericKeyedObjectPoolConfig;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.net.InetSocketAddress;
 
@@ -16,7 +14,6 @@ import java.net.InetSocketAddress;
  * </pre>
  * @author tobato
  */
-@Component
 public class FdfsConnectionPool extends GenericKeyedObjectPool<InetSocketAddress, Connection> {
 
     /**
@@ -24,7 +21,6 @@ public class FdfsConnectionPool extends GenericKeyedObjectPool<InetSocketAddress
      * @param factory
      * @param config
      */
-    @Autowired
     public FdfsConnectionPool(KeyedPooledObjectFactory<InetSocketAddress, Connection> factory,
                               GenericKeyedObjectPoolConfig config) {
         super(factory, config);

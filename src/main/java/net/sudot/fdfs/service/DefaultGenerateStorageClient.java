@@ -17,7 +17,6 @@ import net.sudot.fdfs.proto.storage.StorageUploadSlaveFileCommand;
 import net.sudot.fdfs.proto.storage.enums.StorageMetdataSetType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.io.InputStream;
@@ -28,7 +27,6 @@ import java.util.Set;
  * @author tobato
  * Update by sudot on 2017-03-17 0017.
  */
-@Component
 public class DefaultGenerateStorageClient implements GenerateStorageClient {
 
     /** 日志 */

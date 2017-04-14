@@ -1,8 +1,6 @@
 package net.sudot.fdfs.domain;
 
 import net.sudot.fdfs.util.Validate;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
 
 
 /**
@@ -10,7 +8,6 @@ import org.springframework.stereotype.Component;
  * @author tobato
  * Update by sudot on 2017-03-17 0017.
  */
-@Component
 public class DefaultThumbImageConfig implements ThumbImageConfig {
 
     private static String cachedSuffixName;
@@ -46,7 +43,6 @@ public class DefaultThumbImageConfig implements ThumbImageConfig {
         return width;
     }
 
-    @Value("${fdfs.thumbImage.width}")
     public void setWidth(int width) {
         this.width = width;
     }
@@ -55,7 +51,6 @@ public class DefaultThumbImageConfig implements ThumbImageConfig {
         return height;
     }
 
-    @Value("${fdfs.thumbImage.height}")
     public void setHeight(int height) {
         this.height = height;
     }

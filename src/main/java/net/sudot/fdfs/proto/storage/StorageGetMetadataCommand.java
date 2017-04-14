@@ -15,8 +15,8 @@ public class StorageGetMetadataCommand extends AbstractFdfsCommand<Set<MateData>
 
     /**
      * 设置文件标签(元数据)
-     * @param groupName
-     * @param path
+     * @param groupName 文件所在的组名
+     * @param path      文件路径
      */
     public StorageGetMetadataCommand(String groupName, String path) {
         this.request = new StorageGetMetadataRequest(groupName, path);
