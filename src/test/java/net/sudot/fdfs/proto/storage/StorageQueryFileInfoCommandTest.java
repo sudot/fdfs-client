@@ -22,8 +22,8 @@ public class StorageQueryFileInfoCommandTest extends StorageCommandTestBase {
         StorageQueryFileInfoCommand command = new StorageQueryFileInfoCommand(path.getGroup(), path.getPath());
         FileInfo fileInfo = executeStoreCmd(command);
         assertNotNull(fileInfo);
-        LOGGER.debug("----文件查询处理结果-----");
-        LOGGER.debug(fileInfo.toString());
+        logger.debug("----文件查询处理结果-----");
+        logger.debug(fileInfo.toString());
     }
 
 }

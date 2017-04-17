@@ -1,10 +1,10 @@
 package net.sudot.fdfs.domain;
 
 import net.sudot.fdfs.FastdfsTestBase;
+import net.sudot.fdfs.TestConstants;
+import net.sudot.fdfs.conn.TrackerConnectionManager;
 import net.sudot.fdfs.exception.FdfsUnavailableException;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.net.InetSocketAddress;
 import java.util.Arrays;
@@ -21,12 +21,7 @@ import static org.junit.Assert.fail;
  * @author tobato
  */
 public class TrackerLocatorTest extends FastdfsTestBase {
-
-    /** 日志 */
-    protected static Logger LOGGER = LoggerFactory.getLogger(TrackerLocatorTest.class);
-
-    private String[] ips = {"192.168.174.47:22122", "192.168.1.105:22122"};
-    private List<String> trackerIpList = Arrays.asList(ips);
+    private List<String> trackerIpList = Arrays.asList(TestConstants.TRACKER_LIST.split(TrackerConnectionManager.SPLIT_REGEX));
 
     @Test
     public void testTrackerLocator() {
@@ -71,7 +66,7 @@ public class TrackerLocatorTest extends FastdfsTestBase {
     private InetSocketAddress getAddress(TrackerLocator locator, String msg) {
         InetSocketAddress address = locator.getTrackerAddress();
         assertNotNull(address);
-        LOGGER.debug(msg + ":{}", address);
+        logger.debug(msg + ":{}", address);
         return address;
     }
 

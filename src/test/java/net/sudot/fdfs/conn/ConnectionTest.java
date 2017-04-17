@@ -1,6 +1,9 @@
 package net.sudot.fdfs.conn;
 
+import net.sudot.fdfs.TestConstants;
 import org.junit.Test;
+
+import java.io.IOException;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -22,7 +25,7 @@ public class ConnectionTest extends MockServerTestBase {
     }
 
     @Test
-    public void testCheck() {
+    public void testCheck() throws IOException {
         // 创建连接测试
         Connection conn = createConnection();
         System.out.println("当前连接状态" + conn.isValid());
@@ -34,7 +37,7 @@ public class ConnectionTest extends MockServerTestBase {
      * @return
      */
     private Connection createConnection() {
-        return new DefaultConnection(address, soTimeout, connectTimeout, null);
+        return new DefaultConnection(address, TestConstants.SO_TIMEOUT, TestConstants.CONNECT_TIMEOUT, TestConstants.DEFAULT_CHARSET);
     }
 
 }

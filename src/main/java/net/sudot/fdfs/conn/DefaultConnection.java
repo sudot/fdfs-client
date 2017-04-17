@@ -23,7 +23,7 @@ import java.util.Arrays;
 public class DefaultConnection implements Connection {
 
     /** 日志 */
-    private static final Logger LOGGER = LoggerFactory.getLogger(DefaultConnection.class);
+    private final Logger logger = LoggerFactory.getLogger(getClass());
     /** 封装socket */
     private Socket socket;
     /** 字符集 */
@@ -39,7 +39,7 @@ public class DefaultConnection implements Connection {
         try {
             socket = new Socket();
             socket.setSoTimeout(soTimeout);
-            LOGGER.debug("connect to {} soTimeout={} connectTimeout={}", address, soTimeout, connectTimeout);
+            logger.debug("connect to {} soTimeout={} connectTimeout={}", address, soTimeout, connectTimeout);
             this.charset = charset;
             socket.connect(address, connectTimeout);
         } catch (IOException e) {
@@ -51,7 +51,7 @@ public class DefaultConnection implements Connection {
      * 正常关闭连接
      */
     public synchronized void close() {
-        LOGGER.debug("disconnect from {}", socket);
+        logger.debug("disconnect from {}", socket);
         byte[] header = new byte[OtherConstants.FDFS_PROTO_PKG_LEN_SIZE + 2];
         Arrays.fill(header, (byte) 0);
 
@@ -63,7 +63,7 @@ public class DefaultConnection implements Connection {
             socket.getOutputStream().write(header);
             socket.close();
         } catch (IOException e) {
-            LOGGER.error("close connection error", e);
+            logger.error("close connection error", e);
         } finally {
             IOUtils.closeQuietly(socket);
         }
@@ -83,7 +83,7 @@ public class DefaultConnection implements Connection {
      */
     @Override
     public boolean isValid() {
-        if (LOGGER.isDebugEnabled()) { LOGGER.debug("check connection status of {} ", this); }
+        if (logger.isDebugEnabled()) { logger.debug("check connection status of {} ", this); }
         try {
             byte[] header = new byte[OtherConstants.FDFS_PROTO_PKG_LEN_SIZE + 2];
             Arrays.fill(header, (byte) 0);
@@ -99,7 +99,7 @@ public class DefaultConnection implements Connection {
 
             return header[OtherConstants.PROTO_HEADER_STATUS_INDEX] == 0 ? true : false;
         } catch (IOException e) {
-            LOGGER.error("valid connection error", e);
+            logger.error("valid connection error", e);
             return false;
         }
     }

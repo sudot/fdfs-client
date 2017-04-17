@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  */
 public class CommandTestBase {
     /** 日志 */
-    protected static Logger LOGGER = LoggerFactory.getLogger(CommandTestBase.class);
+    protected Logger logger = LoggerFactory.getLogger(getClass());
 
     /**
      * 连接池
@@ -26,7 +26,7 @@ public class CommandTestBase {
      * @return
      */
     protected <T> T executeTrackerCmd(FdfsCommand<T> command) {
-        return manager.executeFdfsCmd(TestConstants.address, command);
+        return manager.executeFdfsCmd(TestConstants.TRACKER_ADDRESS, command);
     }
 
     /**
@@ -35,7 +35,7 @@ public class CommandTestBase {
      * @return
      */
     protected <T> T executeStoreCmd(FdfsCommand<T> command) {
-        return manager.executeFdfsCmd(TestConstants.store_address, command);
+        return manager.executeFdfsCmd(TestConstants.STORE_ADDRESS, command);
     }
 
     private ConnectionManager createConnectionManager() {
@@ -44,8 +44,8 @@ public class CommandTestBase {
 
     private FdfsConnectionPool createPool() {
         PooledConnectionFactory factory = new PooledConnectionFactory();
-        factory.setConnectTimeout(TestConstants.connectTimeout);
-        factory.setSoTimeout(TestConstants.soTimeout);
+        factory.setConnectTimeout(TestConstants.CONNECT_TIMEOUT);
+        factory.setSoTimeout(TestConstants.SO_TIMEOUT);
         return new FdfsConnectionPool(new PooledConnectionFactory());
     }
 

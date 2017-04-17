@@ -4,8 +4,7 @@ import org.apache.commons.pool2.impl.GenericKeyedObjectPoolConfig;
 
 /**
  * 连接池配置
- * @author tobato
- * Update by sudot on 2017-03-17 0017.
+ * Created by tangjialin on 2017-04-17 0017.
  */
 public class ConnectionPoolConfig extends GenericKeyedObjectPoolConfig {
 
@@ -17,35 +16,5 @@ public class ConnectionPoolConfig extends GenericKeyedObjectPoolConfig {
         设置为 大于0时，回收资源的个数为 Math.min( numTestsPerEvictionRun,池中空闲的资源个数 );
         */
         setNumTestsPerEvictionRun(-1);
-    }
-
-    @Override
-    public void setMaxTotal(int maxTotal) {
-        super.setMaxTotal(maxTotal);
-    }
-
-    @Override
-    public void setMaxWaitMillis(long maxWaitMillis) {
-        super.setMaxWaitMillis(maxWaitMillis);
-    }
-
-    @Override
-    public void setMinEvictableIdleTimeMillis(long minEvictableIdleTimeMillis) {
-        super.setMinEvictableIdleTimeMillis(minEvictableIdleTimeMillis);
-    }
-
-    @Override
-    public void setTestWhileIdle(boolean testWhileIdle) {
-        super.setTestWhileIdle(testWhileIdle);
-    }
-
-    @Override
-    public void setTimeBetweenEvictionRunsMillis(long timeBetweenEvictionRunsMillis) {
-        super.setTimeBetweenEvictionRunsMillis(timeBetweenEvictionRunsMillis);
-    }
-
-    @Override
-    public void setBlockWhenExhausted(boolean blockWhenExhausted) {
-        super.setBlockWhenExhausted(blockWhenExhausted);
     }
 }

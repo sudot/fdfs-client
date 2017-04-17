@@ -40,17 +40,17 @@ public class DefaultFdfsOptionsFactory implements FdfsOptionsFactory{
             String timeBetweenEvictionRunsMillis = ConfigUtils.getConfigValue("fdfs.pool.timeBetweenEvictionRunsMillis");
 
             PooledConnectionFactory factory = new PooledConnectionFactory();
-            if (soTimeout != null) { factory.setSoTimeout(Integer.valueOf(soTimeout)); }
-            if (soTimeout != null) { factory.setConnectTimeout(Integer.valueOf(connectTimeout)); }
+            if (soTimeout != null) { factory.setSoTimeout(Integer.parseInt(soTimeout)); }
+            if (soTimeout != null) { factory.setConnectTimeout(Integer.parseInt(connectTimeout)); }
             if (charsetName != null) { factory.setCharsetName(charsetName); }
 
             ConnectionPoolConfig config = new ConnectionPoolConfig();
-            if (maxTotal != null) { config.setMaxTotal(Integer.valueOf(maxTotal)); }
-            if (blockWhenExhausted != null) { config.setBlockWhenExhausted(Boolean.valueOf(blockWhenExhausted)); }
-            if (maxWaitMillis != null) { config.setMaxWaitMillis(Long.valueOf(maxWaitMillis)); }
-            if (testWhileIdle != null) { config.setTestWhileIdle(Boolean.valueOf(testWhileIdle)); }
-            if (minEvictableIdleTimeMillis != null) { config.setMinEvictableIdleTimeMillis(Long.valueOf(minEvictableIdleTimeMillis)); }
-            if (timeBetweenEvictionRunsMillis != null) { config.setTimeBetweenEvictionRunsMillis(Long.valueOf(timeBetweenEvictionRunsMillis)); }
+            if (maxTotal != null) { config.setMaxTotal(Integer.parseInt(maxTotal)); }
+            if (blockWhenExhausted != null) { config.setBlockWhenExhausted(Boolean.parseBoolean(blockWhenExhausted)); }
+            if (maxWaitMillis != null) { config.setMaxWaitMillis(Long.parseLong(maxWaitMillis)); }
+            if (testWhileIdle != null) { config.setTestWhileIdle(Boolean.parseBoolean(testWhileIdle)); }
+            if (minEvictableIdleTimeMillis != null) { config.setMinEvictableIdleTimeMillis(Long.parseLong(minEvictableIdleTimeMillis)); }
+            if (timeBetweenEvictionRunsMillis != null) { config.setTimeBetweenEvictionRunsMillis(Long.parseLong(timeBetweenEvictionRunsMillis)); }
             POOL = new FdfsConnectionPool(factory, config);
         }
     }

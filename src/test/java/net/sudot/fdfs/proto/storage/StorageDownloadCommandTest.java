@@ -19,7 +19,7 @@ public class StorageDownloadCommandTest extends StorageCommandTestBase {
         StorageDownloadCommand<String> command = new StorageDownloadCommand<String>(path.getGroup(), path.getPath(),
                 callback);
         String fileName = executeStoreCmd(command);
-        LOGGER.debug("----文件下载成功-----{}", fileName);
+        logger.debug("----文件下载成功-----{}", fileName);
     }
 
 }

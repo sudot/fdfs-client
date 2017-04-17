@@ -35,7 +35,7 @@ public class FastFileStorageClientTest extends FastdfsTestBase {
 
     /** 日志 */
     protected static Logger LOGGER = LoggerFactory.getLogger(FastFileStorageClientTest.class);
-    protected StorageClient storageClient = DefaultFdfsOptionsFactory.getStorageClient();
+    protected StorageClient storageClient = new DefaultFdfsOptionsFactory().getStorageClient();
 
     /**
      * 上传文件，并且设置MateData
@@ -104,7 +104,7 @@ public class FastFileStorageClientTest extends FastdfsTestBase {
 //        // 或者由客户端再记录一下从文件的前缀
 //        FileInfo slaveFile = storageClient.queryFileInfo(path.getGroup(), slavePath);
 //        assertNotNull(slaveFile);
-//        LOGGER.debug("##获取到从文件##{}", slaveFile);
+//        logger.debug("##获取到从文件##{}", slaveFile);
 
     }
 

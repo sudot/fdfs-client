@@ -105,7 +105,7 @@ public class TrackerLocator {
             InetSocketAddress address = holder.getAddress();
             config.append(address.toString()).append(",");
         }
-        return new String(config);
+        return config.toString();
     }
 
     /**

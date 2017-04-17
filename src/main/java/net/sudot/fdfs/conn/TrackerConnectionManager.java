@@ -2,6 +2,8 @@ package net.sudot.fdfs.conn;
 
 import net.sudot.fdfs.domain.TrackerLocator;
 import net.sudot.fdfs.exception.FdfsConnectException;
+import net.sudot.fdfs.exception.FdfsException;
+import net.sudot.fdfs.exception.FdfsUnavailableException;
 import net.sudot.fdfs.proto.FdfsCommand;
 
 import javax.annotation.PostConstruct;
@@ -15,6 +17,7 @@ import java.util.List;
  * @author tobato
  */
 public class TrackerConnectionManager extends ConnectionManager {
+    public static final String SPLIT_REGEX = ",|;| |\t|\r\n|\n";
 
     /** Tracker定位 */
     private TrackerLocator trackerLocator;
@@ -35,7 +38,7 @@ public class TrackerConnectionManager extends ConnectionManager {
     /** 初始化方法 */
     @PostConstruct
     public void initTracker() {
-        LOGGER.debug("init trackerLocator {}", trackerList);
+        logger.debug("init trackerLocator {}", trackerList);
         trackerLocator = new TrackerLocator(trackerList);
     }
 
@@ -50,15 +53,19 @@ public class TrackerConnectionManager extends ConnectionManager {
         // 获取连接
         try {
             address = trackerLocator.getTrackerAddress();
-            LOGGER.debug("获取到Tracker连接地址{}", address);
+            logger.debug("获取到Tracker连接地址{}", address);
             conn = getConnection(address);
             trackerLocator.setActive(address);
         } catch (FdfsConnectException e) {
+            returnObject(address, conn);
             trackerLocator.setInActive(address);
             throw e;
+        } catch (FdfsUnavailableException e) {
+            returnObject(address, conn);
+            throw e;
         } catch (Exception e) {
-            LOGGER.error("Unable to borrow buffer from pool", e);
-            throw new RuntimeException("Unable to borrow buffer from pool", e);
+            returnObject(address, conn);
+            throw new FdfsException("Unable to borrow buffer from pool", e);
         }
         // 执行交易
         return execute(address, conn, command);
@@ -74,7 +81,7 @@ public class TrackerConnectionManager extends ConnectionManager {
     }
 
     public TrackerConnectionManager setTrackerListFromString(String trackerListStr) {
-        this.trackerList = Arrays.asList(trackerListStr.split(","));
+        this.trackerList = Arrays.asList(trackerListStr.split(SPLIT_REGEX));
         return this;
     }
 }

@@ -4,8 +4,6 @@ import net.sudot.fdfs.FastdfsTestBase;
 import net.sudot.fdfs.TestConstants;
 import net.sudot.fdfs.proto.OtherConstants;
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.nio.charset.Charset;
 import java.util.Arrays;
@@ -22,12 +20,9 @@ public class FdfsParamMapperTest extends FastdfsTestBase {
 
     private static final Charset charset = TestConstants.DEFAULT_CHARSET;
 
-    private static final long PORT = 23000;
+    private static final long PORT = TestConstants.TRACKER_PORT;
     private static final String GROUP_NAME = TestConstants.DEFAULT_GROUP;
-    private static final String IP = TestConstants.DEFAULT_STORAGE_IP;
-
-    /** 日志 */
-    protected static Logger LOGGER = LoggerFactory.getLogger(FdfsParamMapperTest.class);
+    private static final String IP = TestConstants.STORAGE_HOST;
 
     /**
      * byte to object
@@ -128,15 +123,15 @@ public class FdfsParamMapperTest extends FastdfsTestBase {
      * @param request
      */
     private void printRequest(Object src, byte[] request) {
-        LOGGER.debug("------------------------");
-        LOGGER.debug("--length{}--------------", request.length);
-        LOGGER.debug("原始数据:{}", src);
+        logger.debug("------------------------");
+        logger.debug("--length{}--------------", request.length);
+        logger.debug("原始数据:{}", src);
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < request.length; i++) {
             builder.append(request[i]).append(" ");
         }
-        LOGGER.debug("{}", builder);
-        LOGGER.debug("-------------------");
+        logger.debug("{}", builder);
+        logger.debug("-------------------");
     }
 
 }

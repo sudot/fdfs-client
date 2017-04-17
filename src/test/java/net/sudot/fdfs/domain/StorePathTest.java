@@ -44,7 +44,7 @@ public class StorePathTest extends FastdfsTestBase {
             fail("No exception thrown.");
         } catch (Exception e) {
             assertTrue(e instanceof FdfsUnsupportStorePathException);
-            LOGGER.debug(((FdfsUnsupportStorePathException) e).getMessage());
+            LOGGER.debug(e.getMessage());
         }
     }
 

@@ -4,7 +4,11 @@ import net.sudot.fdfs.proto.mapper.FdfsParamMapper;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.GenericArrayType;
 import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.lang.reflect.TypeVariable;
+import java.lang.reflect.WildcardType;
 import java.nio.charset.Charset;
 
 /**
@@ -23,8 +27,20 @@ public abstract class FdfsResponse<T> {
     @SuppressWarnings("unchecked")
     public FdfsResponse() {
         super();
-        ParameterizedType type = (ParameterizedType) getClass().getGenericSuperclass();
-        this.genericType = (Class<T>) type.getActualTypeArguments()[0];
+        Type type = getClass().getGenericSuperclass();
+        while (type.getClass() != Class.class) {
+            System.out.println(type.getClass());
+            if (type instanceof ParameterizedType) {
+                type = ((ParameterizedType) type).getActualTypeArguments()[0];
+            } else if (type instanceof TypeVariable) {
+                type = Object.class;
+            } else if (type instanceof WildcardType) {
+                throw new IllegalArgumentException("未实现的反射类型(WildcardType):" + getClass().getName());
+            } else if (type instanceof GenericArrayType) {
+                throw new IllegalArgumentException("未实现的反射类型(GenericArrayType):" + getClass().getName());
+            }
+        }
+        this.genericType = (Class<T>) type;
     }
 
     /** 获取报文长度 */

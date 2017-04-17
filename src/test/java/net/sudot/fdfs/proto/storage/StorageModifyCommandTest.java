@@ -32,7 +32,7 @@ public class StorageModifyCommandTest extends StorageCommandTestBase {
         // StorageModifyCommandmand
         StorageModifyCommand command = new StorageModifyCommand(path.getPath(), modifyIn, modifySize, 0);
         executeStoreCmd(command);
-        LOGGER.debug("--文件修改处理成功--");
+        logger.debug("--文件修改处理成功--");
     }
 
 }

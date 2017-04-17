@@ -77,8 +77,8 @@ public abstract class StorageCommandTestBase extends CommandTestBase {
                 isAppenderFile);
         StorePath path = executeStoreCmd(command);
         assertNotNull(path);
-        LOGGER.debug("isAppenderFile={}-----文件上传处理结果-----", false);
-        LOGGER.debug(path.toString());
+        logger.debug("isAppenderFile={}-----文件上传处理结果-----", false);
+        logger.debug(path.toString());
         return path;
     }
 

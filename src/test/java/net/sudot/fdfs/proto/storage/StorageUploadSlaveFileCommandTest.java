@@ -1,6 +1,5 @@
 package net.sudot.fdfs.proto.storage;
 
-import net.coobird.thumbnailator.Thumbnails;
 import net.sudot.fdfs.TestConstants;
 import net.sudot.fdfs.TestUtils;
 import net.sudot.fdfs.domain.StorePath;
@@ -56,8 +55,8 @@ public class StorageUploadSlaveFileCommandTest extends StorageCommandTestBase {
                     prefixName, fileExtName);
             StorePath path = executeStoreCmd(command);
             assertNotNull(path);
-            LOGGER.debug("--从文件上传处理结果-----");
-            LOGGER.debug(path.toString());
+            logger.debug("--从文件上传处理结果-----");
+            logger.debug(path.toString());
             return path;
         } catch (IOException e) {
             e.printStackTrace();
@@ -82,7 +81,7 @@ public class StorageUploadSlaveFileCommandTest extends StorageCommandTestBase {
     private InputStream getThumbImageStream(String filePath) throws IOException {
         // 在内存当中生成缩略图
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        Thumbnails.of(TestUtils.getFile(filePath)).size(120, 120).toOutputStream(out);
+//        Thumbnails.of(TestUtils.getFile(filePath)).size(120, 120).toOutputStream(out);
         return new ByteArrayInputStream(out.toByteArray());
     }
 

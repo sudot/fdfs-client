@@ -5,14 +5,14 @@ package net.sudot.fdfs.exception;
  * @author yuqih
  * @author tobato
  */
-public abstract class FdfsException extends RuntimeException {
+public class FdfsException extends RuntimeException {
 
     /**
      * serialVersionUID
      */
     private static final long serialVersionUID = 1L;
 
-    protected FdfsException(String message) {
+    public FdfsException(String message) {
         super(message);
     }
 
@@ -20,7 +20,7 @@ public abstract class FdfsException extends RuntimeException {
      * @param message
      * @param cause
      */
-    protected FdfsException(String message, Throwable cause) {
+    public FdfsException(String message, Throwable cause) {
         super(message, cause);
     }
 

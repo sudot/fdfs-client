@@ -60,7 +60,7 @@ public class ConnectionPoolTest extends MockServerTestBase {
 
             // 清理连接池
             pool.clear(address);
-            // printPoolStates("清理连接池", address, pool);
+            // printPoolStates("清理连接池", TRACKER_ADDRESS, pool);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -71,12 +71,12 @@ public class ConnectionPoolTest extends MockServerTestBase {
     }
 
     private void printPoolStates(String msg, InetSocketAddress address, FdfsConnectionPool pool) {
-        LOGGER.debug("=============={}================", msg);
-        LOGGER.debug("活动连接{}", pool.getNumActive(address));
-        LOGGER.debug("空闲连接{}", pool.getNumIdle(address));
-        LOGGER.debug("连接获取总数统计{}", pool.getBorrowedCount());
-        LOGGER.debug("连接返回总数统计{}", pool.getReturnedCount());
-        LOGGER.debug("连接销毁总数统计{}", pool.getDestroyedCount());
+        logger.debug("=============={}================", msg);
+        logger.debug("活动连接{}", pool.getNumActive(address));
+        logger.debug("空闲连接{}", pool.getNumIdle(address));
+        logger.debug("连接获取总数统计{}", pool.getBorrowedCount());
+        logger.debug("连接返回总数统计{}", pool.getReturnedCount());
+        logger.debug("连接销毁总数统计{}", pool.getDestroyedCount());
     }
 
 }

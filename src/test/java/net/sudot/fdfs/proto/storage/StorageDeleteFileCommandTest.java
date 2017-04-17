@@ -18,7 +18,7 @@ public class StorageDeleteFileCommandTest extends StorageCommandTestBase {
         // 删除文件
         StorageDeleteFileCommand command = new StorageDeleteFileCommand(path.getGroup(), path.getPath());
         executeStoreCmd(command);
-        LOGGER.debug("----文件删除成功-----");
+        logger.debug("----文件删除成功-----");
     }
 
 }

@@ -5,7 +5,7 @@ package net.sudot.fdfs.exception;
  * @author yuqihuang
  * @author tobato
  */
-public class FdfsConnectException extends FdfsUnavailableException {
+public class FdfsConnectException extends FdfsException {
 
     /**
      * serialVersionUID

@@ -1,7 +1,6 @@
 package net.sudot.fdfs.util;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import net.sudot.fdfs.exception.FdfsIOException;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -16,7 +15,6 @@ import java.util.Properties;
  * @author tangjialin on 2016-04-05 0005.
  */
 public class ConfigUtils {
-	private static Logger logger = LoggerFactory.getLogger(ConfigUtils.class);
 	private static Properties properties;
 
 	/**
@@ -70,11 +68,10 @@ public class ConfigUtils {
 			properties.load(io);
 			return properties;
 		} catch (IOException e) {
-			logger.error("文件加载失败", e);
+			throw new FdfsIOException(e);
 		} finally {
 			IOUtils.closeQuietly(io);
 		}
-		return null;
 	}
 
 	/**
@@ -88,7 +85,7 @@ public class ConfigUtils {
 			io = new FileInputStream(file);
 			properties.load(io);
 		} catch (IOException e) {
-			logger.error("文件加载失败", e);
+			throw new FdfsIOException(e);
 		} finally {
 			IOUtils.closeQuietly(io);
 		}

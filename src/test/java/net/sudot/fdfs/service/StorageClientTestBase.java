@@ -15,6 +15,6 @@ public class StorageClientTestBase extends FastdfsTestBase {
     /** 日志 */
     protected static Logger LOGGER = LoggerFactory.getLogger(StorageClientTestBase.class);
     @Resource
-    protected AppendFileStorageClient storageClient;
+    protected DefaultStorageClient storageClient;
 
 }

@@ -24,7 +24,7 @@ public class StorageTruncateCommandTest extends StorageCommandTestBase {
         // 文件截取
         StorageTruncateCommand command = new StorageTruncateCommand(path.getPath(), 0);
         executeStoreCmd(command);
-        LOGGER.debug("--文件截取处理成功--");
+        logger.debug("--文件截取处理成功--");
     }
 
 }

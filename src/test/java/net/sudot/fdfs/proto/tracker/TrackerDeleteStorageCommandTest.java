@@ -33,13 +33,13 @@ public class TrackerDeleteStorageCommandTest extends StorageCommandTestBase {
             assertTrue(e instanceof FdfsServerException);
             assertTrue(((FdfsServerException) e).getErrorCode() == ErrorCodeConstants.ERR_NO_EBUSY);
         }
-        LOGGER.debug("----删除存储服务器-----");
+        logger.debug("----删除存储服务器-----");
     }
 
     public StorageNode getOneStorage() {
         StorageNode client = executeTrackerCmd(new TrackerGetStoreStorageCommand("group1"));
-        LOGGER.debug("-----列举存储服务器状态处理结果-----");
-        LOGGER.debug(client.toString());
+        logger.debug("-----列举存储服务器状态处理结果-----");
+        logger.debug(client.toString());
         return client;
     }
 

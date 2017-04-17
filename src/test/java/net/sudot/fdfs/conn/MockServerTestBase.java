@@ -1,5 +1,6 @@
 package net.sudot.fdfs.conn;
 
+import net.sudot.fdfs.TestConstants;
 import net.sudot.fdfs.socket.FdfsMockSocketServer;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -14,21 +15,19 @@ import java.net.InetSocketAddress;
  */
 public class MockServerTestBase {
 
-    public static final int soTimeout = 350;
-    public static final int connectTimeout = 50;
-    protected static FdfsMockSocketServer socketServer = new FdfsMockSocketServer();
+    protected static FdfsMockSocketServer SOCKET_SERVER = new FdfsMockSocketServer();
     /** 日志 */
-    protected final Logger LOGGER = LoggerFactory.getLogger(MockServerTestBase.class);
-    public InetSocketAddress address = new InetSocketAddress(FdfsMockSocketServer.PORT);
+    protected final Logger logger = LoggerFactory.getLogger(getClass());
+    public InetSocketAddress address = TestConstants.TRACKER_ADDRESS;
 
     @BeforeClass
     public static void startMockServer() {
-        socketServer.start();
+        SOCKET_SERVER.start();
     }
 
     @AfterClass
     public static void stopMockServer() {
-        socketServer.stopServer();
+        SOCKET_SERVER.stopServer();
     }
 
 }

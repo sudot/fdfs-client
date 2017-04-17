@@ -1,11 +1,12 @@
 package net.sudot.fdfs.conn;
 
 import net.sudot.fdfs.exception.FdfsException;
+import net.sudot.fdfs.exception.FdfsExecuteException;
+import net.sudot.fdfs.exception.FdfsUnavailableException;
 import net.sudot.fdfs.proto.FdfsCommand;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.Resource;
 import java.net.InetSocketAddress;
 
 /**
@@ -19,9 +20,8 @@ import java.net.InetSocketAddress;
 public class ConnectionManager {
 
     /** 日志 */
-    protected static final Logger LOGGER = LoggerFactory.getLogger(ConnectionManager.class);
+    protected final Logger logger = LoggerFactory.getLogger(getClass());
     /** 连接池 */
-    @Resource
     private FdfsConnectionPool pool;
 
     /**
@@ -64,21 +64,14 @@ public class ConnectionManager {
     protected <T> T execute(InetSocketAddress address, Connection conn, FdfsCommand<T> command) {
         try {
             // 执行交易
-            LOGGER.debug("对地址{}发出交易请求{}", address, command.getClass().getSimpleName());
+            logger.debug("对地址{}发出交易请求{}", address, command.getClass().getSimpleName());
             return command.execute(conn);
         } catch (FdfsException e) {
             throw e;
         } catch (Exception e) {
-            LOGGER.error("execute fdfs command error", e);
-            throw new RuntimeException("execute fdfs command error", e);
+            throw new FdfsExecuteException("execute fdfs command error", e);
         } finally {
-            try {
-                if (null != conn) {
-                    pool.returnObject(address, conn);
-                }
-            } catch (Exception e) {
-                LOGGER.error("return pooled connection error", e);
-            }
+            returnObject(address, conn);
         }
     }
 
@@ -93,12 +86,23 @@ public class ConnectionManager {
             // 获取连接
             conn = pool.borrowObject(address);
         } catch (FdfsException e) {
+            returnObject(address, conn);
             throw e;
         } catch (Exception e) {
-            LOGGER.error("Unable to borrow buffer from pool", e);
-            throw new RuntimeException("Unable to borrow buffer from pool", e);
+            returnObject(address, conn);
+            throw new FdfsUnavailableException("Unable to borrow buffer from pool", e);
         }
         return conn;
+    }
+
+    protected void  returnObject (InetSocketAddress address, Connection conn) {
+        try {
+            if (address != null && null != conn) {
+                pool.returnObject(address, conn);
+            }
+        } catch (Exception e) {
+            logger.error("return pooled connection error", e);
+        }
     }
 
     public FdfsConnectionPool getPool() {

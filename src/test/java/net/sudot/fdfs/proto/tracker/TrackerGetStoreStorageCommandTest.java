@@ -16,12 +16,12 @@ public class TrackerGetStoreStorageCommandTest extends CommandTestBase {
     public void testTrackerGetStoreStorageCommand() {
         StorageNode client = executeTrackerCmd(new TrackerGetStoreStorageCommand());
         assertNotNull(client.getInetSocketAddress());
-        LOGGER.debug("-----获取存储节点交易处理结果-----{}");
-        LOGGER.debug(client.toString());
+        logger.debug("-----获取存储节点交易处理结果-----{}");
+        logger.debug(client.toString());
 
         // Connection conn = new
         // DefaultConnection(client.getInetSocketAddress(), 500, 300, null);
-        // LOGGER.debug("连接状态{}", conn.isValid());
+        // logger.debug("连接状态{}", conn.isValid());
         // conn.close();
     }
 
@@ -29,12 +29,12 @@ public class TrackerGetStoreStorageCommandTest extends CommandTestBase {
     public void testTrackerGetStoreStorageWithGroupCommand() {
         StorageNode client = executeTrackerCmd(new TrackerGetStoreStorageCommand("group1"));
         assertNotNull(client.getInetSocketAddress());
-        LOGGER.debug("-----按组获取存储节点交易处理结果-----");
-        LOGGER.debug(client.toString());
+        logger.debug("-----按组获取存储节点交易处理结果-----");
+        logger.debug(client.toString());
 
         // Connection conn = new
         // DefaultConnection(client.getInetSocketAddress(), 500, 300, null);
-        // LOGGER.debug("连接状态{}", conn.isValid());
+        // logger.debug("连接状态{}", conn.isValid());
         // conn.close();
     }
 

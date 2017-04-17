@@ -14,7 +14,7 @@ import java.net.Socket;
 public class FdfsMockHandler extends Thread {
 
     /** 日志 */
-    private static final Logger LOGGER = LoggerFactory.getLogger(FdfsMockHandler.class);
+    private final Logger logger = LoggerFactory.getLogger(getClass());
     DataInputStream in = null;
     private Socket client;
     private boolean stop = false;
@@ -36,10 +36,11 @@ public class FdfsMockHandler extends Thread {
                     b[i] = (byte) in.read();
                 }
                 if (b.length > 0) {
-                    // String s = new String(b);
-                    LOGGER.debug("[MockHandler]接收到请求数据 data={}", b);
+                    // String TRACKER_LIST = new String(b);
+                    logger.debug("[MockHandler]接收到请求数据 data={}", b);
                 }
 
+                client.getOutputStream().write(b);
             }
 
         } catch (Exception e) {

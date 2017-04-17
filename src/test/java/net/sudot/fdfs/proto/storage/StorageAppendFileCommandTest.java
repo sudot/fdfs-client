@@ -27,25 +27,30 @@ public class StorageAppendFileCommandTest extends StorageCommandTestBase {
         long firstSize = firstIn.available();
         // 先上载第一段文字
         StorePath path = uploadInputStream(firstIn, "txt", firstSize, true);
+        logger.debug(path.getFullPath());
         // 添加第二段文字
         String secendText = "Work hard and hard. 努力工作啊\r\n";
         InputStream secendIn = getTextInputStream(secendText);
         long secendSize = secendIn.available();
         // 文件续传
         execStorageAppendFileCommand(secendIn, secendSize, path.getPath());
+        logger.debug(path.getFullPath());
+        byte[] bytes = executeStoreCmd(new StorageDownloadCommand<byte[]>(path.getGroup(), path.getPath(), new DownloadByteArray()));
+        logger.debug(new String(bytes));
+
+        executeStoreCmd(new StorageDeleteFileCommand(path.getGroup(), path.getPath()));
         firstIn.close();
         secendIn.close();
     }
 
     /**
      * 文件续传操作
-     * @param isAppenderFile
      */
     public void execStorageAppendFileCommand(InputStream in, long fileSize, String path) {
         StorageAppendFileCommand command = new StorageAppendFileCommand(in, fileSize, path);
         executeStoreCmd(command);
         assertNotNull(path);
-        LOGGER.debug("--文件续传操作结果-----");
+        logger.debug("--文件续传操作结果-----");
     }
 
 }

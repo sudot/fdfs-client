@@ -29,37 +29,37 @@ public class StorageSetMetadataCommandTest extends StorageCommandTestBase {
 
         // 如果第一次设置MataData使用MERGE后台会报出错误(因为后台要做一次查询)，然后再增加MataData
         // 所以尽量第一次设置的时候采用OverWrite的方式进行设置
-        LOGGER.debug("--第一次做测试OVERWRITE-----");
+        logger.debug("--第一次做测试OVERWRITE-----");
         StorageSetMetadataCommand command = new StorageSetMetadataCommand(path.getGroup(), path.getPath(),
                 firstMateData, StorageMetdataSetType.STORAGE_SET_METADATA_FLAG_OVERWRITE);
         executeStoreCmd(command);
-        LOGGER.debug("--设置文件元数据结果-----");
+        logger.debug("--设置文件元数据结果-----");
 
         StorageGetMetadataCommand getCommand = new StorageGetMetadataCommand(path.getGroup(), path.getPath());
         Set<MateData> firstMateDataResult = executeStoreCmd(getCommand);
-        LOGGER.debug("--获取文件元数据结果-----{}", firstMateDataResult);
+        logger.debug("--获取文件元数据结果-----{}", firstMateDataResult);
         assertEquals(firstMateData.size(), firstMateDataResult.size());
 
-        LOGGER.debug("--第二次做测试FLAG_MERGE-----");
+        logger.debug("--第二次做测试FLAG_MERGE-----");
         Set<MateData> mergeMateData = getMergeMateData();
         StorageSetMetadataCommand mergeCommand = new StorageSetMetadataCommand(path.getGroup(), path.getPath(),
                 mergeMateData, StorageMetdataSetType.STORAGE_SET_METADATA_FLAG_MERGE);
         executeStoreCmd(mergeCommand);
-        LOGGER.debug("--设置文件元数据结果-----");
+        logger.debug("--设置文件元数据结果-----");
 
         Set<MateData> mergeMateDataResult = executeStoreCmd(getCommand);
-        LOGGER.debug("--获取文件元数据结果-----{}", mergeMateDataResult);
+        logger.debug("--获取文件元数据结果-----{}", mergeMateDataResult);
         assertEquals(firstMateData.size() + 1, mergeMateDataResult.size());
 
-        LOGGER.debug("--第三次做测试OverWrite-----");
+        logger.debug("--第三次做测试OverWrite-----");
         Set<MateData> overWriteMateData = getOverWriteMateData();
         StorageSetMetadataCommand overWriteCommand = new StorageSetMetadataCommand(path.getGroup(), path.getPath(),
                 overWriteMateData, StorageMetdataSetType.STORAGE_SET_METADATA_FLAG_MERGE);
         executeStoreCmd(overWriteCommand);
-        LOGGER.debug("--设置文件元数据结果-----");
+        logger.debug("--设置文件元数据结果-----");
 
         Set<MateData> overWriteDataResult = executeStoreCmd(getCommand);
-        LOGGER.debug("--获取文件元数据结果-----{}", overWriteDataResult);
+        logger.debug("--获取文件元数据结果-----{}", overWriteDataResult);
         assertEquals(overWriteMateData.size(), overWriteDataResult.size());
 
     }

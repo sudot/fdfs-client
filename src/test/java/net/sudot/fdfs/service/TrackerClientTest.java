@@ -67,7 +67,7 @@ public class TrackerClientTest extends FastdfsTestBase {
     public void testListStoragesByGroupAndIp() {
         LOGGER.debug("testListStoragesByGroupAndIp..");
         List<StorageState> list = trackerClient.listStorages(TestConstants.DEFAULT_GROUP,
-                TestConstants.DEFAULT_STORAGE_IP);
+                TestConstants.STORAGE_HOST);
         assertNotNull(list);
         LOGGER.debug("result={}", list);
     }
@@ -77,7 +77,7 @@ public class TrackerClientTest extends FastdfsTestBase {
         LOGGER.debug("testDeleteStorage..");
         try {
             trackerClient.deleteStorage(TestConstants.DEFAULT_GROUP,
-                    TestConstants.DEFAULT_STORAGE_IP);
+                    TestConstants.STORAGE_HOST);
             fail("No exception thrown.");
         } catch (Exception e) {
             assertTrue(e instanceof FdfsServerException);

@@ -24,7 +24,7 @@ public class TrackerGetFetchStorageCommandTest extends StorageCommandTestBase {
         TrackerGetFetchStorageCommand command = new TrackerGetFetchStorageCommand(path.getGroup(), path.getPath(),
                 false);
         StorageNodeInfo client = executeTrackerCmd(command);
-        LOGGER.debug("----获取源服务器-----");
-        LOGGER.debug(client.toString());
+        logger.debug("----获取源服务器-----");
+        logger.debug(client.toString());
     }
 }
