@@ -68,11 +68,13 @@ public class TrackerConnectionManager extends ConnectionManager {
         return trackerList;
     }
 
-    public void setTrackerList(List<String> trackerList) {
+    public TrackerConnectionManager setTrackerList(List<String> trackerList) {
         this.trackerList = trackerList;
+        return this;
     }
 
-    public void setTrackerListFromString(String trackerListStr) {
+    public TrackerConnectionManager setTrackerListFromString(String trackerListStr) {
         this.trackerList = Arrays.asList(trackerListStr.split(","));
+        return this;
     }
 }

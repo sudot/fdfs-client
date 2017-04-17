@@ -12,16 +12,14 @@ import net.sudot.fdfs.proto.tracker.TrackerListGroupsCommand;
 import net.sudot.fdfs.proto.tracker.TrackerListStoragesCommand;
 import net.sudot.fdfs.util.Validate;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * 目录服务客户端默认实现
- * @author tobato
+ * 目录服务客户端实现
+ * Created by tangjialin on 2017-04-17 0017.
  */
 public class DefaultTrackerClient implements TrackerClient {
 
-    @Resource
     private TrackerConnectionManager trackerConnectionManager;
 
     /**
@@ -102,4 +100,12 @@ public class DefaultTrackerClient implements TrackerClient {
         trackerConnectionManager.executeFdfsTrackerCmd(command);
     }
 
+    public TrackerConnectionManager getTrackerConnectionManager() {
+        return trackerConnectionManager;
+    }
+
+    public DefaultTrackerClient setTrackerConnectionManager(TrackerConnectionManager trackerConnectionManager) {
+        this.trackerConnectionManager = trackerConnectionManager;
+        return this;
+    }
 }

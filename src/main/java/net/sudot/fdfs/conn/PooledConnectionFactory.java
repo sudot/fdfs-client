@@ -20,10 +20,14 @@ public class PooledConnectionFactory extends BaseKeyedPooledObjectFactory<InetSo
 
     /** 默认字符集 */
     private static final String DEFAULT_CHARSET_NAME = "UTF-8";
+    /** 读取时间(毫秒) */
+    private static final int DEFAULT_SO_TIMEOUT = 3000;
+    /** 连接超时时间(毫秒) */
+    private static final int DEFAULT_CONNECT_TIMEOUT = 5000;
     /** 读取时间 */
-    private int soTimeout;
+    private int soTimeout = DEFAULT_SO_TIMEOUT;
     /** 连接超时时间 */
-    private int connectTimeout;
+    private int connectTimeout = DEFAULT_CONNECT_TIMEOUT;
     /** 字符集 */
     private Charset charset;
     /** 设置默认字符集 */
@@ -53,16 +57,18 @@ public class PooledConnectionFactory extends BaseKeyedPooledObjectFactory<InetSo
         return soTimeout;
     }
 
-    public void setSoTimeout(int soTimeout) {
+    public PooledConnectionFactory setSoTimeout(int soTimeout) {
         this.soTimeout = soTimeout;
+        return this;
     }
 
     public int getConnectTimeout() {
         return connectTimeout;
     }
 
-    public void setConnectTimeout(int connectTimeout) {
+    public PooledConnectionFactory setConnectTimeout(int connectTimeout) {
         this.connectTimeout = connectTimeout;
+        return this;
     }
 
     public Charset getCharset() {
@@ -79,8 +85,9 @@ public class PooledConnectionFactory extends BaseKeyedPooledObjectFactory<InetSo
         return p.getObject().isValid();
     }
 
-    public void setCharsetName(String charsetName) {
+    public PooledConnectionFactory setCharsetName(String charsetName) {
         this.charsetName = charsetName;
+        return this;
     }
 
 }

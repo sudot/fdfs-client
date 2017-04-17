@@ -1,11 +1,10 @@
 package net.sudot.fdfs;
 
 import net.sudot.fdfs.domain.StorePath;
-import net.sudot.fdfs.service.AppendFileStorageClient;
+import net.sudot.fdfs.service.DefaultStorageClient;
 import net.sudot.fdfs.util.IOUtils;
 import org.junit.Test;
 
-import javax.annotation.Resource;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -16,8 +15,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class PerformanceTest extends FastdfsTestBase {
 
-    @Resource
-    protected AppendFileStorageClient storageClient;
+    protected DefaultStorageClient storageClient;
 
     @Test
     public void testPerformance() {

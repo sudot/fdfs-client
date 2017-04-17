@@ -105,19 +105,9 @@ public class ConnectionManager {
         return pool;
     }
 
-    public void setPool(FdfsConnectionPool pool) {
+    public ConnectionManager setPool(FdfsConnectionPool pool) {
         this.pool = pool;
-    }
-
-    public void dumpPoolInfo(InetSocketAddress address) {
-
-        LOGGER.debug("==============Dump Pool Info================");
-        LOGGER.debug("活动连接{}", pool.getNumActive(address));
-        LOGGER.debug("空闲连接{}", pool.getNumIdle(address));
-        LOGGER.debug("连接获取总数统计{}", pool.getBorrowedCount());
-        LOGGER.debug("连接返回总数统计{}", pool.getReturnedCount());
-        LOGGER.debug("连接销毁总数统计{}", pool.getDestroyedCount());
-
+        return this;
     }
 
 }

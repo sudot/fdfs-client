@@ -4,11 +4,9 @@ import net.sudot.fdfs.FastdfsTestBase;
 import net.sudot.fdfs.TestConstants;
 import net.sudot.fdfs.TestUtils;
 import net.sudot.fdfs.ThreadExecuteUtil;
-import net.sudot.fdfs.domain.FileInfo;
 import net.sudot.fdfs.domain.MateData;
 import net.sudot.fdfs.domain.RandomTextFile;
 import net.sudot.fdfs.domain.StorePath;
-import net.sudot.fdfs.domain.ThumbImageConfig;
 import net.sudot.fdfs.proto.storage.DownloadByteArray;
 import net.sudot.fdfs.proto.storage.DownloadCallback;
 import net.sudot.fdfs.util.FdfsUtil;
@@ -17,7 +15,6 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.Resource;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -38,10 +35,7 @@ public class FastFileStorageClientTest extends FastdfsTestBase {
 
     /** 日志 */
     protected static Logger LOGGER = LoggerFactory.getLogger(FastFileStorageClientTest.class);
-    @Resource
-    protected FastFileStorageClient storageClient;
-    @Resource
-    private ThumbImageConfig thumbImageConfig;
+    protected StorageClient storageClient = DefaultFdfsOptionsFactory.getStorageClient();
 
     /**
      * 上传文件，并且设置MateData
@@ -106,11 +100,11 @@ public class FastFileStorageClientTest extends FastdfsTestBase {
 //        IOUtils.write(bytes, new FileOutputStream("D:\\sss.jpg"));
         LOGGER.debug("##获取Metadata##");
         // 这里需要一个获取从文件名的能力，所以从文件名配置以后就最好不要改了
-        String slavePath = thumbImageConfig.getThumbImagePath(path.getPath());
-        // 或者由客户端再记录一下从文件的前缀
-        FileInfo slaveFile = storageClient.queryFileInfo(path.getGroup(), slavePath);
-        assertNotNull(slaveFile);
-        LOGGER.debug("##获取到从文件##{}", slaveFile);
+//        String slavePath = thumbImageConfig.getThumbImagePath(path.getPath());
+//        // 或者由客户端再记录一下从文件的前缀
+//        FileInfo slaveFile = storageClient.queryFileInfo(path.getGroup(), slavePath);
+//        assertNotNull(slaveFile);
+//        LOGGER.debug("##获取到从文件##{}", slaveFile);
 
     }
 
@@ -152,7 +146,8 @@ public class FastFileStorageClientTest extends FastdfsTestBase {
         long fileSize = file.length();
         try {
             in = TestUtils.getFileInputStream(filePath);
-            return storageClient.uploadImageAndCrtThumbImage(in, fileSize, fileExtName, metaDataSet);
+//            return storageClient.uploadImageAndCrtThumbImage(in, fileSize, fileExtName, metaDataSet);
+            return null;
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } finally {
