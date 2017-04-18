@@ -16,10 +16,10 @@ public class StorageSetMetadataCommand extends AbstractFdfsCommand<Void> {
 
     /**
      * 设置文件标签(元数据)
-     * @param groupName
-     * @param path
-     * @param metaDataSet
-     * @param type
+     * @param groupName   组名
+     * @param path        文件路径
+     * @param metaDataSet 元数据信息
+     * @param type        元数据操作方式
      */
     public StorageSetMetadataCommand(String groupName, String path, Set<MateData> metaDataSet,
                                      StorageMetdataSetType type) {

@@ -18,7 +18,7 @@ import java.nio.charset.Charset;
 public abstract class AbstractFdfsCommand<T> implements FdfsCommand<T> {
 
     /** 日志 */
-    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractFdfsCommand.class);
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     /** 表示请求消息 */
     protected FdfsRequest request;
@@ -34,14 +34,14 @@ public abstract class AbstractFdfsCommand<T> implements FdfsCommand<T> {
         try {
             send(conn.getOutputStream(), conn.getCharset());
         } catch (IOException e) {
-            LOGGER.error("send conent error", e);
+            logger.error("send conent error", e);
             throw new FdfsIOException("socket io exception occured while sending cmd", e);
         }
 
         try {
             return receive(conn.getInputStream(), conn.getCharset());
         } catch (IOException e) {
-            LOGGER.error("receive conent error", e);
+            logger.error("receive conent error", e);
             throw new FdfsIOException("socket io exception occured while receive content", e);
         }
 
@@ -67,8 +67,8 @@ public abstract class AbstractFdfsCommand<T> implements FdfsCommand<T> {
         // 交易文件流
         InputStream inputFile = request.getInputFile();
         long fileSize = request.getFileSize();
-        LOGGER.debug("发出交易请求..报文头为{}", request.getHead());
-        LOGGER.debug("交易参数为{}", param);
+        logger.debug("发出交易请求..报文头为{}", request.getHead());
+        logger.debug("交易参数为{}", param);
         // 输出报文头
         out.write(head);
         // 输出交易参数
@@ -84,7 +84,8 @@ public abstract class AbstractFdfsCommand<T> implements FdfsCommand<T> {
 
     /**
      * 接收这里只能确切知道报文头，报文内容(参数+文件)只能靠接收对象分析
-     * @param in
+     * @param in      解析的内容
+     * @param charset 字符编码
      * @return
      * @throws IOException
      */
@@ -92,7 +93,7 @@ public abstract class AbstractFdfsCommand<T> implements FdfsCommand<T> {
 
         // 解析报文头
         ProtoHead head = ProtoHead.createFromInputStream(in);
-        LOGGER.debug("服务端返回报文头{}", head);
+        logger.debug("服务端返回报文头{}", head);
         // 校验报文头
         head.validateResponseHead();
 
@@ -109,7 +110,7 @@ public abstract class AbstractFdfsCommand<T> implements FdfsCommand<T> {
      * @throws IOException
      */
     protected void sendFileContent(InputStream ins, long size, OutputStream ous) throws IOException {
-        LOGGER.debug("开始上传文件流大小为{}", size);
+        logger.debug("开始上传文件流大小为{}", size);
         long remainBytes = size;
         byte[] buff = new byte[256 * 1024];
         int bytes;
@@ -120,7 +121,7 @@ public abstract class AbstractFdfsCommand<T> implements FdfsCommand<T> {
 
             ous.write(buff, 0, bytes);
             remainBytes -= bytes;
-            LOGGER.debug("剩余数据量{}", remainBytes);
+            logger.debug("剩余数据量{}", remainBytes);
         }
     }
 

@@ -17,8 +17,7 @@ import java.net.InetSocketAddress;
  * </pre>
  * @author tobato
  */
-public class ConnectionManager {
-
+public abstract class ConnectionManager {
     /** 日志 */
     protected final Logger logger = LoggerFactory.getLogger(getClass());
     /** 连接池 */
@@ -33,7 +32,7 @@ public class ConnectionManager {
 
     /**
      * 构造函数
-     * @param pool
+     * @param pool 连接池
      */
     public ConnectionManager(FdfsConnectionPool pool) {
         super();
@@ -95,7 +94,14 @@ public class ConnectionManager {
         return conn;
     }
 
-    protected void  returnObject (InetSocketAddress address, Connection conn) {
+    /**
+     * 回收连接
+     * @param address 连接所属地址
+     * @param conn    回收的连接
+     * @param <T>     ConnectionManager及其子类泛型
+     * @return 返回ConnectionManager及其子类
+     */
+    protected <T extends ConnectionManager> T returnObject(InetSocketAddress address, Connection conn) {
         try {
             if (address != null && null != conn) {
                 pool.returnObject(address, conn);
@@ -103,15 +109,16 @@ public class ConnectionManager {
         } catch (Exception e) {
             logger.error("return pooled connection error", e);
         }
+        return (T) this;
     }
 
     public FdfsConnectionPool getPool() {
         return pool;
     }
 
-    public ConnectionManager setPool(FdfsConnectionPool pool) {
+    public <T extends ConnectionManager> T setPool(FdfsConnectionPool pool) {
         this.pool = pool;
-        return this;
+        return (T) this;
     }
 
 }

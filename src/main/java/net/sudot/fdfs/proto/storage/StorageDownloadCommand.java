@@ -13,10 +13,11 @@ public class StorageDownloadCommand<T> extends AbstractFdfsCommand<T> {
 
     /**
      * 下载文件
-     * @param groupName
-     * @param path
-     * @param fileOffset
-     * @param fileSize
+     * @param groupName  组名
+     * @param path       文件路径
+     * @param fileOffset 文件下载起始位置
+     * @param fileSize   预期下载文件大小
+     * @param callback   文件下载的回调处理
      */
     public StorageDownloadCommand(String groupName, String path, long fileOffset, long fileSize,
                                   DownloadCallback<T> callback) {
@@ -28,8 +29,9 @@ public class StorageDownloadCommand<T> extends AbstractFdfsCommand<T> {
 
     /**
      * 下载文件
-     * @param groupName
-     * @param path
+     * @param groupName 组名
+     * @param path      文件路径
+     * @param callback  文件下载的回调处理
      */
     public StorageDownloadCommand(String groupName, String path, DownloadCallback<T> callback) {
         super();

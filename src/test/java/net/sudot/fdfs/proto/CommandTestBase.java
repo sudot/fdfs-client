@@ -2,8 +2,6 @@ package net.sudot.fdfs.proto;
 
 import net.sudot.fdfs.TestConstants;
 import net.sudot.fdfs.conn.ConnectionManager;
-import net.sudot.fdfs.conn.FdfsConnectionPool;
-import net.sudot.fdfs.conn.PooledConnectionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,13 +10,14 @@ import org.slf4j.LoggerFactory;
  * @author tobato
  */
 public class CommandTestBase {
+
     /** 日志 */
     protected Logger logger = LoggerFactory.getLogger(getClass());
 
     /**
      * 连接池
      */
-    protected ConnectionManager manager = createConnectionManager();
+    protected ConnectionManager manager = TestConstants.FDFS_OPTIONS_FACTORY.getTrackerConnectionManager();
 
     /**
      * 执行Tracker交易命令
@@ -36,17 +35,6 @@ public class CommandTestBase {
      */
     protected <T> T executeStoreCmd(FdfsCommand<T> command) {
         return manager.executeFdfsCmd(TestConstants.STORE_ADDRESS, command);
-    }
-
-    private ConnectionManager createConnectionManager() {
-        return new ConnectionManager(createPool());
-    }
-
-    private FdfsConnectionPool createPool() {
-        PooledConnectionFactory factory = new PooledConnectionFactory();
-        factory.setConnectTimeout(TestConstants.CONNECT_TIMEOUT);
-        factory.setSoTimeout(TestConstants.SO_TIMEOUT);
-        return new FdfsConnectionPool(new PooledConnectionFactory());
     }
 
 }

@@ -4,6 +4,7 @@ import net.sudot.fdfs.conn.ConnectionManager;
 import net.sudot.fdfs.conn.ConnectionPoolConfig;
 import net.sudot.fdfs.conn.FdfsConnectionPool;
 import net.sudot.fdfs.conn.PooledConnectionFactory;
+import net.sudot.fdfs.conn.StorageConnectionManager;
 import net.sudot.fdfs.conn.TrackerConnectionManager;
 import net.sudot.fdfs.util.ConfigUtils;
 import net.sudot.fdfs.util.Validate;
@@ -12,7 +13,15 @@ import net.sudot.fdfs.util.Validate;
  * 默认FastDFS操作客户端工厂接口
  * Created by tangjialin on 2017-04-14 0014.
  */
-public class DefaultFdfsOptionsFactory implements FdfsOptionsFactory{
+public class DefaultFdfsOptionsFactory implements FdfsOptionsFactory {
+
+    public ConnectionManager getTrackerConnectionManager() {
+        return TrackerConnectionManagerInstance.TRACKER_CONNECTION_MANAGER;
+    }
+
+    public ConnectionManager getStorageConnectionManager() {
+        return StorageConnectionManagerInstance.STORAGE_CONNECTION_MANAGER;
+    }
 
     public TrackerClient getTrackerClient() {
         return TrackerClientInstance.TRACKER_CLIENT;
@@ -28,6 +37,7 @@ public class DefaultFdfsOptionsFactory implements FdfsOptionsFactory{
      */
     private static class ConnectionPoolInstance {
         private static final FdfsConnectionPool POOL;
+
         static {
             String soTimeout = ConfigUtils.getConfigValue("fdfs.soTimeout");
             String connectTimeout = ConfigUtils.getConfigValue("fdfs.connectTimeout");
@@ -49,9 +59,28 @@ public class DefaultFdfsOptionsFactory implements FdfsOptionsFactory{
             if (blockWhenExhausted != null) { config.setBlockWhenExhausted(Boolean.parseBoolean(blockWhenExhausted)); }
             if (maxWaitMillis != null) { config.setMaxWaitMillis(Long.parseLong(maxWaitMillis)); }
             if (testWhileIdle != null) { config.setTestWhileIdle(Boolean.parseBoolean(testWhileIdle)); }
-            if (minEvictableIdleTimeMillis != null) { config.setMinEvictableIdleTimeMillis(Long.parseLong(minEvictableIdleTimeMillis)); }
-            if (timeBetweenEvictionRunsMillis != null) { config.setTimeBetweenEvictionRunsMillis(Long.parseLong(timeBetweenEvictionRunsMillis)); }
+            if (minEvictableIdleTimeMillis != null) {
+                config.setMinEvictableIdleTimeMillis(Long.parseLong(minEvictableIdleTimeMillis));
+            }
+            if (timeBetweenEvictionRunsMillis != null) {
+                config.setTimeBetweenEvictionRunsMillis(Long.parseLong(timeBetweenEvictionRunsMillis));
+            }
             POOL = new FdfsConnectionPool(factory, config);
+        }
+    }
+
+    /**
+     * TrackerConnectionManager静态初始化
+     * Created by tangjialin on 2017-04-18 0018.
+     */
+    private static class TrackerConnectionManagerInstance {
+        private static final TrackerConnectionManager TRACKER_CONNECTION_MANAGER = new TrackerConnectionManager();
+
+        static {
+            String trackerList = ConfigUtils.getConfigValue("fdfs.trackerList");
+            Validate.notBlank(trackerList, "Tracker连接不能为空或包含空字符");
+            TRACKER_CONNECTION_MANAGER.setTrackerListFromString(trackerList);
+            TRACKER_CONNECTION_MANAGER.setPool(ConnectionPoolInstance.POOL);
         }
     }
 
@@ -61,14 +90,21 @@ public class DefaultFdfsOptionsFactory implements FdfsOptionsFactory{
      */
     private static class TrackerClientInstance {
         private static final DefaultTrackerClient TRACKER_CLIENT = new DefaultTrackerClient();
-        static {
-            String trackerList = ConfigUtils.getConfigValue("fdfs.trackerList");
-            Validate.notBlank(trackerList, "Tracker连接不能为空或包含空字符");
 
-            TrackerConnectionManager manager = new TrackerConnectionManager();
-            manager.setTrackerListFromString(trackerList);
-            manager.setPool(ConnectionPoolInstance.POOL);
-            TRACKER_CLIENT.setTrackerConnectionManager(manager);
+        static {
+            TRACKER_CLIENT.setTrackerConnectionManager(TrackerConnectionManagerInstance.TRACKER_CONNECTION_MANAGER);
+        }
+    }
+
+    /**
+     * StorageConnectionManager静态初始化
+     * Created by tangjialin on 2017-04-18 0018.
+     */
+    private static class StorageConnectionManagerInstance {
+        private static final StorageConnectionManager STORAGE_CONNECTION_MANAGER = new StorageConnectionManager();
+
+        static {
+            STORAGE_CONNECTION_MANAGER.setPool(ConnectionPoolInstance.POOL);
         }
     }
 
@@ -78,11 +114,10 @@ public class DefaultFdfsOptionsFactory implements FdfsOptionsFactory{
      */
     private static class StorageClientInstance {
         private static final DefaultStorageClient STORAGE_CLIENT = new DefaultStorageClient();
+
         static {
-            ConnectionManager connectionManager = new ConnectionManager();
-            connectionManager.setPool(ConnectionPoolInstance.POOL);
             STORAGE_CLIENT.setTrackerClient(TrackerClientInstance.TRACKER_CLIENT);
-            STORAGE_CLIENT.setConnectionManager(connectionManager);
+            STORAGE_CLIENT.setConnectionManager(StorageConnectionManagerInstance.STORAGE_CONNECTION_MANAGER);
         }
     }
 }

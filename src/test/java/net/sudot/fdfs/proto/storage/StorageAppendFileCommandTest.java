@@ -7,8 +7,6 @@ import org.junit.Test;
 import java.io.IOException;
 import java.io.InputStream;
 
-import static org.junit.Assert.assertNotNull;
-
 /**
  * 文件续传命令
  * @author tobato
@@ -33,7 +31,7 @@ public class StorageAppendFileCommandTest extends StorageCommandTestBase {
         InputStream secendIn = getTextInputStream(secendText);
         long secendSize = secendIn.available();
         // 文件续传
-        execStorageAppendFileCommand(secendIn, secendSize, path.getPath());
+        executeStoreCmd(new StorageAppendFileCommand(secendIn, secendSize, path.getPath()));
         logger.debug(path.getFullPath());
         byte[] bytes = executeStoreCmd(new StorageDownloadCommand<byte[]>(path.getGroup(), path.getPath(), new DownloadByteArray()));
         logger.debug(new String(bytes));
@@ -42,15 +40,4 @@ public class StorageAppendFileCommandTest extends StorageCommandTestBase {
         firstIn.close();
         secendIn.close();
     }
-
-    /**
-     * 文件续传操作
-     */
-    public void execStorageAppendFileCommand(InputStream in, long fileSize, String path) {
-        StorageAppendFileCommand command = new StorageAppendFileCommand(in, fileSize, path);
-        executeStoreCmd(command);
-        assertNotNull(path);
-        logger.debug("--文件续传操作结果-----");
-    }
-
 }

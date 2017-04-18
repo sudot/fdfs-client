@@ -33,7 +33,7 @@ import java.io.InputStream;
 public class StorageUploadSlaveFileCommand extends AbstractFdfsCommand<StorePath> {
 
     /**
-     * 文件上传命令
+     * 从文件上传命令
      * @param inputStream    输入流
      * @param fileSize       文件大小
      * @param masterFilename 主文件名称

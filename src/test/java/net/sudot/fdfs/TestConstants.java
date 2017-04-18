@@ -1,5 +1,7 @@
 package net.sudot.fdfs;
 
+import net.sudot.fdfs.service.DefaultFdfsOptionsFactory;
+import net.sudot.fdfs.service.FdfsOptionsFactory;
 import net.sudot.fdfs.util.ConfigUtils;
 
 import java.net.InetSocketAddress;
@@ -11,7 +13,7 @@ import java.nio.charset.Charset;
  */
 @SuppressWarnings("unused")
 public class TestConstants {
-
+    public static final FdfsOptionsFactory FDFS_OPTIONS_FACTORY = new DefaultFdfsOptionsFactory();
     public static final String TRACKER_HOST = ConfigUtils.getConfigValue("fdfs.test.trackerHost");
     public static final int TRACKER_PORT = Integer.parseInt(ConfigUtils.getConfigValue("fdfs.test.trackerPort"));
 
