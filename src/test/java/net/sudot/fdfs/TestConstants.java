@@ -28,7 +28,7 @@ public class TestConstants {
 
     public static final String TRACKER_LIST = ConfigUtils.getConfigValue("fdfs.trackerList");
 
-    public static final String DEFAULT_GROUP = "group1";
+    public static final String DEFAULT_GROUP = "group0dev01";
 
     public static final String PERFORM_FILE_PATH = "/images/gs.jpg";
     public static final String CAT_IMAGE_FILE = "/images/cat.jpg";

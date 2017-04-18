@@ -7,7 +7,9 @@ import java.util.Date;
 
 /**
  * fastdfs中storage节点的状态信息
+ * 修复字段索引跳跃
  * @author yuqih
+ * Update by sudot on 2017-04-18 0018.
  */
 public class StorageState {
 
@@ -175,25 +177,25 @@ public class StorageState {
     @FdfsColumn(index = 54)
     private long successFileReadCount;
     /** 文件写数量 */
-    @FdfsColumn(index = 56)
+    @FdfsColumn(index = 55)
     private long totalFileWriteCount;
     /** 文件成功写数量 */
-    @FdfsColumn(index = 57)
+    @FdfsColumn(index = 56)
     private long successFileWriteCount;
     /** 最后上传时间 */
-    @FdfsColumn(index = 58)
+    @FdfsColumn(index = 57)
     private Date lastSourceUpdate;
     /** 最后同步时间 */
-    @FdfsColumn(index = 59)
+    @FdfsColumn(index = 58)
     private Date lastSyncUpdate;
     /** 最后同步时间戳 */
-    @FdfsColumn(index = 60)
+    @FdfsColumn(index = 59)
     private Date lastSyncedTimestamp;
     /** 最后心跳时间 */
-    @FdfsColumn(index = 61)
+    @FdfsColumn(index = 60)
     private Date lastHeartBeatTime;
     /** 是否trunk服务器 */
-    @FdfsColumn(index = 62)
+    @FdfsColumn(index = 61)
     private boolean isTrunkServer;
 
     /**

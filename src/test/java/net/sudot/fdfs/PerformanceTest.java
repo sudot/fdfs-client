@@ -1,7 +1,6 @@
 package net.sudot.fdfs;
 
 import net.sudot.fdfs.domain.StorePath;
-import net.sudot.fdfs.service.DefaultStorageClient;
 import net.sudot.fdfs.util.IOUtils;
 import org.junit.Test;
 
@@ -12,11 +11,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * 性能测试
  * @author tobato
+ * Update by sudot on 2017-04-18 0018.
  */
 public class PerformanceTest extends FastdfsTestBase {
-
-    protected DefaultStorageClient storageClient;
-
     @Test
     public void testPerformance() {
         final AtomicInteger failCount = new AtomicInteger(0);

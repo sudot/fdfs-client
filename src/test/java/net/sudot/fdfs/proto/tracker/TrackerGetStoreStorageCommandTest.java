@@ -1,5 +1,6 @@
 package net.sudot.fdfs.proto.tracker;
 
+import net.sudot.fdfs.TestConstants;
 import net.sudot.fdfs.domain.StorageNode;
 import net.sudot.fdfs.proto.CommandTestBase;
 import org.junit.Test;
@@ -9,6 +10,7 @@ import static org.junit.Assert.assertNotNull;
 /**
  * 获取存储节点交易
  * @author tobato
+ * Update by sudot on 2017-04-18 0018.
  */
 public class TrackerGetStoreStorageCommandTest extends CommandTestBase {
 
@@ -18,24 +20,14 @@ public class TrackerGetStoreStorageCommandTest extends CommandTestBase {
         assertNotNull(client.getInetSocketAddress());
         logger.debug("-----获取存储节点交易处理结果-----{}");
         logger.debug(client.toString());
-
-        // Connection conn = new
-        // DefaultConnection(client.getInetSocketAddress(), 500, 300, null);
-        // logger.debug("连接状态{}", conn.isValid());
-        // conn.close();
     }
 
     @Test
     public void testTrackerGetStoreStorageWithGroupCommand() {
-        StorageNode client = executeTrackerCmd(new TrackerGetStoreStorageCommand("group1"));
+        StorageNode client = executeTrackerCmd(new TrackerGetStoreStorageCommand(TestConstants.DEFAULT_GROUP));
         assertNotNull(client.getInetSocketAddress());
         logger.debug("-----按组获取存储节点交易处理结果-----");
         logger.debug(client.toString());
-
-        // Connection conn = new
-        // DefaultConnection(client.getInetSocketAddress(), 500, 300, null);
-        // logger.debug("连接状态{}", conn.isValid());
-        // conn.close();
     }
 
 }
