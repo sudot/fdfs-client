@@ -14,6 +14,7 @@ import java.nio.charset.Charset;
 /**
  * Fdfs交易应答基类
  * @author tobato
+ * Update by sudot on 2017-04-18 0018.
  */
 public abstract class FdfsResponse<T> {
     /** 返回值类型 */
@@ -29,7 +30,6 @@ public abstract class FdfsResponse<T> {
         super();
         Type type = getClass().getGenericSuperclass();
         while (type.getClass() != Class.class) {
-            System.out.println(type.getClass());
             if (type instanceof ParameterizedType) {
                 type = ((ParameterizedType) type).getActualTypeArguments()[0];
             } else if (type instanceof TypeVariable) {

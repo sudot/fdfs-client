@@ -13,12 +13,14 @@ import java.util.Map;
 /**
  * param对象与byte映射器
  * @author tobato
- * Update by sudot on 2017-03-19 0019.
+ * Update by sudot on 2017-04-18 0018.
  */
 public class FdfsParamMapper {
 
     /** 对象映射缓存 */
     private static Map<String, ObjectMateData> mapCache = new HashMap<String, ObjectMateData>();
+    /** 类属性映射缓存 */
+    private static Map<String, Map<String, Field>> fieldCache = new HashMap<String, Map<String, Field>>();
     /** 日志 */
     private static Logger LOGGER = LoggerFactory.getLogger(FdfsParamMapper.class);
 
@@ -44,13 +46,10 @@ public class FdfsParamMapper {
         try {
             return mapByIndex(content, genericType, objectMap, charset);
         } catch (InstantiationException e) {
-            LOGGER.debug("Cannot instantiate: ", e);
             throw new FdfsColumnMapException(e);
         } catch (IllegalAccessException e) {
-            LOGGER.debug("Illegal access: ", e);
             throw new FdfsColumnMapException(e);
         } catch (NoSuchFieldException e) {
-            LOGGER.debug("No Such Field: ", e);
             throw new FdfsColumnMapException(e);
         }
     }
@@ -61,11 +60,34 @@ public class FdfsParamMapper {
      * @return
      */
     public static <T> ObjectMateData getObjectMap(Class<T> genericType) {
-        if (null == mapCache.get(genericType.getName())) {
+        ObjectMateData objectMateData = mapCache.get(genericType.getName());
+        if (null == objectMateData) {
             // 还未缓存过
-            mapCache.put(genericType.getName(), new ObjectMateData(genericType));
+            objectMateData = new ObjectMateData(genericType);
+            mapCache.put(genericType.getName(), objectMateData);
         }
-        return mapCache.get(genericType.getName());
+        return objectMateData;
+    }
+
+    /**
+     * 获取类属性定义
+     * @param genericType 需要获取的属性类
+     * @param <T>         类泛型
+     * @return 返回该类的属性定义集合
+     */
+    private static <T> Map<String, Field> getFieldMap(Class<T> genericType) {
+        String genericTypeName = genericType.getName();
+        Map<String, Field> stringFieldMap = fieldCache.get(genericTypeName);
+        if (stringFieldMap == null) {
+            Field[] declaredFields = genericType.getDeclaredFields();
+            stringFieldMap = new HashMap<>(declaredFields.length);
+            for (Field field : declaredFields) {
+                field.setAccessible(true);
+                stringFieldMap.put(field.getName(), field);
+            }
+            fieldCache.put(genericTypeName, stringFieldMap);
+        }
+        return stringFieldMap;
     }
 
     /**
@@ -81,14 +103,15 @@ public class FdfsParamMapper {
     private static <T> T mapByIndex(byte[] content, Class<T> genericType, ObjectMateData objectMap, Charset charset)
             throws IllegalAccessException, InstantiationException, NoSuchFieldException {
 
+        if (genericType == Void.class) { throw new IllegalAccessException("genericType不能为Void"); }
         List<FieldMateData> mappingFields = objectMap.getFieldList();
+        Map<String, Field> fieldMap = getFieldMap(genericType);
         T obj = genericType.newInstance();
         for (FieldMateData field : mappingFields) {
             Object value = field.getValue(content, charset);
             // 设置属性值
             if (LOGGER.isDebugEnabled()) { LOGGER.debug("设置值是 {} {}", field, value); }
-            Field declaredField = genericType.getDeclaredField(field.getFieldName());
-            declaredField.setAccessible(true);
+            Field declaredField = fieldMap.get(field.getFieldName());
             declaredField.set(obj, value);
 //            BeanUtils.setProperty(obj, field.getFieldName(), value);
         }

@@ -14,6 +14,7 @@ import java.nio.charset.Charset;
  * 交易命令抽象类
  * @param <T>
  * @author tobato
+ * Update by sudot on 2017-04-18 0018.
  */
 public abstract class AbstractFdfsCommand<T> implements FdfsCommand<T> {
 
@@ -34,17 +35,14 @@ public abstract class AbstractFdfsCommand<T> implements FdfsCommand<T> {
         try {
             send(conn.getOutputStream(), conn.getCharset());
         } catch (IOException e) {
-            logger.error("send conent error", e);
             throw new FdfsIOException("socket io exception occured while sending cmd", e);
         }
 
         try {
             return receive(conn.getInputStream(), conn.getCharset());
         } catch (IOException e) {
-            logger.error("receive conent error", e);
             throw new FdfsIOException("socket io exception occured while receive content", e);
         }
-
     }
 
     /**
@@ -67,8 +65,8 @@ public abstract class AbstractFdfsCommand<T> implements FdfsCommand<T> {
         // 交易文件流
         InputStream inputFile = request.getInputFile();
         long fileSize = request.getFileSize();
-        logger.debug("发出交易请求..报文头为{}", request.getHead());
-        logger.debug("交易参数为{}", param);
+        if (logger.isDebugEnabled()) { logger.debug("发出交易请求..报文头为{}", request.getHead()); }
+        if (logger.isDebugEnabled()) { logger.debug("交易参数为{}", param); }
         // 输出报文头
         out.write(head);
         // 输出交易参数
@@ -93,7 +91,7 @@ public abstract class AbstractFdfsCommand<T> implements FdfsCommand<T> {
 
         // 解析报文头
         ProtoHead head = ProtoHead.createFromInputStream(in);
-        logger.debug("服务端返回报文头{}", head);
+        if (logger.isDebugEnabled()) { logger.debug("服务端返回报文头{}", head); }
         // 校验报文头
         head.validateResponseHead();
 
@@ -110,7 +108,7 @@ public abstract class AbstractFdfsCommand<T> implements FdfsCommand<T> {
      * @throws IOException
      */
     protected void sendFileContent(InputStream ins, long size, OutputStream ous) throws IOException {
-        logger.debug("开始上传文件流大小为{}", size);
+        if (logger.isDebugEnabled()) { logger.debug("开始上传文件流大小为{}", size); }
         long remainBytes = size;
         byte[] buff = new byte[256 * 1024];
         int bytes;
@@ -121,7 +119,7 @@ public abstract class AbstractFdfsCommand<T> implements FdfsCommand<T> {
 
             ous.write(buff, 0, bytes);
             remainBytes -= bytes;
-            logger.debug("剩余数据量{}", remainBytes);
+            if (logger.isDebugEnabled()) { logger.debug("剩余数据量{}", remainBytes); }
         }
     }
 

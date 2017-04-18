@@ -10,6 +10,7 @@ import static org.junit.Assert.assertNotNull;
 /**
  * 文件查询处理
  * @author tobato
+ * Update by sudot on 2017-04-18 0018.
  */
 public class StorageQueryFileInfoCommandTest extends StorageCommandTestBase {
 
@@ -19,11 +20,11 @@ public class StorageQueryFileInfoCommandTest extends StorageCommandTestBase {
         StorePath path = uploadDefaultFile();
 
         // 查询文件
-        StorageQueryFileInfoCommand command = new StorageQueryFileInfoCommand(path.getGroup(), path.getPath());
-        FileInfo fileInfo = executeStoreCmd(command);
+        FileInfo fileInfo = executeStoreCmd(new StorageQueryFileInfoCommand(path.getGroup(), path.getPath()));
         assertNotNull(fileInfo);
         logger.debug("----文件查询处理结果-----");
         logger.debug(fileInfo.toString());
+        executeStoreCmd(new StorageDeleteFileCommand(path.getGroup(), path.getPath()));
     }
 
 }

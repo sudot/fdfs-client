@@ -15,6 +15,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * 文件上传命令测试
  * @author tobato
+ * Update by sudot on 2017-04-18 0018.
  */
 public class StorageSetMetadataCommandTest extends StorageCommandTestBase {
 
@@ -62,6 +63,7 @@ public class StorageSetMetadataCommandTest extends StorageCommandTestBase {
         logger.debug("--获取文件元数据结果-----{}", overWriteDataResult);
         assertEquals(overWriteMateData.size(), overWriteDataResult.size());
 
+        executeStoreCmd(new StorageDeleteFileCommand(path.getGroup(), path.getPath()));
     }
 
     /**
