@@ -12,6 +12,7 @@ import java.io.InputStream;
 /**
  * 从文件上传命令
  * @author tobato
+ * Update by sudot on 2017-04-19 0019.
  */
 public class StorageUploadSlaveFileRequest extends FdfsRequest {
 
@@ -33,11 +34,12 @@ public class StorageUploadSlaveFileRequest extends FdfsRequest {
 
     /**
      * 构造函数
-     * @param inputStream
-     * @param masterFilename
-     * @param fileExtName
-     * @param prefixName
-     * @param fileSize
+     * @param inputStream    文件输入流
+     * @param fileSize       文件大小
+     * @param masterFilename 主文件路径(不包含组名)
+     * @param prefixName     从文件存储前缀
+     * @param fileExtName    从文件扩展名
+     * @see net.sudot.fdfs.proto.storage.StorageUploadSlaveFileCommand
      */
     public StorageUploadSlaveFileRequest(InputStream inputStream, long fileSize, String masterFilename,
                                          String prefixName, String fileExtName) {

@@ -74,13 +74,12 @@ public class DefaultFdfsOptionsFactory implements FdfsOptionsFactory {
      * Created by tangjialin on 2017-04-18 0018.
      */
     private static class TrackerConnectionManagerInstance {
-        private static final TrackerConnectionManager TRACKER_CONNECTION_MANAGER = new TrackerConnectionManager();
+        private static final TrackerConnectionManager TRACKER_CONNECTION_MANAGER = new TrackerConnectionManager(ConnectionPoolInstance.POOL);
 
         static {
             String trackerList = ConfigUtils.getConfigValue("fdfs.trackerList");
             Validate.notBlank(trackerList, "Tracker连接不能为空或包含空字符");
             TRACKER_CONNECTION_MANAGER.setTrackerListFromString(trackerList);
-            TRACKER_CONNECTION_MANAGER.setPool(ConnectionPoolInstance.POOL);
         }
     }
 
@@ -101,11 +100,7 @@ public class DefaultFdfsOptionsFactory implements FdfsOptionsFactory {
      * Created by tangjialin on 2017-04-18 0018.
      */
     private static class StorageConnectionManagerInstance {
-        private static final StorageConnectionManager STORAGE_CONNECTION_MANAGER = new StorageConnectionManager();
-
-        static {
-            STORAGE_CONNECTION_MANAGER.setPool(ConnectionPoolInstance.POOL);
-        }
+        private static final StorageConnectionManager STORAGE_CONNECTION_MANAGER = new StorageConnectionManager(ConnectionPoolInstance.POOL);
     }
 
     /**

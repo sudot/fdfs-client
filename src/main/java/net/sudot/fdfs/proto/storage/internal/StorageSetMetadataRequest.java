@@ -17,6 +17,7 @@ import java.util.Set;
 /**
  * 设置文件标签
  * @author tobato
+ * Update by sudot on 2017-04-19 0019.
  */
 public class StorageSetMetadataRequest extends FdfsRequest {
 
@@ -41,17 +42,17 @@ public class StorageSetMetadataRequest extends FdfsRequest {
 
     /**
      * 设置文件元数据
-     * @param groupName
-     * @param path
-     * @param metaDataSet
-     * @param type
+     * @param groupName   文件存储组
+     * @param path        文件路径
+     * @param metaDataSet 元数据集合
+     * @param type        操作类型
      */
     public StorageSetMetadataRequest(String groupName, String path, Set<MateData> metaDataSet,
                                      StorageMetdataSetType type) {
         super();
         Validate.notBlank(groupName, "分组不能为空");
-        Validate.notBlank(path, "分组不能为空");
-        Validate.notEmpty(metaDataSet, "分组不能为空");
+        Validate.notBlank(path, "文件路径不能为空");
+        Validate.notEmpty(metaDataSet, "元数据不能为空");
         Validate.notNull(type, "标签设置方式不能为空");
         this.groupName = groupName;
         this.path = path;

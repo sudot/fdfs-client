@@ -10,6 +10,7 @@ import net.sudot.fdfs.proto.mapper.FdfsColumn;
 /**
  * 文件下载请求
  * @author tobato
+ * Update by sudot on 2017-04-19 0019.
  */
 public class StorageDownloadRequest extends FdfsRequest {
 
@@ -28,10 +29,10 @@ public class StorageDownloadRequest extends FdfsRequest {
 
     /**
      * 文件下载请求
-     * @param groupName
-     * @param path
-     * @param fileOffset
-     * @param fileSize
+     * @param groupName  文件存储组
+     * @param path       文件路径
+     * @param fileOffset 文件下载偏移量(文件下载的起始位置)
+     * @param fileSize   文件下载大小
      */
     public StorageDownloadRequest(String groupName, String path, long fileOffset, long fileSize) {
         super();

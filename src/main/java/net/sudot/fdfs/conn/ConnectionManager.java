@@ -16,6 +16,7 @@ import java.net.InetSocketAddress;
  * 负责借出连接，在连接上执行业务逻辑，然后归还连
  * </pre>
  * @author tobato
+ * Update by sudot on 2017-04-19 0019.
  */
 public abstract class ConnectionManager {
     /** 日志 */
@@ -36,7 +37,7 @@ public abstract class ConnectionManager {
      */
     public ConnectionManager(FdfsConnectionPool pool) {
         super();
-        this.pool = pool;
+        setPool(pool);
     }
 
     /**

@@ -12,6 +12,7 @@ import java.nio.charset.Charset;
 /**
  * 文件修改请求
  * @author tobato
+ * Update by sudot on 2017-04-19 0019.
  */
 public class StorageModifyRequest extends FdfsRequest {
 
@@ -30,10 +31,10 @@ public class StorageModifyRequest extends FdfsRequest {
 
     /**
      * 构造函数
-     * @param inputStream
-     * @param fileSize
-     * @param path
-     * @param fileOffset
+     * @param inputStream 文件输入流
+     * @param fileSize    文件大小
+     * @param path        文件路径(不含组名)
+     * @param fileOffset  偏移量(文件修改的起始位置)
      */
     public StorageModifyRequest(InputStream inputStream, long fileSize, String path, long fileOffset) {
         super();

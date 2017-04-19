@@ -29,16 +29,17 @@ import java.io.InputStream;
  *
  * </pre>
  * @author tobato
+ * Update by sudot on 2017-04-19 0019.
  */
 public class StorageUploadSlaveFileCommand extends AbstractFdfsCommand<StorePath> {
 
     /**
      * 从文件上传命令
-     * @param inputStream    输入流
+     * @param inputStream    文件输入流
      * @param fileSize       文件大小
-     * @param masterFilename 主文件名称
-     * @param prefixName     从文件前缀
-     * @param fileExtName    文件扩展名
+     * @param masterFilename 主文件路径(不包含组名)
+     * @param prefixName     从文件存储前缀
+     * @param fileExtName    从文件扩展名
      */
     public StorageUploadSlaveFileCommand(InputStream inputStream, long fileSize, String masterFilename,
                                          String prefixName, String fileExtName) {

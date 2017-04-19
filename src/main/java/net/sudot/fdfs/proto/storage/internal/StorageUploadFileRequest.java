@@ -11,7 +11,7 @@ import java.io.InputStream;
 /**
  * 文件上传命令
  * @author tobato
- * Update by sudot on 2017-03-17 0017.
+ * Update by sudot on 2017-04-19 0019.
  */
 public class StorageUploadFileRequest extends FdfsRequest {
 
@@ -31,7 +31,7 @@ public class StorageUploadFileRequest extends FdfsRequest {
     /**
      * 构造函数
      * @param storeIndex     存储节点
-     * @param inputStream    输入流
+     * @param inputStream    文件输入流
      * @param fileExtName    文件扩展名
      * @param fileSize       文件大小
      * @param isAppenderFile 是否支持断点续传

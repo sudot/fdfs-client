@@ -10,6 +10,7 @@ import net.sudot.fdfs.proto.mapper.FdfsColumn;
 /**
  * 查询文件信息命令
  * @author tobato
+ * Update by sudot on 2017-04-19 0019.
  */
 public class StorageGetMetadataRequest extends FdfsRequest {
 
@@ -22,8 +23,8 @@ public class StorageGetMetadataRequest extends FdfsRequest {
 
     /**
      * 删除文件命令
-     * @param groupName
-     * @param path
+     * @param groupName 文件存储组
+     * @param path      文件路径
      */
     public StorageGetMetadataRequest(String groupName, String path) {
         super();

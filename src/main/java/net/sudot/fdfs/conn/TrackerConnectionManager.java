@@ -6,9 +6,7 @@ import net.sudot.fdfs.exception.FdfsException;
 import net.sudot.fdfs.exception.FdfsUnavailableException;
 import net.sudot.fdfs.proto.FdfsCommand;
 
-import javax.annotation.PostConstruct;
 import java.net.InetSocketAddress;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -22,9 +20,6 @@ public class TrackerConnectionManager extends ConnectionManager {
     /** Tracker定位 */
     private TrackerLocator trackerLocator;
 
-    /** tracker服务配置地址列表 */
-    private List<String> trackerList = new ArrayList<String>();
-
     /** 构造函数 */
     public TrackerConnectionManager() {
         super();
@@ -33,13 +28,6 @@ public class TrackerConnectionManager extends ConnectionManager {
     /** 构造函数 */
     public TrackerConnectionManager(FdfsConnectionPool pool) {
         super(pool);
-    }
-
-    /** 初始化方法 */
-    @PostConstruct
-    public void initTracker() {
-        logger.debug("init trackerLocator {}", trackerList);
-        trackerLocator = new TrackerLocator(trackerList);
     }
 
     /**
@@ -71,17 +59,22 @@ public class TrackerConnectionManager extends ConnectionManager {
         return execute(address, conn, command);
     }
 
-    public List<String> getTrackerList() {
-        return trackerList;
+    public TrackerLocator getTrackerLocator() {
+        return trackerLocator;
+    }
+
+    public TrackerConnectionManager setTrackerLocator(TrackerLocator trackerLocator) {
+        this.trackerLocator = trackerLocator;
+        return this;
     }
 
     public TrackerConnectionManager setTrackerList(List<String> trackerList) {
-        this.trackerList = trackerList;
+        setTrackerLocator(new TrackerLocator(trackerList));
         return this;
     }
 
     public TrackerConnectionManager setTrackerListFromString(String trackerListStr) {
-        this.trackerList = Arrays.asList(trackerListStr.split(SPLIT_REGEX));
+        setTrackerList(Arrays.asList(trackerListStr.split(SPLIT_REGEX)));
         return this;
     }
 }

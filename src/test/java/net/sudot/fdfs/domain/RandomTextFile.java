@@ -26,7 +26,9 @@ public class RandomTextFile {
         Random random = new Random();
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < 30; i ++) {
-            builder.append(temple.charAt(random.nextInt() % len));
+            int nextInt = 0;
+            while ((nextInt = random.nextInt()) < 0);
+            builder.append(temple.charAt(nextInt % len));
         }
         this.text = builder.toString();
         this.fileSize = TestUtils.getTextLength(text);
