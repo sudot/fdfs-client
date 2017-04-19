@@ -11,7 +11,7 @@ import java.util.Set;
 /**
  * 基本文件存储客户端操作
  * @author tobato
- * Update by sudot on 2017-03-17 0017.
+ * @author sudot on 2017-03-17 0017.
  */
 public interface StorageClient {
 

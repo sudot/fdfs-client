@@ -1,14 +1,11 @@
 package net.sudot.fdfs.domain;
 
 import net.sudot.fdfs.FastdfsTestBase;
-import net.sudot.fdfs.TestConstants;
-import net.sudot.fdfs.conn.TrackerConnectionManager;
 import net.sudot.fdfs.exception.FdfsUnavailableException;
 import org.junit.Test;
 
 import java.net.InetSocketAddress;
 import java.util.Arrays;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -19,14 +16,13 @@ import static org.junit.Assert.fail;
 /**
  * TrackerLocator创建
  * @author tobato
+ * @author sudot on 2017-04-19 0019.
  */
 public class TrackerLocatorTest extends FastdfsTestBase {
-    private List<String> trackerIpList = Arrays.asList(TestConstants.TRACKER_LIST.split(TrackerConnectionManager.SPLIT_REGEX));
-
     @Test
     public void testTrackerLocator() {
         // 创建Locator
-        TrackerLocator locator = new TrackerLocator(trackerIpList);
+        TrackerLocator locator = new TrackerLocator(Arrays.asList(new String[]{"127.0.0.1:1234", "127.0.0.1:2234"}));
         assertFalse(locator.getTrackerList().isEmpty());
         // 获取一个连接地址
         InetSocketAddress addressA = getAddress(locator, "获取地址A");

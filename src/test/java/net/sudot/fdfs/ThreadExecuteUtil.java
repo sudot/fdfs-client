@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * 线程执行工具
- * Created by tangjialin on 2017-03-22 0022.
+ * @author sudot on 2017-03-22 0022.
  */
 public class ThreadExecuteUtil {
     /** 线程池 */

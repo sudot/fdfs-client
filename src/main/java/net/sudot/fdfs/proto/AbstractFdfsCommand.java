@@ -14,7 +14,7 @@ import java.nio.charset.Charset;
  * 交易命令抽象类
  * @param <T>
  * @author tobato
- * Update by sudot on 2017-04-18 0018.
+ * @author sudot on 2017-04-18 0018.
  */
 public abstract class AbstractFdfsCommand<T> implements FdfsCommand<T> {
 

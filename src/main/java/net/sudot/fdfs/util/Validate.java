@@ -4,7 +4,7 @@ import java.util.Collection;
 
 /**
  * 验证操作类
- * Created by tangjialin on 2017-04-07 0007.
+ * @author sudot on 2017-04-07 0007.
  */
 public class Validate {
 

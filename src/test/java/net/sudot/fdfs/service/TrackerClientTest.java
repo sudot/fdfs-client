@@ -18,7 +18,7 @@ import static org.junit.Assert.fail;
 /**
  * unit test for TrackerClientService
  * @author tobato
- * Update by sudot on 2017-04-18 0018.
+ * @author sudot on 2017-04-18 0018.
  */
 public class TrackerClientTest extends FastdfsTestBase {
     @Test

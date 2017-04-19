@@ -11,7 +11,7 @@ import net.sudot.fdfs.util.Validate;
 /**
  * 获取源服务器
  * @author tobato
- * Update by sudot on 2017-03-17 0017.
+ * @author sudot on 2017-03-17 0017.
  */
 public class TrackerGetFetchStorageRequest extends FdfsRequest {
 

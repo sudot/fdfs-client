@@ -12,7 +12,7 @@ import java.nio.charset.Charset;
 /**
  * 文件修改请求
  * @author tobato
- * Update by sudot on 2017-04-19 0019.
+ * @author sudot on 2017-04-19 0019.
  */
 public class StorageModifyRequest extends FdfsRequest {
 
@@ -21,27 +21,27 @@ public class StorageModifyRequest extends FdfsRequest {
     private long pathSize;
     /** 开始位置 */
     @FdfsColumn(index = 1)
-    private long fileOffset;
+    private long modifyOffset;
     /** 发送文件长度 */
     @FdfsColumn(index = 2)
-    private long fileSize;
+    private long modifySize;
     /** 文件路径 */
     @FdfsColumn(index = 3, dynamicField = DynamicFieldType.allRestByte)
     private String path;
 
     /**
      * 构造函数
-     * @param inputStream 文件输入流
-     * @param fileSize    文件大小
-     * @param path        文件路径(不含组名)
-     * @param fileOffset  偏移量(文件修改的起始位置)
+     * @param inputStream  文件输入流
+     * @param modifySize   文件大小
+     * @param path         文件路径(不含组名)
+     * @param modifyOffset 偏移量(文件修改的起始位置)
      */
-    public StorageModifyRequest(InputStream inputStream, long fileSize, String path, long fileOffset) {
+    public StorageModifyRequest(InputStream inputStream, long modifySize, String path, long modifyOffset) {
         super();
         this.inputFile = inputStream;
-        this.fileSize = fileSize;
+        this.modifySize = modifySize;
         this.path = path;
-        this.fileOffset = fileOffset;
+        this.modifyOffset = modifyOffset;
         head = new ProtoHead(CmdConstants.STORAGE_PROTO_CMD_MODIFY_FILE);
 
     }
@@ -60,8 +60,8 @@ public class StorageModifyRequest extends FdfsRequest {
         return pathSize;
     }
 
-    public long getFileOffset() {
-        return fileOffset;
+    public long getModifyOffset() {
+        return modifyOffset;
     }
 
     public String getPath() {
@@ -70,7 +70,7 @@ public class StorageModifyRequest extends FdfsRequest {
 
     @Override
     public long getFileSize() {
-        return fileSize;
+        return modifySize;
     }
 
 }

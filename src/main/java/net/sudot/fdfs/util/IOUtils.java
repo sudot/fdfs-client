@@ -7,7 +7,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 /**
- * Created by tangjialin on 2017-04-07 0007.
+ * @author sudot on 2017-04-07 0007.
  */
 public class IOUtils {
     /**

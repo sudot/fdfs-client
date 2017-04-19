@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 /**
  * 测试基类
  * @author wenchukai1
- * Update by sudot on 2017-04-18 0018.
+ * @author sudot on 2017-04-18 0018.
  */
 public class FastdfsTestBase {
     /** 日志 */

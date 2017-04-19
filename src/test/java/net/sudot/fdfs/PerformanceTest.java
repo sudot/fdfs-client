@@ -11,7 +11,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * 性能测试
  * @author tobato
- * Update by sudot on 2017-04-18 0018.
+ * @author sudot on 2017-04-18 0018.
  */
 public class PerformanceTest extends FastdfsTestBase {
     @Test

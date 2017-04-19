@@ -29,7 +29,7 @@ import java.io.InputStream;
  *
  * </pre>
  * @author tobato
- * Update by sudot on 2017-04-19 0019.
+ * @author sudot on 2017-04-19 0019.
  */
 public class StorageUploadSlaveFileCommand extends AbstractFdfsCommand<StorePath> {
 

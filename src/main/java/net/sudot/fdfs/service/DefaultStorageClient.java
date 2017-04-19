@@ -26,7 +26,7 @@ import java.util.Set;
 /**
  * 基本存储客户端操作实现
  * @author tobato
- * Update by sudot on 2017-03-17 0017.
+ * @author sudot on 2017-03-17 0017.
  */
 public class DefaultStorageClient implements StorageClient {
 

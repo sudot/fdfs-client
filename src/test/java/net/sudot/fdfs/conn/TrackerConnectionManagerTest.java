@@ -12,6 +12,7 @@ import java.util.List;
 /**
  * 验证会轮询地址
  * @author tobato
+ * @author sudot on 2017-04-19 0019.
  */
 public class TrackerConnectionManagerTest extends FastdfsTestBase {
 
@@ -22,7 +23,6 @@ public class TrackerConnectionManagerTest extends FastdfsTestBase {
         // 初始化
         TrackerConnectionManager manager = new TrackerConnectionManager(createPool());
         manager.setTrackerList(trackerIpList);
-        manager.initTracker();
         List<GroupState> list = null;
         // 第一次执行
         list = manager.executeFdfsTrackerCmd(new TrackerListGroupsCommand());

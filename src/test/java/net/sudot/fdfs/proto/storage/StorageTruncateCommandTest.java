@@ -11,7 +11,7 @@ import java.io.InputStream;
 /**
  * 文件截取命令
  * @author tobato
- * Update by sudot on 2017-04-18 0018.
+ * @author sudot on 2017-04-18 0018.
  */
 public class StorageTruncateCommandTest extends StorageCommandTestBase {
 

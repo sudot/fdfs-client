@@ -9,7 +9,7 @@ import net.sudot.fdfs.util.Validate;
 /**
  * 存储文件的路径信息
  * @author yuqih
- * Update by sudot on 2017-03-17 0017.
+ * @author sudot on 2017-03-17 0017.
  */
 public class StorePath {
 

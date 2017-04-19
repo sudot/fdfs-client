@@ -6,7 +6,7 @@ import java.io.InputStream;
 /**
  * FdfsInputStream包装类
  * @author tobato
- * Update by sudot on 2017-04-19 0019.
+ * @author sudot on 2017-04-19 0019.
  */
 public class FdfsInputStream extends InputStream {
 

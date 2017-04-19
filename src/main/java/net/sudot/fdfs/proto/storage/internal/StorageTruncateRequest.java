@@ -19,7 +19,7 @@ import java.nio.charset.Charset;
  * 4.文件的截取是从文件起始部分保留truncatedFileSize,后面的部分全部清除
  * </pre>
  * @author tobato
- * Update by tangjialin on 2017-04-18 0018.
+ * @author sudot on 2017-04-19 0019.
  */
 public class StorageTruncateRequest extends FdfsRequest {
 

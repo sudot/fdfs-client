@@ -14,7 +14,7 @@ import static org.junit.Assert.fail;
 /**
  * 文件路径对象
  * @author tobato
- *         Update by sudot on 2017-03-17 0017.
+ * @author sudot on 2017-03-17 0017.
  */
 public class StorePathTest extends FastdfsTestBase {
 

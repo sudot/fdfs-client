@@ -4,7 +4,8 @@ import org.apache.commons.pool2.impl.GenericKeyedObjectPoolConfig;
 
 /**
  * 连接池配置
- * Created by tangjialin on 2017-04-17 0017.
+ * @author tobato
+ * @author sudot on 2017-04-17 0017.
  */
 public class ConnectionPoolConfig extends GenericKeyedObjectPoolConfig {
 

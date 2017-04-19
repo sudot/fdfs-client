@@ -2,6 +2,7 @@ package net.sudot.fdfs.proto.storage;
 
 import net.sudot.fdfs.domain.StorePath;
 import net.sudot.fdfs.proto.StorageCommandTestBase;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -10,6 +11,7 @@ import java.io.InputStream;
 /**
  * 文件续传命令
  * @author tobato
+ * @author sudot on 2017-04-19 0019.
  */
 public class StorageAppendFileCommandTest extends StorageCommandTestBase {
 
@@ -20,12 +22,13 @@ public class StorageAppendFileCommandTest extends StorageCommandTestBase {
      */
     @Test
     public void testStorageAppendFileCommand() throws IOException {
-        String firstText = "Tobato is a good man.他是一个好人\r\n";
+        String firstText = "testStorageAppendFileCommand.一个单元测试\r\n";
         InputStream firstIn = getTextInputStream(firstText);
         long firstSize = firstIn.available();
         // 先上载第一段文字
         StorePath path = uploadInputStream(firstIn, "txt", firstSize, true);
         logger.debug(path.getFullPath());
+
         // 添加第二段文字
         String secendText = "Work hard and hard. 努力工作啊\r\n";
         InputStream secendIn = getTextInputStream(secendText);
@@ -34,10 +37,12 @@ public class StorageAppendFileCommandTest extends StorageCommandTestBase {
         executeStoreCmd(new StorageAppendFileCommand(secendIn, secendSize, path.getPath()));
         logger.debug(path.getFullPath());
         byte[] bytes = executeStoreCmd(new StorageDownloadCommand<byte[]>(path.getGroup(), path.getPath(), new DownloadByteArray()));
-        logger.debug(new String(bytes));
 
+        // 文件清理
         executeStoreCmd(new StorageDeleteFileCommand(path.getGroup(), path.getPath()));
-        firstIn.close();
-        secendIn.close();
+
+        String context = new String(bytes);
+        logger.debug("续传后的内容:{}", context);
+        Assert.assertEquals("内容不一致", firstText + secendText, context);
     }
 }

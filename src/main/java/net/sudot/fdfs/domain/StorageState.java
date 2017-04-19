@@ -9,7 +9,7 @@ import java.util.Date;
  * fastdfs中storage节点的状态信息
  * 修复字段索引跳跃
  * @author yuqih
- * Update by sudot on 2017-04-18 0018.
+ * @author sudot on 2017-04-18 0018.
  */
 public class StorageState {
 

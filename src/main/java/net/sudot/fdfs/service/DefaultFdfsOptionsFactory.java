@@ -11,7 +11,7 @@ import net.sudot.fdfs.util.Validate;
 
 /**
  * 默认FastDFS操作客户端工厂接口
- * Created by tangjialin on 2017-04-14 0014.
+ * @author sudot on 2017-04-14 0014.
  */
 public class DefaultFdfsOptionsFactory implements FdfsOptionsFactory {
 
@@ -33,7 +33,7 @@ public class DefaultFdfsOptionsFactory implements FdfsOptionsFactory {
 
     /**
      * 连接池静态初始化
-     * Created by tangjialin on 2017-04-17 0017.
+     * @author sudot on 2017-04-17 0017.
      */
     private static class ConnectionPoolInstance {
         private static final FdfsConnectionPool POOL;
@@ -71,7 +71,7 @@ public class DefaultFdfsOptionsFactory implements FdfsOptionsFactory {
 
     /**
      * TrackerConnectionManager静态初始化
-     * Created by tangjialin on 2017-04-18 0018.
+     * @author sudot on 2017-04-18 0018.
      */
     private static class TrackerConnectionManagerInstance {
         private static final TrackerConnectionManager TRACKER_CONNECTION_MANAGER = new TrackerConnectionManager(ConnectionPoolInstance.POOL);
@@ -85,7 +85,7 @@ public class DefaultFdfsOptionsFactory implements FdfsOptionsFactory {
 
     /**
      * TrackerClient静态初始化
-     * Created by tangjialin on 2017-04-17 0017.
+     * @author sudot on 2017-04-17 0017.
      */
     private static class TrackerClientInstance {
         private static final DefaultTrackerClient TRACKER_CLIENT = new DefaultTrackerClient();
@@ -97,7 +97,7 @@ public class DefaultFdfsOptionsFactory implements FdfsOptionsFactory {
 
     /**
      * StorageConnectionManager静态初始化
-     * Created by tangjialin on 2017-04-18 0018.
+     * @author sudot on 2017-04-18 0018.
      */
     private static class StorageConnectionManagerInstance {
         private static final StorageConnectionManager STORAGE_CONNECTION_MANAGER = new StorageConnectionManager(ConnectionPoolInstance.POOL);
@@ -105,7 +105,7 @@ public class DefaultFdfsOptionsFactory implements FdfsOptionsFactory {
 
     /**
      * StorageClient静态初始化
-     * Created by tangjialin on 2017-04-17 0017.
+     * @author sudot on 2017-04-17 0017.
      */
     private static class StorageClientInstance {
         private static final DefaultStorageClient STORAGE_CLIENT = new DefaultStorageClient();

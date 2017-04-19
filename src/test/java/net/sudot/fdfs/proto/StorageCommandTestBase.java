@@ -17,6 +17,7 @@ import static org.junit.Assert.assertNotNull;
 /**
  * command测试基类
  * @author tobato
+ * @author sudot on 2017-04-19 0019.
  */
 public abstract class StorageCommandTestBase extends CommandTestBase {
 
@@ -53,7 +54,7 @@ public abstract class StorageCommandTestBase extends CommandTestBase {
      * @return
      * @throws IOException
      */
-    protected InputStream getTextInputStream(String text) throws IOException {
+    protected InputStream getTextInputStream(String text) {
         // 将String转换为InputStream
         return new ByteArrayInputStream(text.getBytes(TestConstants.DEFAULT_CHARSET));
     }
@@ -69,12 +70,15 @@ public abstract class StorageCommandTestBase extends CommandTestBase {
 
     /**
      * 文件上传操作
-     * @param isAppenderFile
+     * @param in             文件输入流
+     * @param fileExtName    文件扩展名
+     * @param fileSize       文件大小
+     * @param isAppenderFile 是否支持断电续传
+     * @return
      */
     protected StorePath uploadInputStream(InputStream in, String fileExtName, long fileSize, boolean isAppenderFile) {
         byte storeIndex = 0;
-        StorageUploadFileCommand command = new StorageUploadFileCommand(storeIndex, in, fileExtName, fileSize,
-                isAppenderFile);
+        StorageUploadFileCommand command = new StorageUploadFileCommand(storeIndex, in, fileExtName, fileSize, isAppenderFile);
         StorePath path = executeStoreCmd(command);
         assertNotNull(path);
         logger.debug("isAppenderFile={}-----文件上传处理结果-----", false);

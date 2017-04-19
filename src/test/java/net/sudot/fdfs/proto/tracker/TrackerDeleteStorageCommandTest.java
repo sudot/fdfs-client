@@ -12,7 +12,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * 删除存储服务器
  * @author tobato
- * Update by sudot on 2017-04-18 0018.
+ * @author sudot on 2017-04-18 0018.
  */
 public class TrackerDeleteStorageCommandTest extends StorageCommandTestBase {
 

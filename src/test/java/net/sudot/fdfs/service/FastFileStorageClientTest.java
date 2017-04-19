@@ -24,7 +24,7 @@ import static org.junit.Assert.assertNotNull;
 /**
  * FastFileStorageClient客户端
  * @author tobato
- * Update by sudot on 2017-04-18 0018.
+ * @author sudot on 2017-04-18 0018.
  */
 public class FastFileStorageClientTest extends FastdfsTestBase {
 

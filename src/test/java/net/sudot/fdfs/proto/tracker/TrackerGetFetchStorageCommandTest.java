@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * 获取源服务器
  * @author tobato
- * Update by sudot on 2017-04-18 0018.
+ * @author sudot on 2017-04-18 0018.
  */
 public class TrackerGetFetchStorageCommandTest extends StorageCommandTestBase {
 

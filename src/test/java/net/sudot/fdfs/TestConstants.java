@@ -10,6 +10,7 @@ import java.nio.charset.Charset;
 /**
  * 测试常量定义
  * @author tobato
+ * @author sudot on 2017-04-18 0018.
  */
 @SuppressWarnings("unused")
 public class TestConstants {

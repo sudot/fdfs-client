@@ -16,7 +16,7 @@ import java.util.List;
 
 /**
  * 目录服务客户端实现
- * Created by tangjialin on 2017-04-17 0017.
+ * @author sudot on 2017-04-17 0017.
  */
 public class DefaultTrackerClient implements TrackerClient {
 

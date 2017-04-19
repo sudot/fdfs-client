@@ -1,9 +1,7 @@
 package net.sudot.fdfs.conn;
 
 import net.sudot.fdfs.domain.TrackerLocator;
-import net.sudot.fdfs.exception.FdfsConnectException;
 import net.sudot.fdfs.exception.FdfsException;
-import net.sudot.fdfs.exception.FdfsUnavailableException;
 import net.sudot.fdfs.proto.FdfsCommand;
 
 import java.net.InetSocketAddress;
@@ -13,6 +11,7 @@ import java.util.List;
 /**
  * 管理TrackerClient连接池分配
  * @author tobato
+ * @author sudot on 2017-04-19 0019.
  */
 public class TrackerConnectionManager extends ConnectionManager {
     public static final String SPLIT_REGEX = ",|;| |\t|\r\n|\n";
@@ -36,27 +35,15 @@ public class TrackerConnectionManager extends ConnectionManager {
      * @return
      */
     public <T> T executeFdfsTrackerCmd(FdfsCommand<T> command) {
-        Connection conn = null;
-        InetSocketAddress address = null;
-        // 获取连接
+        InetSocketAddress address = trackerLocator.getTrackerAddress();
+        logger.debug("获取到Tracker连接地址{}", address);
+        trackerLocator.setActive(address);
         try {
-            address = trackerLocator.getTrackerAddress();
-            logger.debug("获取到Tracker连接地址{}", address);
-            conn = getConnection(address);
-            trackerLocator.setActive(address);
-        } catch (FdfsConnectException e) {
-            returnObject(address, conn);
+            return super.executeFdfsCmd(address, command);
+        } catch (FdfsException e) {
             trackerLocator.setInActive(address);
             throw e;
-        } catch (FdfsUnavailableException e) {
-            returnObject(address, conn);
-            throw e;
-        } catch (Exception e) {
-            returnObject(address, conn);
-            throw new FdfsException("Unable to borrow buffer from pool", e);
         }
-        // 执行交易
-        return execute(address, conn, command);
     }
 
     public TrackerLocator getTrackerLocator() {

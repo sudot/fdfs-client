@@ -12,7 +12,7 @@ import java.nio.charset.Charset;
 /**
  * 文件上传命令
  * @author tobato
- * Update by sudot on 2017-04-19 0019.
+ * @author sudot on 2017-04-19 0019.
  */
 public class StorageAppendFileRequest extends FdfsRequest {
 

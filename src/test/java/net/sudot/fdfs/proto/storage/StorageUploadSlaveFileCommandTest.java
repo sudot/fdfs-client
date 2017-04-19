@@ -21,7 +21,7 @@ import java.io.InputStream;
 /**
  * 文件上传命令测试
  * @author tobato
- * Update by sudot on 2017-04-18 0018.
+ * @author sudot on 2017-04-18 0018.
  */
 public class StorageUploadSlaveFileCommandTest extends StorageCommandTestBase {
 

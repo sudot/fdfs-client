@@ -7,7 +7,7 @@ import net.sudot.fdfs.proto.storage.internal.StorageTruncateRequest;
 /**
  * 文件删减(Truncate)命令
  * @author tobato
- * Update by sudot on 2017-04-18 0018.
+ * @author sudot on 2017-04-18 0018.
  */
 public class StorageTruncateCommand extends AbstractFdfsCommand<Void> {
 

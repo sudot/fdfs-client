@@ -4,7 +4,7 @@ import net.sudot.fdfs.conn.ConnectionManager;
 
 /**
  * FastDFS操作客户端工厂接口
- * Created by tangjialin on 2017-04-14 0014.
+ * @author sudot on 2017-04-14 0014.
  */
 public interface FdfsOptionsFactory {
 

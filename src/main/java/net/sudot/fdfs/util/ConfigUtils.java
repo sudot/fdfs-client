@@ -12,7 +12,7 @@ import java.util.Properties;
 
 /**
  * 系统配置参数读取工具
- * @author tangjialin on 2016-04-05 0005.
+ * @author sudot on 2016-04-05 0005.
  */
 public class ConfigUtils {
 	private static Properties properties;

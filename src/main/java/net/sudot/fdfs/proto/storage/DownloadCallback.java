@@ -7,7 +7,7 @@ import java.io.InputStream;
  * 文件下载回调接口
  * @param <T>
  * @author tobato
- * Update by sudot on 2017-03-17 0017.
+ * @author sudot on 2017-03-17 0017.
  */
 public interface DownloadCallback<T> {
 
