@@ -23,7 +23,7 @@ public class StorageAppendFileRequest extends FdfsRequest {
     @FdfsColumn(index = 1)
     private long fileSize;
     /** 文件路径 */
-    @FdfsColumn(index = 2, dynamicField = DynamicFieldType.allRestByte)
+    @FdfsColumn(index = 2, dynamicField = DynamicFieldType.ALL_REST_BYTE)
     private String path;
 
     /**
@@ -80,7 +80,12 @@ public class StorageAppendFileRequest extends FdfsRequest {
 
     @Override
     public String toString() {
-        return "StorageAppendFileRequest [pathSize=" + pathSize + ", fileSize=" + fileSize + ", path=" + path + "]";
+        final StringBuilder sb = new StringBuilder("StorageAppendFileRequest{");
+        sb.append("pathSize=").append(pathSize);
+        sb.append(", fileSize=").append(fileSize);
+        sb.append(", path='").append(path).append('\'');
+        sb.append('}');
+        return sb.toString();
     }
 
 }

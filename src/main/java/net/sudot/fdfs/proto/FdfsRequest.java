@@ -1,7 +1,7 @@
 package net.sudot.fdfs.proto;
 
 import net.sudot.fdfs.proto.mapper.FdfsParamMapper;
-import net.sudot.fdfs.proto.mapper.ObjectMateData;
+import net.sudot.fdfs.proto.mapper.ObjectMetaData;
 
 import java.io.InputStream;
 import java.nio.charset.Charset;
@@ -9,6 +9,7 @@ import java.nio.charset.Charset;
 /**
  * Fdfs交易请求基类
  * @author tobato
+ * @author sudot on 2017-04-20 0020.
  */
 public abstract class FdfsRequest {
 
@@ -51,8 +52,8 @@ public abstract class FdfsRequest {
      * @return
      */
     protected long getBodyLength(Charset charset) {
-        ObjectMateData objectMateData = FdfsParamMapper.getObjectMap(this.getClass());
-        return objectMateData.getFieldsSendTotalByteSize(this, charset) + getFileSize();
+        ObjectMetaData objectMetaData = FdfsParamMapper.getObjectMap(this.getClass());
+        return objectMetaData.getFieldsSendTotalByteSize(this, charset) + getFileSize();
     }
 
     public InputStream getInputFile() {

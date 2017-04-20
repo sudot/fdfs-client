@@ -1,8 +1,5 @@
 package net.sudot.fdfs.proto.mapper;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.Charset;
@@ -18,11 +15,9 @@ import java.util.Map;
 public class FdfsParamMapper {
 
     /** 对象映射缓存 */
-    private static Map<String, ObjectMateData> mapCache = new HashMap<String, ObjectMateData>();
+    private static Map<String, ObjectMetaData> mapCache = new HashMap<String, ObjectMetaData>();
     /** 类属性映射缓存 */
     private static Map<String, Map<String, Field>> fieldCache = new HashMap<String, Map<String, Field>>();
-    /** 日志 */
-    private static Logger LOGGER = LoggerFactory.getLogger(FdfsParamMapper.class);
 
     private FdfsParamMapper() {
         // hide for utils
@@ -38,11 +33,7 @@ public class FdfsParamMapper {
      */
     public static <T> T map(byte[] content, Class<T> genericType, Charset charset) {
         // 获取映射对象
-        ObjectMateData objectMap = getObjectMap(genericType);
-        if (LOGGER.isDebugEnabled()) {
-            objectMap.dumpObjectMateData();
-        }
-
+        ObjectMetaData objectMap = getObjectMap(genericType);
         try {
             return mapByIndex(content, genericType, objectMap, charset);
         } catch (InstantiationException e) {
@@ -59,14 +50,14 @@ public class FdfsParamMapper {
      * @param genericType
      * @return
      */
-    public static <T> ObjectMateData getObjectMap(Class<T> genericType) {
-        ObjectMateData objectMateData = mapCache.get(genericType.getName());
-        if (null == objectMateData) {
+    public static <T> ObjectMetaData getObjectMap(Class<T> genericType) {
+        ObjectMetaData objectMetaData = mapCache.get(genericType.getName());
+        if (null == objectMetaData) {
             // 还未缓存过
-            objectMateData = new ObjectMateData(genericType);
-            mapCache.put(genericType.getName(), objectMateData);
+            objectMetaData = new ObjectMetaData(genericType);
+            mapCache.put(genericType.getName(), objectMetaData);
         }
-        return objectMateData;
+        return objectMetaData;
     }
 
     /**
@@ -100,17 +91,15 @@ public class FdfsParamMapper {
      * @throws InstantiationException
      * @throws NoSuchFieldException
      */
-    private static <T> T mapByIndex(byte[] content, Class<T> genericType, ObjectMateData objectMap, Charset charset)
+    private static <T> T mapByIndex(byte[] content, Class<T> genericType, ObjectMetaData objectMap, Charset charset)
             throws IllegalAccessException, InstantiationException, NoSuchFieldException {
 
         if (genericType == Void.class) { throw new IllegalAccessException("genericType不能为Void"); }
-        List<FieldMateData> mappingFields = objectMap.getFieldList();
+        List<FieldMetaData> mappingFields = objectMap.getFieldList();
         Map<String, Field> fieldMap = getFieldMap(genericType);
         T obj = genericType.newInstance();
-        for (FieldMateData field : mappingFields) {
+        for (FieldMetaData field : mappingFields) {
             Object value = field.getValue(content, charset);
-            // 设置属性值
-            if (LOGGER.isDebugEnabled()) { LOGGER.debug("设置值是 {} {}", field, value); }
             Field declaredField = fieldMap.get(field.getFieldName());
             declaredField.set(obj, value);
 //            BeanUtils.setProperty(obj, field.getFieldName(), value);
@@ -125,20 +114,16 @@ public class FdfsParamMapper {
      * @return
      */
     public static byte[] toByte(Object object, Charset charset) {
-        ObjectMateData objectMap = getObjectMap(object.getClass());
+        ObjectMetaData objectMap = getObjectMap(object.getClass());
         try {
             return convertFieldToByte(objectMap, object, charset);
-        } catch (NoSuchMethodException ie) {
-            LOGGER.debug("Cannot invoke get methed: ", ie);
-            throw new FdfsColumnMapException(ie);
-        } catch (IllegalAccessException iae) {
-            LOGGER.debug("Illegal access: ", iae);
-            throw new FdfsColumnMapException(iae);
-        } catch (InvocationTargetException ite) {
-            LOGGER.debug("Cannot invoke method: ", ite);
-            throw new FdfsColumnMapException(ite);
+        } catch (NoSuchMethodException e) {
+            throw new FdfsColumnMapException("Cannot invoke get method", e);
+        } catch (IllegalAccessException e) {
+            throw new FdfsColumnMapException("Illegal access", e);
+        } catch (InvocationTargetException e) {
+            throw new FdfsColumnMapException("Cannot invoke method", e);
         }
-
     }
 
     /**
@@ -151,18 +136,18 @@ public class FdfsParamMapper {
      * @throws InvocationTargetException
      * @throws NoSuchMethodException
      */
-    private static byte[] convertFieldToByte(ObjectMateData objectMap, Object object, Charset charset)
+    private static byte[] convertFieldToByte(ObjectMetaData objectMap, Object object, Charset charset)
             throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
-        List<FieldMateData> mappingFields = objectMap.getFieldList();
+        List<FieldMetaData> mappingFields = objectMap.getFieldList();
         // 获取报文长度 (固定长度+动态长度)
         int size = objectMap.getFieldsSendTotalByteSize(object, charset);
         byte[] result = new byte[size];
-        int offsize = 0;
-        for (FieldMateData field : mappingFields) {
-            byte[] fieldByte = field.toByte(object, charset);
+        int offset = 0;
+        for (FieldMetaData metaData : mappingFields) {
+            byte[] fieldByte = metaData.toByte(object, charset);
             if (null != fieldByte) {
-                System.arraycopy(fieldByte, 0, result, offsize, fieldByte.length);
-                offsize += fieldByte.length;
+                System.arraycopy(fieldByte, 0, result, offset, fieldByte.length);
+                offset += fieldByte.length;
             }
         }
         return result;

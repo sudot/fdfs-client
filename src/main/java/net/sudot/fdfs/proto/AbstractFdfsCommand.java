@@ -2,8 +2,6 @@ package net.sudot.fdfs.proto;
 
 import net.sudot.fdfs.conn.Connection;
 import net.sudot.fdfs.exception.FdfsIOException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,9 +15,6 @@ import java.nio.charset.Charset;
  * @author sudot on 2017-04-18 0018.
  */
 public abstract class AbstractFdfsCommand<T> implements FdfsCommand<T> {
-
-    /** 日志 */
-    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     /** 表示请求消息 */
     protected FdfsRequest request;
@@ -65,8 +60,6 @@ public abstract class AbstractFdfsCommand<T> implements FdfsCommand<T> {
         // 交易文件流
         InputStream inputFile = request.getInputFile();
         long fileSize = request.getFileSize();
-        if (logger.isDebugEnabled()) { logger.debug("发出交易请求..报文头为{}", request.getHead()); }
-        if (logger.isDebugEnabled()) { logger.debug("交易参数为{}", param); }
         // 输出报文头
         out.write(head);
         // 输出交易参数
@@ -91,7 +84,6 @@ public abstract class AbstractFdfsCommand<T> implements FdfsCommand<T> {
 
         // 解析报文头
         ProtoHead head = ProtoHead.createFromInputStream(in);
-        if (logger.isDebugEnabled()) { logger.debug("服务端返回报文头{}", head); }
         // 校验报文头
         head.validateResponseHead();
 
@@ -108,7 +100,6 @@ public abstract class AbstractFdfsCommand<T> implements FdfsCommand<T> {
      * @throws IOException
      */
     protected void sendFileContent(InputStream ins, long size, OutputStream ous) throws IOException {
-        if (logger.isDebugEnabled()) { logger.debug("开始上传文件流大小为{}", size); }
         long remainBytes = size;
         byte[] buff = new byte[256 * 1024];
         int bytes;
@@ -119,7 +110,6 @@ public abstract class AbstractFdfsCommand<T> implements FdfsCommand<T> {
 
             ous.write(buff, 0, bytes);
             remainBytes -= bytes;
-            if (logger.isDebugEnabled()) { logger.debug("剩余数据量{}", remainBytes); }
         }
     }
 

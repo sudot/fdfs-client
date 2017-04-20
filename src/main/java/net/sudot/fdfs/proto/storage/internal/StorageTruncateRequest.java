@@ -10,14 +10,6 @@ import java.nio.charset.Charset;
 
 /**
  * 文件Truncate命令
- *
- * <pre>
- * 使用限制：
- * 1.创建文件时候需要采用<<源追加>>模式,之后才能Truncate
- * 2.truncatedFileSize是指截取后的文件大小
- * 3.truncatedFileSize不能大于文件总大小
- * 4.文件的截取是从文件起始部分保留truncatedFileSize,后面的部分全部清除
- * </pre>
  * @author tobato
  * @author sudot on 2017-04-19 0019.
  */
@@ -30,7 +22,7 @@ public class StorageTruncateRequest extends FdfsRequest {
     @FdfsColumn(index = 1)
     private long truncatedFileSize;
     /** 文件路径 */
-    @FdfsColumn(index = 2, dynamicField = DynamicFieldType.allRestByte)
+    @FdfsColumn(index = 2, dynamicField = DynamicFieldType.ALL_REST_BYTE)
     private String path;
 
     /**
@@ -84,7 +76,12 @@ public class StorageTruncateRequest extends FdfsRequest {
 
     @Override
     public String toString() {
-        return "StorageAppendFileRequest [pathSize=" + pathSize + ", truncatedFileSize=" + truncatedFileSize + ", path=" + path + "]";
+        final StringBuilder sb = new StringBuilder("StorageTruncateRequest{");
+        sb.append("pathSize=").append(pathSize);
+        sb.append(", truncatedFileSize=").append(truncatedFileSize);
+        sb.append(", path='").append(path).append('\'');
+        sb.append('}');
+        return sb.toString();
     }
 
 }

@@ -3,7 +3,7 @@ package net.sudot.fdfs.proto.tracker.internal;
 import net.sudot.fdfs.domain.StorageState;
 import net.sudot.fdfs.proto.FdfsResponse;
 import net.sudot.fdfs.proto.mapper.FdfsParamMapper;
-import net.sudot.fdfs.proto.mapper.ObjectMateData;
+import net.sudot.fdfs.proto.mapper.ObjectMetaData;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -41,8 +41,8 @@ public class TrackerListStoragesResponse extends FdfsResponse<List<StorageState>
      */
     private List<StorageState> decode(byte[] bs, Charset charset) throws IOException {
         // 获取对象转换定义
-        ObjectMateData objectMateData = FdfsParamMapper.getObjectMap(StorageState.class);
-        int fixFieldsTotalSize = objectMateData.getFieldsFixTotalSize();
+        ObjectMetaData objectMetaData = FdfsParamMapper.getObjectMap(StorageState.class);
+        int fixFieldsTotalSize = objectMetaData.getFieldsFixTotalSize();
         if (bs.length % fixFieldsTotalSize != 0) {
             throw new IOException("fixFieldsTotalSize=" + fixFieldsTotalSize + "but byte array length: " + bs.length
                     + " is invalid!");

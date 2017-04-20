@@ -38,13 +38,13 @@ public class StorageUploadSlaveFileCommand extends AbstractFdfsCommand<StorePath
      * @param inputStream    文件输入流
      * @param fileSize       文件大小
      * @param masterFilename 主文件路径(不包含组名)
-     * @param prefixName     从文件存储前缀
+     * @param suffixName     从文件后缀(后缀在扩展名前面.[groupName]/[masterPath][suffixName].[fileExtName])
      * @param fileExtName    从文件扩展名
      */
     public StorageUploadSlaveFileCommand(InputStream inputStream, long fileSize, String masterFilename,
-                                         String prefixName, String fileExtName) {
+                                         String suffixName, String fileExtName) {
         super();
-        this.request = new StorageUploadSlaveFileRequest(inputStream, fileSize, masterFilename, prefixName,
+        this.request = new StorageUploadSlaveFileRequest(inputStream, fileSize, masterFilename, suffixName,
                 fileExtName);
         // 输出响应
         this.response = new FdfsResponse<StorePath>() {

@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 /**
  * 文件的基础信息
  * @author yuqih
+ * @author sudot on 2017-04-20 0020.
  */
 public class FileInfo {
     /** 长度 */
@@ -21,7 +22,7 @@ public class FileInfo {
     private int crc32;
     /** ip地址 */
     @FdfsColumn(index = 3, max = OtherConstants.FDFS_IPADDR_SIZE)
-    private String sourceIpAddr;
+    private String sourceIpAddress;
 
     /**
      *
@@ -31,31 +32,31 @@ public class FileInfo {
     }
 
     /**
-     * @param sourceIpAddr
+     * @param sourceIpAddress
      * @param fileSize
      * @param createTime
      * @param crc32
      */
-    public FileInfo(String sourceIpAddr, long fileSize, int createTime, int crc32) {
+    public FileInfo(String sourceIpAddress, long fileSize, int createTime, int crc32) {
         super();
-        this.sourceIpAddr = sourceIpAddr;
+        this.sourceIpAddress = sourceIpAddress;
         this.fileSize = fileSize;
         this.createTime = createTime;
         this.crc32 = crc32;
     }
 
     /**
-     * @return the sourceIpAddr
+     * @return the sourceIpAddress
      */
-    public String getSourceIpAddr() {
-        return sourceIpAddr;
+    public String getSourceIpAddress() {
+        return sourceIpAddress;
     }
 
     /**
-     * @param sourceIpAddr the sourceIpAddr to set
+     * @param sourceIpAddress the sourceIpAddress to set
      */
-    public void setSourceIpAddr(String sourceIpAddr) {
-        this.sourceIpAddr = sourceIpAddr;
+    public void setSourceIpAddress(String sourceIpAddress) {
+        this.sourceIpAddress = sourceIpAddress;
     }
 
     /**
@@ -103,8 +104,13 @@ public class FileInfo {
     @Override
     public String toString() {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        return "source_ip_addr = " + this.sourceIpAddr + ", " + "file_size = " + this.fileSize + ", "
-                + "create_timestamp = " + df.format(this.createTime) + ", " + "crc32 = " + this.crc32;
+        final StringBuilder sb = new StringBuilder("FileInfo{");
+        sb.append("fileSize=").append(fileSize);
+        sb.append(", createTime=").append(df.format(createTime));
+        sb.append(", crc32=").append(crc32);
+        sb.append(", sourceIpAddress='").append(sourceIpAddress).append('\'');
+        sb.append('}');
+        return sb.toString();
     }
 
 }

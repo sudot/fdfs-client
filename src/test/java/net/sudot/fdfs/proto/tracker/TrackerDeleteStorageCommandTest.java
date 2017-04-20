@@ -27,15 +27,18 @@ public class TrackerDeleteStorageCommandTest extends StorageCommandTestBase {
         logger.debug("-----列举存储服务器状态处理结果-----");
         logger.debug(client.toString());
 
-        // 获取源服务器
-        TrackerDeleteStorageCommand command = new TrackerDeleteStorageCommand(client.getGroupName(), client.getIp());
         try {
+            TrackerDeleteStorageCommand command = new TrackerDeleteStorageCommand(client.getGroupName(), client.getIp());
+            logger.debug("----删除存储服务器-----");
             executeTrackerCmd(command);
         } catch (Exception e) {
             assertTrue(e instanceof FdfsServerException);
             assertTrue(((FdfsServerException) e).getErrorCode() == ErrorCodeConstants.ERR_NO_EBUSY);
         }
-        logger.debug("----删除存储服务器-----");
+        // 获取存储节点信息
+        client = executeTrackerCmd(new TrackerGetStoreStorageCommand(TestConstants.DEFAULT_GROUP));
+        logger.debug("-----列举存储服务器状态处理结果-----");
+        logger.debug(client.toString());
     }
 
 }

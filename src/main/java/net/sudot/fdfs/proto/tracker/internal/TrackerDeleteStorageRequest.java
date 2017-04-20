@@ -5,11 +5,11 @@ import net.sudot.fdfs.proto.FdfsRequest;
 import net.sudot.fdfs.proto.OtherConstants;
 import net.sudot.fdfs.proto.ProtoHead;
 import net.sudot.fdfs.proto.mapper.FdfsColumn;
-import net.sudot.fdfs.util.Validate;
 
 /**
  * 移除存储服务器
  * @author tobato
+ * @author sudot on 2017-04-20 0020.
  */
 public class TrackerDeleteStorageRequest extends FdfsRequest {
 
@@ -18,18 +18,16 @@ public class TrackerDeleteStorageRequest extends FdfsRequest {
     private String groupName;
     /** 存储ip */
     @FdfsColumn(index = 1, max = OtherConstants.FDFS_IPADDR_SIZE - 1)
-    private String storageIpAddr;
+    private String storageIpAddress;
 
     /**
      * 获取文件源服务器
      * @param groupName
-     * @param storageIpAddr
+     * @param storageIpAddress
      */
-    public TrackerDeleteStorageRequest(String groupName, String storageIpAddr) {
-        Validate.notBlank(groupName, "分组不能为空");
-        Validate.notBlank(storageIpAddr, "文件路径不能为空");
+    public TrackerDeleteStorageRequest(String groupName, String storageIpAddress) {
         this.groupName = groupName;
-        this.storageIpAddr = storageIpAddr;
+        this.storageIpAddress = storageIpAddress;
         head = new ProtoHead(CmdConstants.TRACKER_PROTO_CMD_SERVER_DELETE_STORAGE);
     }
 
@@ -37,8 +35,8 @@ public class TrackerDeleteStorageRequest extends FdfsRequest {
         return groupName;
     }
 
-    public String getStorageIpAddr() {
-        return storageIpAddr;
+    public String getStorageIpAddress() {
+        return storageIpAddress;
     }
 
 }

@@ -5,11 +5,11 @@ import net.sudot.fdfs.proto.FdfsRequest;
 import net.sudot.fdfs.proto.OtherConstants;
 import net.sudot.fdfs.proto.ProtoHead;
 import net.sudot.fdfs.proto.mapper.FdfsColumn;
-import net.sudot.fdfs.util.Validate;
 
 /**
  * 按分组获取存储节点
  * @author tobato
+ * @author sudot on 2017-04-20 0020.
  */
 public class TrackerGetStoreStorageWithGroupRequest extends FdfsRequest {
 
@@ -26,7 +26,6 @@ public class TrackerGetStoreStorageWithGroupRequest extends FdfsRequest {
      * @param groupName
      */
     public TrackerGetStoreStorageWithGroupRequest(String groupName) {
-        Validate.notBlank(groupName, "分组不能为空");
         this.groupName = groupName;
         this.head = new ProtoHead(withGroupCmd);
     }

@@ -3,7 +3,7 @@ package net.sudot.fdfs.proto.tracker.internal;
 import net.sudot.fdfs.domain.GroupState;
 import net.sudot.fdfs.proto.FdfsResponse;
 import net.sudot.fdfs.proto.mapper.FdfsParamMapper;
-import net.sudot.fdfs.proto.mapper.ObjectMateData;
+import net.sudot.fdfs.proto.mapper.ObjectMetaData;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,14 +25,13 @@ public class TrackerListGroupsResponse extends FdfsResponse<List<GroupState>> {
         // 解析报文内容
         byte[] bytes = new byte[(int) getContentLength()];
         int contentSize = in.read(bytes);
-        // 此处fastdfs的服务端有bug
+        // 此处FastDFS的服务端有bug
         if (contentSize != getContentLength()) {
             try {
                 return decode(bytes, charset);
             } catch (Exception e) {
-                throw new IOException("读取到的数据长度与协议长度不符");
+                throw new IOException("读取到的数据长度与协议长度不符", e);
             }
-
         } else {
             return decode(bytes, charset);
         }
@@ -47,8 +46,8 @@ public class TrackerListGroupsResponse extends FdfsResponse<List<GroupState>> {
      */
     private List<GroupState> decode(byte[] bs, Charset charset) throws IOException {
         // 获取对象转换定义
-        ObjectMateData objectMateData = FdfsParamMapper.getObjectMap(GroupState.class);
-        int fixFieldsTotalSize = objectMateData.getFieldsFixTotalSize();
+        ObjectMetaData objectMetaData = FdfsParamMapper.getObjectMap(GroupState.class);
+        int fixFieldsTotalSize = objectMetaData.getFieldsFixTotalSize();
         if (bs.length % fixFieldsTotalSize != 0) {
             throw new IOException("byte array length: " + bs.length + " is invalid!");
         }

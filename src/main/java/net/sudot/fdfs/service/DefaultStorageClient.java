@@ -2,7 +2,7 @@ package net.sudot.fdfs.service;
 
 import net.sudot.fdfs.conn.ConnectionManager;
 import net.sudot.fdfs.domain.FileInfo;
-import net.sudot.fdfs.domain.MateData;
+import net.sudot.fdfs.domain.MetaData;
 import net.sudot.fdfs.domain.StorageNode;
 import net.sudot.fdfs.domain.StorageNodeInfo;
 import net.sudot.fdfs.domain.StorePath;
@@ -10,15 +10,14 @@ import net.sudot.fdfs.proto.storage.DownloadCallback;
 import net.sudot.fdfs.proto.storage.StorageAppendFileCommand;
 import net.sudot.fdfs.proto.storage.StorageDeleteFileCommand;
 import net.sudot.fdfs.proto.storage.StorageDownloadCommand;
-import net.sudot.fdfs.proto.storage.StorageGetMetadataCommand;
+import net.sudot.fdfs.proto.storage.StorageGetMetaDataCommand;
 import net.sudot.fdfs.proto.storage.StorageModifyCommand;
 import net.sudot.fdfs.proto.storage.StorageQueryFileInfoCommand;
-import net.sudot.fdfs.proto.storage.StorageSetMetadataCommand;
+import net.sudot.fdfs.proto.storage.StorageSetMetaDataCommand;
 import net.sudot.fdfs.proto.storage.StorageTruncateCommand;
 import net.sudot.fdfs.proto.storage.StorageUploadFileCommand;
 import net.sudot.fdfs.proto.storage.StorageUploadSlaveFileCommand;
-import net.sudot.fdfs.proto.storage.enums.StorageMetdataSetType;
-import net.sudot.fdfs.util.Validate;
+import net.sudot.fdfs.proto.storage.enums.StorageMetaDataSetType;
 
 import java.io.InputStream;
 import java.util.Set;
@@ -43,26 +42,75 @@ public class DefaultStorageClient implements StorageClient {
 
     @Override
     public StorePath uploadFile(String groupName, InputStream inputStream, long fileSize, String fileExtName) {
-        Validate.notNull(inputStream, "上传文件流不能为空");
-        Validate.notBlank(fileExtName, "文件扩展名不能为空");
         StorageNode client = trackerClient.getStoreStorage(groupName);
-        StorageUploadFileCommand command = new StorageUploadFileCommand(client.getStoreIndex(), inputStream,
-                fileExtName, fileSize, false);
+        // 上传文件
+        StorageUploadFileCommand command = new StorageUploadFileCommand(client.getStoreIndex(), inputStream, fileExtName, fileSize, false);
         return connectionManager.executeFdfsCmd(client.getInetSocketAddress(), command);
     }
 
     @Override
-    public StorePath uploadFile(InputStream inputStream, long fileSize, String fileExtName, Set<MateData> metaDataSet) {
+    public StorePath uploadFile(InputStream inputStream, long fileSize, String fileExtName, Set<MetaData> metaDataSet) {
         String groupName = null;
         return uploadFile(groupName, inputStream, fileSize, fileExtName, metaDataSet);
     }
 
     @Override
-    public StorePath uploadFile(String groupName, InputStream inputStream, long fileSize, String fileExtName, Set<MateData> metaDataSet) {
-        Validate.notNull(inputStream, "上传文件流不能为空");
-        Validate.notBlank(fileExtName, "文件扩展名不能为空");
+    public StorePath uploadFile(String groupName, InputStream inputStream, long fileSize, String fileExtName, Set<MetaData> metaDataSet) {
+        // 上传文件
+        StorePath storePath = uploadFile(groupName, inputStream, fileSize, fileExtName);
+        // 上传Metadata
+        if (null != metaDataSet && !metaDataSet.isEmpty()) {
+            overwriteMetaData(storePath, metaDataSet);
+        }
+        return storePath;
+    }
+
+    @Override
+    public StorePath uploadAppenderFile(InputStream inputStream, long fileSize, String fileExtName) {
+        String groupName = null;
+        return uploadAppenderFile(groupName, inputStream, fileSize, fileExtName);
+    }
+
+    @Override
+    public StorePath uploadAppenderFile(String groupName, InputStream inputStream, long fileSize, String fileExtName) {
         StorageNode client = trackerClient.getStoreStorage(groupName);
-        return uploadFileAndMateData(client, inputStream, fileSize, fileExtName, metaDataSet);
+        StorageUploadFileCommand command = new StorageUploadFileCommand(client.getStoreIndex(), inputStream,
+                fileExtName, fileSize, true);
+        return connectionManager.executeFdfsCmd(client.getInetSocketAddress(), command);
+    }
+
+    @Override
+    public StorePath uploadAppenderFile(InputStream inputStream, long fileSize, String fileExtName, Set<MetaData> metaDataSet) {
+        String groupName = null;
+        return uploadAppenderFile(groupName, inputStream, fileSize, fileExtName, metaDataSet);
+    }
+
+    @Override
+    public StorePath uploadAppenderFile(String groupName, InputStream inputStream, long fileSize, String fileExtName, Set<MetaData> metaDataSet) {
+        StorePath storePath = uploadAppenderFile(groupName, inputStream, fileSize, fileExtName);
+        // 上传Metadata
+        if (null != metaDataSet && !metaDataSet.isEmpty()) {
+            overwriteMetaData(storePath, metaDataSet);
+        }
+        return storePath;
+    }
+
+    @Override
+    public void appendFile(String groupName, String path, InputStream inputStream, long fileSize) {
+        StorageNodeInfo client = trackerClient.getUpdateStorage(groupName, path);
+        StorageAppendFileCommand command = new StorageAppendFileCommand(inputStream, fileSize, path);
+        connectionManager.executeFdfsCmd(client.getInetSocketAddress(), command);
+    }
+
+    @Override
+    public void appendFile(String fullPath, InputStream inputStream, long fileSize) {
+        StorePath storePath = StorePath.parseFullPath(fullPath);
+        appendFile(storePath.getGroup(), storePath.getPath(), inputStream, fileSize);
+    }
+
+    @Override
+    public void appendFile(StorePath storePath, InputStream inputStream, long fileSize) {
+        appendFile(storePath.getGroup(), storePath.getPath(), inputStream, fileSize);
     }
 
     @Override
@@ -88,63 +136,21 @@ public class DefaultStorageClient implements StorageClient {
     }
 
     @Override
-    public StorePath uploadAppenderFile(InputStream inputStream, long fileSize, String fileExtName) {
-        StorageNode client = trackerClient.getStoreStorage();
-        StorageUploadFileCommand command = new StorageUploadFileCommand(client.getStoreIndex(), inputStream,
-                fileExtName, fileSize, true);
-        return connectionManager.executeFdfsCmd(client.getInetSocketAddress(), command);
-    }
-
-    @Override
-    public StorePath uploadAppenderFile(String groupName, InputStream inputStream, long fileSize, String fileExtName) {
-        StorageNode client = trackerClient.getStoreStorage(groupName);
-        StorageUploadFileCommand command = new StorageUploadFileCommand(client.getStoreIndex(), inputStream,
-                fileExtName, fileSize, true);
-        return connectionManager.executeFdfsCmd(client.getInetSocketAddress(), command);
-    }
-
-    @Override
-    public void appendFile(String groupName, String path, InputStream inputStream, long fileSize) {
+    public void modifyFile(String groupName, String path, InputStream inputStream, long modifySize, long modifyOffset) {
         StorageNodeInfo client = trackerClient.getUpdateStorage(groupName, path);
-        StorageAppendFileCommand command = new StorageAppendFileCommand(inputStream, fileSize, path);
+        StorageModifyCommand command = new StorageModifyCommand(path, inputStream, modifySize, modifyOffset);
         connectionManager.executeFdfsCmd(client.getInetSocketAddress(), command);
     }
 
     @Override
-    public void appendFile(String fullPath, InputStream inputStream, long fileSize) {
+    public void modifyFile(String fullPath, InputStream inputStream, long modifySize, long modifyOffset) {
         StorePath storePath = StorePath.parseFullPath(fullPath);
-        StorageNodeInfo client = trackerClient.getUpdateStorage(storePath.getGroup(), storePath.getPath());
-        StorageAppendFileCommand command = new StorageAppendFileCommand(inputStream, fileSize, storePath.getPath());
-        connectionManager.executeFdfsCmd(client.getInetSocketAddress(), command);
+        modifyFile(storePath.getGroup(), storePath.getPath(), inputStream, modifySize, modifyOffset);
     }
 
     @Override
-    public void appendFile(StorePath storePath, InputStream inputStream, long fileSize) {
-        StorageNodeInfo client = trackerClient.getUpdateStorage(storePath.getGroup(), storePath.getPath());
-        StorageAppendFileCommand command = new StorageAppendFileCommand(inputStream, fileSize, storePath.getPath());
-        connectionManager.executeFdfsCmd(client.getInetSocketAddress(), command);
-    }
-
-    @Override
-    public void modifyFile(String groupName, String path, InputStream inputStream, long fileSize, long fileOffset) {
-        StorageNodeInfo client = trackerClient.getUpdateStorage(groupName, path);
-        StorageModifyCommand command = new StorageModifyCommand(path, inputStream, fileSize, fileOffset);
-        connectionManager.executeFdfsCmd(client.getInetSocketAddress(), command);
-    }
-
-    @Override
-    public void modifyFile(String fullPath, InputStream inputStream, long fileSize, long fileOffset) {
-        StorePath storePath = StorePath.parseFullPath(fullPath);
-        StorageNodeInfo client = trackerClient.getUpdateStorage(storePath.getGroup(), storePath.getPath());
-        StorageModifyCommand command = new StorageModifyCommand(storePath.getPath(), inputStream, fileSize, fileOffset);
-        connectionManager.executeFdfsCmd(client.getInetSocketAddress(), command);
-    }
-
-    @Override
-    public void modifyFile(StorePath storePath, InputStream inputStream, long fileSize, long fileOffset) {
-        StorageNodeInfo client = trackerClient.getUpdateStorage(storePath.getGroup(), storePath.getPath());
-        StorageModifyCommand command = new StorageModifyCommand(storePath.getPath(), inputStream, fileSize, fileOffset);
-        connectionManager.executeFdfsCmd(client.getInetSocketAddress(), command);
+    public void modifyFile(StorePath storePath, InputStream inputStream, long modifySize, long modifyOffset) {
+        modifyFile(storePath.getGroup(), storePath.getPath(), inputStream, modifySize, modifyOffset);
     }
 
     @Override
@@ -157,41 +163,31 @@ public class DefaultStorageClient implements StorageClient {
     @Override
     public void truncateFile(String fullPath, long truncatedFileSize) {
         StorePath storePath = StorePath.parseFullPath(fullPath);
-        StorageNodeInfo client = trackerClient.getUpdateStorage(storePath.getGroup(), storePath.getPath());
-        StorageTruncateCommand command = new StorageTruncateCommand(storePath.getPath(), truncatedFileSize);
-        connectionManager.executeFdfsCmd(client.getInetSocketAddress(), command);
+        truncateFile(storePath.getGroup(), storePath.getPath(), truncatedFileSize);
     }
 
     @Override
     public void truncateFile(StorePath storePath, long truncatedFileSize) {
-        StorageNodeInfo client = trackerClient.getUpdateStorage(storePath.getGroup(), storePath.getPath());
-        StorageTruncateCommand command = new StorageTruncateCommand(storePath.getPath(), truncatedFileSize);
-        connectionManager.executeFdfsCmd(client.getInetSocketAddress(), command);
+        truncateFile(storePath.getGroup(), storePath.getPath(), truncatedFileSize);
     }
 
     @Override
     public void truncateFile(String groupName, String path) {
         long truncatedFileSize = 0;
-        StorageNodeInfo client = trackerClient.getUpdateStorage(groupName, path);
-        StorageTruncateCommand command = new StorageTruncateCommand(path, truncatedFileSize);
-        connectionManager.executeFdfsCmd(client.getInetSocketAddress(), command);
+        truncateFile(groupName, path, truncatedFileSize);
     }
 
     @Override
     public void truncateFile(String fullPath) {
         StorePath storePath = StorePath.parseFullPath(fullPath);
         long truncatedFileSize = 0;
-        StorageNodeInfo client = trackerClient.getUpdateStorage(storePath.getGroup(), storePath.getPath());
-        StorageTruncateCommand command = new StorageTruncateCommand(storePath.getPath(), truncatedFileSize);
-        connectionManager.executeFdfsCmd(client.getInetSocketAddress(), command);
+        truncateFile(storePath.getGroup(), storePath.getPath(), truncatedFileSize);
     }
 
     @Override
     public void truncateFile(StorePath storePath) {
         long truncatedFileSize = 0;
-        StorageNodeInfo client = trackerClient.getUpdateStorage(storePath.getGroup(), storePath.getPath());
-        StorageTruncateCommand command = new StorageTruncateCommand(storePath.getPath(), truncatedFileSize);
-        connectionManager.executeFdfsCmd(client.getInetSocketAddress(), command);
+        truncateFile(storePath.getGroup(), storePath.getPath(), truncatedFileSize);
     }
 
     @Override
@@ -231,22 +227,22 @@ public class DefaultStorageClient implements StorageClient {
     }
 
     @Override
-    public <T> T downloadFile(String groupName, String path, long fileOffset, long fileSize,
+    public <T> T downloadFile(String groupName, String path, long downloadOffset, long downloadSize,
                               DownloadCallback<T> callback) {
         StorageNodeInfo client = trackerClient.getFetchStorage(groupName, path);
-        StorageDownloadCommand<T> command = new StorageDownloadCommand<T>(groupName, path, fileOffset, fileSize, callback);
+        StorageDownloadCommand<T> command = new StorageDownloadCommand<T>(groupName, path, downloadOffset, downloadSize, callback);
         return connectionManager.executeFdfsCmd(client.getInetSocketAddress(), command);
     }
 
     @Override
-    public <T> T downloadFile(String fullPath, long fileOffset, long fileSize, DownloadCallback<T> callback) {
+    public <T> T downloadFile(String fullPath, long downloadOffset, long downloadSize, DownloadCallback<T> callback) {
         StorePath storePath = StorePath.parseFullPath(fullPath);
-        return downloadFile(storePath.getGroup(), storePath.getPath(), fileOffset, fileSize, callback);
+        return downloadFile(storePath.getGroup(), storePath.getPath(), downloadOffset, downloadSize, callback);
     }
 
     @Override
-    public <T> T downloadFile(StorePath storePath, long fileOffset, long fileSize, DownloadCallback<T> callback) {
-        return downloadFile(storePath.getGroup(), storePath.getPath(), fileOffset, fileSize, callback);
+    public <T> T downloadFile(StorePath storePath, long downloadOffset, long downloadSize, DownloadCallback<T> callback) {
+        return downloadFile(storePath.getGroup(), storePath.getPath(), downloadOffset, downloadSize, callback);
     }
 
     @Override
@@ -268,83 +264,59 @@ public class DefaultStorageClient implements StorageClient {
     }
 
     @Override
-    public void mergeMetadata(String groupName, String path, Set<MateData> metaDataSet) {
+    public void mergeMetaData(String groupName, String path, Set<MetaData> metaDataSet) {
         StorageNodeInfo client = trackerClient.getUpdateStorage(groupName, path);
-        StorageSetMetadataCommand command = new StorageSetMetadataCommand(groupName, path, metaDataSet,
-                StorageMetdataSetType.STORAGE_SET_METADATA_FLAG_MERGE);
+        StorageSetMetaDataCommand command = new StorageSetMetaDataCommand(groupName, path, metaDataSet,
+                StorageMetaDataSetType.STORAGE_SET_METADATA_FLAG_MERGE);
         connectionManager.executeFdfsCmd(client.getInetSocketAddress(), command);
     }
 
     @Override
-    public void mergeMetadata(String fullPath, Set<MateData> metaDataSet) {
+    public void mergeMetaData(String fullPath, Set<MetaData> metaDataSet) {
         StorePath storePath = StorePath.parseFullPath(fullPath);
-        mergeMetadata(storePath.getGroup(), storePath.getPath(), metaDataSet);
+        mergeMetaData(storePath.getGroup(), storePath.getPath(), metaDataSet);
     }
 
     @Override
-    public void mergeMetadata(StorePath storePath, Set<MateData> metaDataSet) {
-        mergeMetadata(storePath.getGroup(), storePath.getPath(), metaDataSet);
+    public void mergeMetaData(StorePath storePath, Set<MetaData> metaDataSet) {
+        mergeMetaData(storePath.getGroup(), storePath.getPath(), metaDataSet);
     }
 
     @Override
-    public void overwriteMetadata(String groupName, String path, Set<MateData> metaDataSet) {
+    public void overwriteMetaData(String groupName, String path, Set<MetaData> metaDataSet) {
         StorageNodeInfo client = trackerClient.getUpdateStorage(groupName, path);
-        StorageSetMetadataCommand command = new StorageSetMetadataCommand(groupName, path, metaDataSet,
-                StorageMetdataSetType.STORAGE_SET_METADATA_FLAG_OVERWRITE);
+        StorageSetMetaDataCommand command = new StorageSetMetaDataCommand(groupName, path, metaDataSet,
+                StorageMetaDataSetType.STORAGE_SET_METADATA_FLAG_OVERWRITE);
         connectionManager.executeFdfsCmd(client.getInetSocketAddress(), command);
     }
 
     @Override
-    public void overwriteMetadata(String fullPath, Set<MateData> metaDataSet) {
+    public void overwriteMetaData(String fullPath, Set<MetaData> metaDataSet) {
         StorePath storePath = StorePath.parseFullPath(fullPath);
-        overwriteMetadata(storePath.getGroup(), storePath.getPath(), metaDataSet);
+        overwriteMetaData(storePath.getGroup(), storePath.getPath(), metaDataSet);
     }
 
     @Override
-    public void overwriteMetadata(StorePath storePath, Set<MateData> metaDataSet) {
-        overwriteMetadata(storePath.getGroup(), storePath.getPath(), metaDataSet);
+    public void overwriteMetaData(StorePath storePath, Set<MetaData> metaDataSet) {
+        overwriteMetaData(storePath.getGroup(), storePath.getPath(), metaDataSet);
     }
 
     @Override
-    public Set<MateData> getMetadata(String groupName, String path) {
+    public Set<MetaData> getMetaData(String groupName, String path) {
         StorageNodeInfo client = trackerClient.getFetchStorage(groupName, path);
-        StorageGetMetadataCommand command = new StorageGetMetadataCommand(groupName, path);
+        StorageGetMetaDataCommand command = new StorageGetMetaDataCommand(groupName, path);
         return connectionManager.executeFdfsCmd(client.getInetSocketAddress(), command);
     }
 
     @Override
-    public Set<MateData> getMetadata(String fullPath) {
+    public Set<MetaData> getMetaData(String fullPath) {
         StorePath storePath = StorePath.parseFullPath(fullPath);
-        return getMetadata(storePath.getGroup(), storePath.getPath());
+        return getMetaData(storePath.getGroup(), storePath.getPath());
     }
 
     @Override
-    public Set<MateData> getMetadata(StorePath storePath) {
-        return getMetadata(storePath.getGroup(), storePath.getPath());
-    }
-
-    /**
-     * 上传文件和元数据
-     * @param client
-     * @param inputStream
-     * @param fileSize
-     * @param fileExtName
-     * @param metaDataSet
-     * @return
-     */
-    private StorePath uploadFileAndMateData(StorageNode client, InputStream inputStream, long fileSize,
-                                            String fileExtName, Set<MateData> metaDataSet) {
-        // 上传文件
-        StorageUploadFileCommand command = new StorageUploadFileCommand(client.getStoreIndex(), inputStream,
-                fileExtName, fileSize, false);
-        StorePath path = connectionManager.executeFdfsCmd(client.getInetSocketAddress(), command);
-        // 上传matadata
-        if (null != metaDataSet && !metaDataSet.isEmpty()) {
-            StorageSetMetadataCommand setMDCommand = new StorageSetMetadataCommand(path.getGroup(), path.getPath(),
-                    metaDataSet, StorageMetdataSetType.STORAGE_SET_METADATA_FLAG_OVERWRITE);
-            connectionManager.executeFdfsCmd(client.getInetSocketAddress(), setMDCommand);
-        }
-        return path;
+    public Set<MetaData> getMetaData(StorePath storePath) {
+        return getMetaData(storePath.getGroup(), storePath.getPath());
     }
 
     public TrackerClient getTrackerClient() {

@@ -125,7 +125,12 @@ public class ProtoHead {
 
     @Override
     public String toString() {
-        return "ProtoHead [contentLength=" + contentLength + ", cmd=" + cmd + ", status=" + status + "]";
+        final StringBuilder sb = new StringBuilder("ProtoHead{");
+        sb.append("contentLength=").append(contentLength);
+        sb.append(", cmd=").append(cmd);
+        sb.append(", status=").append(status);
+        sb.append('}');
+        return sb.toString();
     }
 
 }

@@ -22,11 +22,11 @@ public class ThreadExecuteUtil {
         if (THREAD_POOL_EXECUTOR == null) {
             synchronized (SYNC_THREAD_POOL_EXECUTOR) {
                 if (THREAD_POOL_EXECUTOR == null) {
-                    int corePoolSize = 5; // 最小空闲池数量
-                    int maximumPoolSize = 50;
-                    long keepAliveTime = 10L;
+                    int maximumPoolSize = 2;
+                    int corePoolSize = maximumPoolSize;
+                    long keepAliveTime = 1000L * 10L;
                     TimeUnit unit = TimeUnit.SECONDS;
-                    BlockingQueue<Runnable> workQueue = new ArrayBlockingQueue<Runnable>(50);
+                    BlockingQueue<Runnable> workQueue = new ArrayBlockingQueue<Runnable>(50000);
                     THREAD_POOL_EXECUTOR = new ThreadPoolExecutor(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue);
                 }
             }

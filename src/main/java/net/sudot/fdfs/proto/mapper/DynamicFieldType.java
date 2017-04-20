@@ -8,15 +8,16 @@ package net.sudot.fdfs.proto.mapper;
  * 剩余的所有byte-将该字段全部写入到最后的byte当中
  * </pre>
  * @author tobato
+ * @author sudot on 2017-04-20 0020.
  */
 public enum DynamicFieldType {
     /** 非动态属性 */
     NULL,
     /** 剩余的所有Byte */
-    allRestByte,
+    ALL_REST_BYTE,
     /** 可空的属性 */
-    nullable,
+    NULLABLE,
     /** 文件元数据Set */
-    matedata
+    META_DATA
 
 }

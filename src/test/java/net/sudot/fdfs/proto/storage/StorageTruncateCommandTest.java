@@ -24,21 +24,22 @@ public class StorageTruncateCommandTest extends StorageCommandTestBase {
         StorePath path = uploadInputStream(firstIn, "txt", firstSize, true);
         byte[] bytes = null;
         bytes = executeStoreCmd(new StorageDownloadCommand<byte[]>(path.getGroup(), path.getPath(), new DownloadByteArray()));
-        logger.debug("远程文件内容:{}", new String(bytes));
+        String original = new String(bytes);
 
         // 文件删减
         executeStoreCmd(new StorageTruncateCommand(path.getPath(), "这".getBytes(TestConstants.DEFAULT_CHARSET).length));
         logger.debug("--文件处理成功--");
         bytes = executeStoreCmd(new StorageDownloadCommand<byte[]>(path.getGroup(), path.getPath(), new DownloadByteArray()));
-        logger.debug("删减后远程文件内容:{}", new String(bytes));
+        String firstTruncated = new String(bytes);
 
         // 文件删减
         executeStoreCmd(new StorageTruncateCommand(path.getPath(), 0));
         logger.debug("--文件处理成功--");
         bytes = executeStoreCmd(new StorageDownloadCommand<byte[]>(path.getGroup(), path.getPath(), new DownloadByteArray()));
-        logger.debug("删减后远程文件内容:{}", new String(bytes));
+        String secondTruncated = new String(bytes);
         // 文件清理
         executeStoreCmd(new StorageDeleteFileCommand(path.getGroup(), path.getPath()));
+        logger.debug("远程原始文件内容:{}\n第一次删减后远程文件内容:{}\n第二次删减后远程文件内容:{}", original, firstTruncated, secondTruncated);
     }
 
 }

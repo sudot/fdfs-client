@@ -24,7 +24,7 @@ public class StorageDownloadRequest extends FdfsRequest {
     @FdfsColumn(index = 2, max = OtherConstants.FDFS_GROUP_NAME_MAX_LEN)
     private String groupName;
     /** 文件路径 */
-    @FdfsColumn(index = 3, dynamicField = DynamicFieldType.allRestByte)
+    @FdfsColumn(index = 3, dynamicField = DynamicFieldType.ALL_REST_BYTE)
     private String path;
 
     /**

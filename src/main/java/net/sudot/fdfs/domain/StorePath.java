@@ -20,7 +20,7 @@ public class StorePath {
     @FdfsColumn(index = 0, max = OtherConstants.FDFS_GROUP_NAME_MAX_LEN)
     /** 文件分组 */
     private String group;
-    @FdfsColumn(index = 1, dynamicField = DynamicFieldType.allRestByte)
+    @FdfsColumn(index = 1, dynamicField = DynamicFieldType.ALL_REST_BYTE)
     /** 文件路径 */
     private String path;
 
@@ -112,14 +112,13 @@ public class StorePath {
         return this.group.concat(SPLIT_GROUP_NAME_AND_FILENAME_SEPERATOR).concat(this.path);
     }
 
-    /*
-     * (non-Javadoc)
-     *
-     * @see java.lang.Object#toString()
-     */
     @Override
     public String toString() {
-        return "StorePath [group=" + group + ", path=" + path + "]";
+        final StringBuilder sb = new StringBuilder("StorePath{");
+        sb.append("group='").append(group).append('\'');
+        sb.append(", path='").append(path).append('\'');
+        sb.append('}');
+        return sb.toString();
     }
 
 }

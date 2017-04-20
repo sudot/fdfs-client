@@ -83,7 +83,7 @@ public class DefaultConnection implements Connection {
      */
     @Override
     public boolean isValid() {
-        if (logger.isDebugEnabled()) { logger.debug("check connection status of {} {}", this, socket.getInetAddress()); }
+        if (logger.isDebugEnabled()) { logger.debug("check connection status of {} {}:{}", this, socket.getInetAddress(), socket.getPort()); }
         try {
             byte[] header = new byte[OtherConstants.FDFS_PROTO_PKG_LEN_SIZE + 2];
             Arrays.fill(header, (byte) 0);

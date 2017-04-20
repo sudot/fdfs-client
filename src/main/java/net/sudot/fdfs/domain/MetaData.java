@@ -1,23 +1,23 @@
 package net.sudot.fdfs.domain;
 
 /**
- * 文件元数据(MateData)
+ * 文件元数据(MetaData)
  * @author tobato
  */
-public class MateData {
+public class MetaData {
 
     private String name;
 
     private String value;
 
-    public MateData() {
+    public MetaData() {
     }
 
-    public MateData(String name) {
+    public MetaData(String name) {
         this.name = name;
     }
 
-    public MateData(String name, String value) {
+    public MetaData(String name, String value) {
         this.name = name;
         this.value = value;
     }
@@ -55,7 +55,7 @@ public class MateData {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        MateData other = (MateData) obj;
+        MetaData other = (MetaData) obj;
         if (name == null) {
             if (other.name != null)
                 return false;

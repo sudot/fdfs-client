@@ -1,6 +1,6 @@
 package net.sudot.fdfs.proto.mapper;
 
-import net.sudot.fdfs.domain.MateData;
+import net.sudot.fdfs.domain.MetaData;
 import net.sudot.fdfs.proto.OtherConstants;
 
 import java.lang.reflect.Field;
@@ -12,8 +12,9 @@ import java.util.Set;
 /**
  * 属性映射MateData定义
  * @author tobato
+ * @author sudot on 2017-04-20 0020.
  */
-class FieldMateData {
+class FieldMetaData {
 
     /** 动态属性类型 */
     DynamicFieldType dynamicFieldType;
@@ -26,20 +27,20 @@ class FieldMateData {
     /** 单元长度 */
     private int size;
     /** 列偏移量 */
-    private int offsize;
+    private int offset;
 
     /**
      * 构造函数
      * @param mapedfield
-     * @param offsize
+     * @param offset
      */
-    public FieldMateData(Field mapedfield, int offsize) {
+    public FieldMetaData(Field mapedfield, int offset) {
         FdfsColumn column = mapedfield.getAnnotation(FdfsColumn.class);
         this.field = mapedfield;
         this.index = column.index();
         this.max = column.max();
         this.size = getFieldSize(field);
-        this.offsize = offsize;
+        this.offset = offset;
         this.dynamicFieldType = column.dynamicField();
         // 如果强制设置了最大值，以最大值为准
         if (this.max > 0 && this.size > this.max) {
@@ -81,19 +82,19 @@ class FieldMateData {
         Class<?> fieldType = field.getType();
         if (String.class == fieldType) {
             if (isDynamicField()) {
-                return (new String(bs, offsize, bs.length - offsize, charset)).trim();
+                return (new String(bs, offset, bs.length - offset, charset)).trim();
             }
-            return (new String(bs, offsize, size, charset)).trim();
+            return (new String(bs, offset, size, charset)).trim();
         } else if (long.class == fieldType) {
-            return BytesUtil.buff2long(bs, offsize);
+            return BytesUtil.buff2long(bs, offset);
         } else if (int.class == fieldType) {
-            return (int) BytesUtil.buff2long(bs, offsize);
+            return (int) BytesUtil.buff2long(bs, offset);
         } else if (java.util.Date.class == fieldType) {
-            return new Date(BytesUtil.buff2long(bs, offsize) * 1000);
+            return new Date(BytesUtil.buff2long(bs, offset) * 1000);
         } else if (byte.class == fieldType) {
-            return bs[offsize];
+            return bs[offset];
         } else if (boolean.class == fieldType) {
-            return bs[offsize] != 0;
+            return bs[offset] != 0;
         }
         throw new FdfsColumnMapException(field.getName() + "获取值时未识别的FdfsColumn类型" + fieldType);
     }
@@ -122,7 +123,7 @@ class FieldMateData {
      * 获取真实属性
      * @return
      */
-    public int getRealeSize() {
+    public int getRealSize() {
         // 如果是动态属性
         if (isDynamicField()) {
             return 0;
@@ -130,14 +131,14 @@ class FieldMateData {
         return size;
     }
 
-    public int getOffsize() {
-        return offsize;
+    public int getOffset() {
+        return offset;
     }
 
     @Override
     public String toString() {
-        return "FieldMateData [field=" + getFieldName() + ", index=" + index + ", max=" + max + ", size=" + size
-                + ", offsize=" + offsize + "]";
+        return "FieldMetaData [field=" + getFieldName() + ", index=" + index + ", max=" + max + ", size=" + size
+                + ", offset=" + offset + "]";
     }
 
     /**
@@ -183,11 +184,11 @@ class FieldMateData {
     private byte[] getDynamicFieldByteValue(Object value, Charset charset) {
         switch (dynamicFieldType) {
             // 如果是打包剩余的所有Byte
-            case allRestByte:
+            case ALL_REST_BYTE:
                 return BytesUtil.objString2Byte((String) value, charset);
             // 如果是文件matedata
-            case matedata:
-                return MetadataMapper.toByte((Set<MateData>) value, charset);
+            case META_DATA:
+                return MetaDataMapper.toByte((Set<MetaData>) value, charset);
             default:
                 return BytesUtil.objString2Byte((String) value, charset);
         }
@@ -219,11 +220,11 @@ class FieldMateData {
         if (null == value) { return 0; }
         switch (dynamicFieldType) {
             // 如果是打包剩余的所有Byte
-            case allRestByte:
+            case ALL_REST_BYTE:
                 return ((String) value).getBytes(charset).length;
             // 如果是文件matedata
-            case matedata:
-                return MetadataMapper.toByte((Set<MateData>) value, charset).length;
+            case META_DATA:
+                return MetaDataMapper.toByte((Set<MetaData>) value, charset).length;
             default:
                 return getFieldSize(field);
         }

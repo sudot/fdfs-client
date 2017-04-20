@@ -12,13 +12,13 @@ import net.sudot.fdfs.proto.mapper.FdfsColumn;
  * @author tobato
  * @author sudot on 2017-04-19 0019.
  */
-public class StorageGetMetadataRequest extends FdfsRequest {
+public class StorageGetMetaDataRequest extends FdfsRequest {
 
     /** 组名 */
     @FdfsColumn(index = 0, max = OtherConstants.FDFS_GROUP_NAME_MAX_LEN)
     private String groupName;
     /** 路径名 */
-    @FdfsColumn(index = 1, dynamicField = DynamicFieldType.allRestByte)
+    @FdfsColumn(index = 1, dynamicField = DynamicFieldType.ALL_REST_BYTE)
     private String path;
 
     /**
@@ -26,7 +26,7 @@ public class StorageGetMetadataRequest extends FdfsRequest {
      * @param groupName 文件存储组
      * @param path      文件路径
      */
-    public StorageGetMetadataRequest(String groupName, String path) {
+    public StorageGetMetaDataRequest(String groupName, String path) {
         super();
         this.groupName = groupName;
         this.path = path;
@@ -37,7 +37,7 @@ public class StorageGetMetadataRequest extends FdfsRequest {
         return groupName;
     }
 
-    public StorageGetMetadataRequest setGroupName(String groupName) {
+    public StorageGetMetaDataRequest setGroupName(String groupName) {
         this.groupName = groupName;
         return this;
     }
@@ -46,7 +46,7 @@ public class StorageGetMetadataRequest extends FdfsRequest {
         return path;
     }
 
-    public StorageGetMetadataRequest setPath(String path) {
+    public StorageGetMetaDataRequest setPath(String path) {
         this.path = path;
         return this;
     }

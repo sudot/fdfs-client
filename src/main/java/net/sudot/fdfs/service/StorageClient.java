@@ -1,7 +1,7 @@
 package net.sudot.fdfs.service;
 
 import net.sudot.fdfs.domain.FileInfo;
-import net.sudot.fdfs.domain.MateData;
+import net.sudot.fdfs.domain.MetaData;
 import net.sudot.fdfs.domain.StorePath;
 import net.sudot.fdfs.proto.storage.DownloadCallback;
 
@@ -51,7 +51,7 @@ public interface StorageClient {
      * @param metaDataSet 文件元信息
      * @return 返回文件全路径
      */
-    StorePath uploadFile(InputStream inputStream, long fileSize, String fileExtName, Set<MateData> metaDataSet);
+    StorePath uploadFile(InputStream inputStream, long fileSize, String fileExtName, Set<MetaData> metaDataSet);
 
     /**
      * 上传包含元信息的文件(不支持断点续传)
@@ -65,44 +65,7 @@ public interface StorageClient {
      * @param metaDataSet 文件元信息
      * @return 返回文件全路径
      */
-    StorePath uploadFile(String groupName, InputStream inputStream, long fileSize, String fileExtName, Set<MateData> metaDataSet);
-
-    /**
-     * 上传从文件
-     * @param groupName   主文件组
-     * @param masterPath  主文件路径
-     * @param inputStream 从文件流
-     * @param fileSize    从文件大小
-     * @param suffixName  从文件后缀(后缀在扩展名前面.[groupName]/[masterPath][suffixName].[fileExtName])
-     * @param fileExtName 从文件扩展名
-     * @return 返回从文件全路径
-     */
-    StorePath uploadSlaveFile(String groupName, String masterPath, InputStream inputStream, long fileSize,
-                              String suffixName, String fileExtName);
-
-    /**
-     * 上传从文件
-     * @param masterFullPath 主文件全路径,包含组
-     * @param inputStream    主文件路径
-     * @param fileSize       从文件流
-     * @param suffixName     从文件大小
-     * @param fileExtName    从文件后缀(后缀在扩展名前面.[groupName]/[masterPath][suffixName].[fileExtName])
-     * @return 返回从文件全路径
-     */
-    StorePath uploadSlaveFile(String masterFullPath, InputStream inputStream, long fileSize,
-                              String suffixName, String fileExtName);
-
-    /**
-     * 上传从文件
-     * @param masterStorePath 主文件路径信息
-     * @param inputStream     主文件路径
-     * @param fileSize        从文件流
-     * @param suffixName      从文件大小
-     * @param fileExtName     从文件后缀(后缀在扩展名前面.[groupName]/[masterPath][suffixName].[fileExtName])
-     * @return 返回从文件全路径
-     */
-    StorePath uploadSlaveFile(StorePath masterStorePath, InputStream inputStream, long fileSize,
-                              String suffixName, String fileExtName);
+    StorePath uploadFile(String groupName, InputStream inputStream, long fileSize, String fileExtName, Set<MetaData> metaDataSet);
 
     /**
      * 上传支持断点续传的文件
@@ -122,6 +85,27 @@ public interface StorageClient {
      * @return 返回文件全路径
      */
     StorePath uploadAppenderFile(String groupName, InputStream inputStream, long fileSize, String fileExtName);
+
+    /**
+     * 上传支持断点续传的文件
+     * @param inputStream 文件流
+     * @param fileSize    文件大小
+     * @param fileExtName 文件扩展名
+     * @param metaDataSet 文件元信息
+     * @return 返回文件全路径
+     */
+    StorePath uploadAppenderFile(InputStream inputStream, long fileSize, String fileExtName, Set<MetaData> metaDataSet);
+
+    /**
+     * 上传支持断点续传的文件
+     * @param groupName   文件需要上传的组
+     * @param inputStream 文件流
+     * @param fileSize    文件大小
+     * @param fileExtName 文件扩展名
+     * @param metaDataSet 文件元信息
+     * @return 返回文件全路径
+     */
+    StorePath uploadAppenderFile(String groupName, InputStream inputStream, long fileSize, String fileExtName, Set<MetaData> metaDataSet);
 
     /**
      * 断点续传文件
@@ -149,70 +133,107 @@ public interface StorageClient {
     void appendFile(StorePath storePath, InputStream inputStream, long fileSize);
 
     /**
-     * 修改续传文件的内容
-     * @param groupName   文件组
-     * @param path        文件路径
-     * @param inputStream 上传文件流
-     * @param fileSize    上传文件大小
-     * @param fileOffset  修改文件的起始偏移量
+     * 上传从文件
+     * @param groupName   主文件组
+     * @param masterPath  主文件路径
+     * @param inputStream 从文件流
+     * @param fileSize    从文件大小
+     * @param suffixName  从文件后缀(后缀在扩展名前面.[groupName]/[masterPath][suffixName].[fileExtName])
+     * @param fileExtName 从文件扩展名
+     * @return 返回从文件全路径
      */
-    void modifyFile(String groupName, String path, InputStream inputStream, long fileSize, long fileOffset);
+    StorePath uploadSlaveFile(String groupName, String masterPath, InputStream inputStream, long fileSize,
+                              String suffixName, String fileExtName);
+
+    /**
+     * 上传从文件
+     * @param masterFullPath 主文件全路径,包含组
+     * @param inputStream    从文件流
+     * @param fileSize       从文件大小
+     * @param suffixName     从文件后缀(后缀在扩展名前面.[groupName]/[masterPath][suffixName].[fileExtName])
+     * @param fileExtName    文件扩展名
+     * @return 返回从文件全路径
+     */
+    StorePath uploadSlaveFile(String masterFullPath, InputStream inputStream, long fileSize,
+                              String suffixName, String fileExtName);
+
+    /**
+     * 上传从文件
+     * @param masterStorePath 主文件路径信息
+     * @param inputStream     从文件流
+     * @param fileSize        从文件大小
+     * @param suffixName      从文件后缀(后缀在扩展名前面.[groupName]/[masterPath][suffixName].[fileExtName])
+     * @param fileExtName     文件扩展名
+     * @return 返回从文件全路径
+     */
+    StorePath uploadSlaveFile(StorePath masterStorePath, InputStream inputStream, long fileSize,
+                              String suffixName, String fileExtName);
 
     /**
      * 修改续传文件的内容
-     * @param fullPath    文件全路径
-     * @param inputStream 上传文件流
-     * @param fileSize    上传文件大小
-     * @param fileOffset  修改文件的起始偏移量
+     * @param groupName    文件组
+     * @param path         文件路径
+     * @param inputStream  上传文件流
+     * @param modifySize   替换内容的大小(其大小不可大于输入流实际大小)
+     * @param modifyOffset 文件修改的起始位置(原文件内容索引值,从0开始计数)
      */
-    void modifyFile(String fullPath, InputStream inputStream, long fileSize, long fileOffset);
+    void modifyFile(String groupName, String path, InputStream inputStream, long modifySize, long modifyOffset);
 
     /**
      * 修改续传文件的内容
-     * @param storePath   文件路径信息
-     * @param inputStream 上传文件流
-     * @param fileSize    上传文件大小
-     * @param fileOffset  修改文件的起始偏移量
+     * @param fullPath     文件全路径
+     * @param inputStream  上传文件流
+     * @param modifySize   替换内容的大小(其大小不可大于输入流实际大小)
+     * @param modifyOffset 文件修改的起始位置(原文件内容索引值,从0开始计数)
      */
-    void modifyFile(StorePath storePath, InputStream inputStream, long fileSize, long fileOffset);
+    void modifyFile(String fullPath, InputStream inputStream, long modifySize, long modifyOffset);
 
     /**
-     * 清除续传类型文件的内容
+     * 修改续传文件的内容
+     * @param storePath    文件路径信息
+     * @param inputStream  上传文件流
+     * @param modifySize   替换内容的大小(其大小不可大于输入流实际大小)
+     * @param modifyOffset 文件修改的起始位置(原文件内容索引值,从0开始计数)
+     */
+    void modifyFile(StorePath storePath, InputStream inputStream, long modifySize, long modifyOffset);
+
+    /**
+     * 删减续传类型文件的内容(从文件起始部分删减)
      * @param groupName         文件组
      * @param path              文件路径
-     * @param truncatedFileSize 清除的文件大小
+     * @param truncatedFileSize 删减后的文件大小(需要保留的文件大小)
      */
     void truncateFile(String groupName, String path, long truncatedFileSize);
 
     /**
-     * 清除续传类型文件的内容
+     * 删减续传类型文件的内容(从文件起始部分删减)
      * @param fullPath          文件全路径
-     * @param truncatedFileSize 清除的文件大小
+     * @param truncatedFileSize 删减后的文件大小(需要保留的文件大小)
      */
     void truncateFile(String fullPath, long truncatedFileSize);
 
     /**
-     * 清除续传类型文件的内容
+     * 删减续传类型文件的内容(从文件起始部分删减)
      * @param storePath         文件路径信息
-     * @param truncatedFileSize 清除的文件大小
+     * @param truncatedFileSize 删减后的文件大小(需要保留的文件大小)
      */
     void truncateFile(StorePath storePath, long truncatedFileSize);
 
     /**
-     * 清除续传类型文件的内容
+     * 删减续传类型文件的全部内容
      * @param groupName 文件组
      * @param path      文件路径
      */
     void truncateFile(String groupName, String path);
 
     /**
-     * 清除续传类型文件的内容
+     * 删减续传类型文件的全部内容
      * @param fullPath 文件全路径
      */
     void truncateFile(String fullPath);
 
     /**
-     * 清除续传类型文件的内容
+     * 删减续传类型文件的全部内容
      * @param storePath 文件路径信息
      */
     void truncateFile(StorePath storePath);
@@ -266,34 +287,37 @@ public interface StorageClient {
 
     /**
      * 下载文件片段
-     * @param groupName  文件组
-     * @param path       文件路径
-     * @param fileOffset 起始位置
-     * @param fileSize   下载总大小
-     * @param callback   文件下载回调
+     * @param groupName      文件组
+     * @param path           文件路径
+     * @param downloadOffset 文件下载起始位置
+     * @param downloadSize   预期下载文件大小
+     * @param callback       文件下载回调
      * @return 返回下载回调定义对象
+     * @see net.sudot.fdfs.proto.storage.StorageDownloadCommand#StorageDownloadCommand(java.lang.String, java.lang.String, long, long, net.sudot.fdfs.proto.storage.DownloadCallback)
      */
-    <T> T downloadFile(String groupName, String path, long fileOffset, long fileSize, DownloadCallback<T> callback);
+    <T> T downloadFile(String groupName, String path, long downloadOffset, long downloadSize, DownloadCallback<T> callback);
 
     /**
      * 下载文件片段
      * @param fullPath   文件全路径
-     * @param fileOffset 起始位置
-     * @param fileSize   下载总大小
-     * @param callback   文件下载回调
+     * @param downloadOffset 文件下载起始位置
+     * @param downloadSize   预期下载文件大小
+     * @param callback       文件下载回调
      * @return 返回下载回调定义对象
+     * @see net.sudot.fdfs.proto.storage.StorageDownloadCommand#StorageDownloadCommand(java.lang.String, java.lang.String, long, long, net.sudot.fdfs.proto.storage.DownloadCallback)
      */
-    <T> T downloadFile(String fullPath, long fileOffset, long fileSize, DownloadCallback<T> callback);
+    <T> T downloadFile(String fullPath, long downloadOffset, long downloadSize, DownloadCallback<T> callback);
 
     /**
      * 下载文件片段
      * @param storePath  文件路径信息
-     * @param fileOffset 起始位置
-     * @param fileSize   下载总大小
-     * @param callback   文件下载回调
+     * @param downloadOffset 文件下载起始位置
+     * @param downloadSize   预期下载文件大小
+     * @param callback       文件下载回调
      * @return 返回下载回调定义对象
+     * @see net.sudot.fdfs.proto.storage.StorageDownloadCommand#StorageDownloadCommand(java.lang.String, java.lang.String, long, long, net.sudot.fdfs.proto.storage.DownloadCallback)
      */
-    <T> T downloadFile(StorePath storePath, long fileOffset, long fileSize, DownloadCallback<T> callback);
+    <T> T downloadFile(StorePath storePath, long downloadOffset, long downloadSize, DownloadCallback<T> callback);
 
     /**
      * 删除文件
@@ -320,21 +344,21 @@ public interface StorageClient {
      * @param path        文件路径
      * @param metaDataSet 需要合并的元信息
      */
-    void mergeMetadata(String groupName, String path, Set<MateData> metaDataSet);
+    void mergeMetaData(String groupName, String path, Set<MetaData> metaDataSet);
 
     /**
      * 修改文件元信息（合并）
      * @param fullPath    文件全路径
      * @param metaDataSet 需要合并的元信息
      */
-    void mergeMetadata(String fullPath, Set<MateData> metaDataSet);
+    void mergeMetaData(String fullPath, Set<MetaData> metaDataSet);
 
     /**
      * 修改文件元信息（合并）
      * @param storePath   文件路径信息
      * @param metaDataSet 需要合并的元信息
      */
-    void mergeMetadata(StorePath storePath, Set<MateData> metaDataSet);
+    void mergeMetaData(StorePath storePath, Set<MetaData> metaDataSet);
 
     /**
      * 修改文件元信息（覆盖）
@@ -342,21 +366,21 @@ public interface StorageClient {
      * @param path        文件路径
      * @param metaDataSet 需要修改的元信息
      */
-    void overwriteMetadata(String groupName, String path, Set<MateData> metaDataSet);
+    void overwriteMetaData(String groupName, String path, Set<MetaData> metaDataSet);
 
     /**
      * 修改文件元信息（覆盖）
      * @param fullPath    文件全路径
      * @param metaDataSet 需要修改的元信息
      */
-    void overwriteMetadata(String fullPath, Set<MateData> metaDataSet);
+    void overwriteMetaData(String fullPath, Set<MetaData> metaDataSet);
 
     /**
      * 修改文件元信息（覆盖）
      * @param storePath   文件路径信息
      * @param metaDataSet 需要修改的元信息
      */
-    void overwriteMetadata(StorePath storePath, Set<MateData> metaDataSet);
+    void overwriteMetaData(StorePath storePath, Set<MetaData> metaDataSet);
 
     /**
      * 获取文件元信息
@@ -364,20 +388,20 @@ public interface StorageClient {
      * @param path      文件路径
      * @return 返回元信息
      */
-    Set<MateData> getMetadata(String groupName, String path);
+    Set<MetaData> getMetaData(String groupName, String path);
 
     /**
      * 获取文件元信息
      * @param fullPath 文件全路径
      * @return 返回元信息
      */
-    Set<MateData> getMetadata(String fullPath);
+    Set<MetaData> getMetaData(String fullPath);
 
     /**
      * 获取文件元信息
      * @param storePath 文件路径信息
      * @return 返回元信息
      */
-    Set<MateData> getMetadata(StorePath storePath);
+    Set<MetaData> getMetaData(StorePath storePath);
 
 }

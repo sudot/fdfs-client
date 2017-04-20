@@ -29,7 +29,7 @@ public class StorageUploadSlaveFileRequest extends FdfsRequest {
     @FdfsColumn(index = 3, max = OtherConstants.FDFS_FILE_EXT_NAME_MAX_LEN)
     private String fileExtName;
     /** 主文件名 */
-    @FdfsColumn(index = 4, dynamicField = DynamicFieldType.allRestByte)
+    @FdfsColumn(index = 4, dynamicField = DynamicFieldType.ALL_REST_BYTE)
     private final String masterFilename;
 
     /**

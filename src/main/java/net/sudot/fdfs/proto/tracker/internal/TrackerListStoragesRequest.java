@@ -6,11 +6,11 @@ import net.sudot.fdfs.proto.OtherConstants;
 import net.sudot.fdfs.proto.ProtoHead;
 import net.sudot.fdfs.proto.mapper.DynamicFieldType;
 import net.sudot.fdfs.proto.mapper.FdfsColumn;
-import net.sudot.fdfs.util.Validate;
 
 /**
  * 列出存储状态
  * @author tobato
+ * @author sudot on 2017-04-20 0020.
  */
 public class TrackerListStoragesRequest extends FdfsRequest {
 
@@ -18,41 +18,30 @@ public class TrackerListStoragesRequest extends FdfsRequest {
     @FdfsColumn(index = 0, max = OtherConstants.FDFS_GROUP_NAME_MAX_LEN)
     private String groupName;
     /** 存储服务器ip地址 */
-    @FdfsColumn(index = 1, max = OtherConstants.FDFS_IPADDR_SIZE - 1, dynamicField = DynamicFieldType.nullable)
-    private String storageIpAddr;
+    @FdfsColumn(index = 1, max = OtherConstants.FDFS_IPADDR_SIZE - 1, dynamicField = DynamicFieldType.NULLABLE)
+    private String storageIpAddress;
 
-    public TrackerListStoragesRequest() {
+    private TrackerListStoragesRequest() {
         head = new ProtoHead(CmdConstants.TRACKER_PROTO_CMD_SERVER_LIST_STORAGE);
     }
 
     /**
      * 列举存储服务器状态
      * @param groupName
-     * @param storageIpAddr
+     * @param storageIpAddress
      */
-    public TrackerListStoragesRequest(String groupName, String storageIpAddr) {
-        this();
-        Validate.notBlank(groupName, "分组不能为空");
-        this.groupName = groupName;
-        this.storageIpAddr = storageIpAddr;
-    }
-
-    /**
-     * 列举组当中存储节点状态
-     * @param groupName
-     */
-    public TrackerListStoragesRequest(String groupName) {
+    public TrackerListStoragesRequest(String groupName, String storageIpAddress) {
         this();
         this.groupName = groupName;
-        Validate.notBlank(groupName, "分组不能为空");
+        this.storageIpAddress = storageIpAddress;
     }
 
     public String getGroupName() {
         return groupName;
     }
 
-    public String getStorageIpAddr() {
-        return storageIpAddr;
+    public String getStorageIpAddress() {
+        return storageIpAddress;
     }
 
 }

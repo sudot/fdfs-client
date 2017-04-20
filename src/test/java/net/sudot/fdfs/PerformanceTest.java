@@ -26,9 +26,11 @@ public class PerformanceTest extends FastdfsTestBase {
                 public void run() {
                     FileInputStream inputStream = null;
                     try {
-                        File file = new File(TestConstants.PERFORM_FILE_PATH);
+                        File file = TestUtils.getFile(TestConstants.PERFORM_FILE_PATH);
                         inputStream = new FileInputStream(file);
                         StorePath storePath = storageClient.uploadFile(null, inputStream, file.length(), "jpg");
+                        logger.info("{}", storePath);
+                        storageClient.deleteFile(storePath);
                     } catch (Exception e) {
                         e.printStackTrace();
                         failCount.incrementAndGet();

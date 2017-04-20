@@ -26,7 +26,7 @@ public class StorageModifyRequest extends FdfsRequest {
     @FdfsColumn(index = 2)
     private long modifySize;
     /** 文件路径 */
-    @FdfsColumn(index = 3, dynamicField = DynamicFieldType.allRestByte)
+    @FdfsColumn(index = 3, dynamicField = DynamicFieldType.ALL_REST_BYTE)
     private String path;
 
     /**

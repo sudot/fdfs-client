@@ -1,8 +1,5 @@
 package net.sudot.fdfs.proto.mapper;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.Charset;
@@ -17,20 +14,17 @@ import java.util.List;
  * 映射对象元数据必须由{@code @FdfsColumn}注解
  * </pre>
  * @author tobato
+ * @author sudot on 2017-04-20 0020.
  */
-public class ObjectMateData {
-
-    /** 日志 */
-    private static Logger LOGGER = LoggerFactory.getLogger(ObjectMateData.class);
-
+public class ObjectMetaData {
     /** 映射对象类名 */
     private String className;
 
     /** 映射列(全部) */
-    private List<FieldMateData> fieldList = new ArrayList<FieldMateData>();
+    private List<FieldMetaData> fieldList = new ArrayList<FieldMetaData>();
 
     /** 动态计算列(部分)fieldList包含dynamicFieldList */
-    private List<FieldMateData> dynamicFieldList = new ArrayList<FieldMateData>();
+    private List<FieldMetaData> dynamicFieldList = new ArrayList<FieldMetaData>();
 
     /** FieldsTotalSize */
     private int fieldsTotalSize = 0;
@@ -39,7 +33,7 @@ public class ObjectMateData {
      * 映射对象元数据构造函数
      * @param genericType
      */
-    public <T> ObjectMateData(Class<T> genericType) {
+    public <T> ObjectMetaData(Class<T> genericType) {
         // 获得对象类名
         this.className = genericType.getName();
         this.fieldList = praseFieldList(genericType);
@@ -51,7 +45,7 @@ public class ObjectMateData {
         return className;
     }
 
-    public List<FieldMateData> getFieldList() {
+    public List<FieldMetaData> getFieldList() {
         return Collections.unmodifiableList(fieldList);
     }
 
@@ -59,40 +53,40 @@ public class ObjectMateData {
      * 解析映射对象数据映射情况
      * @return
      */
-    private <T> List<FieldMateData> praseFieldList(Class<T> genericType) {
+    private <T> List<FieldMetaData> praseFieldList(Class<T> genericType) {
 //        原代码(包含隐藏BUG,实体中定义的列顺序和FdfsColumn.index标记顺序不一致,会导致参数错误)
 //        Field[] fields = genericType.getDeclaredFields();
-//        List<FieldMateData> mapedFieldList = new ArrayList<FieldMateData>();
+//        List<FieldMetaData> mapedFieldList = new ArrayList<FieldMetaData>();
 //        for (int i = 0; i < fields.length; i++) {
 //            if (fields[i].isAnnotationPresent(FdfsColumn.class)) {
-//                FieldMateData fieldMateData = new FieldMateData(fields[i], fieldsTotalSize);
-//                mapedFieldList.add(fieldMateData);
+//                FieldMetaData fieldMetaData = new FieldMetaData(fields[i], fieldsTotalSize);
+//                mapedFieldList.add(fieldMetaData);
 //                // 计算偏移量
-//                fieldsTotalSize += fieldMateData.getRealeSize();
+//                fieldsTotalSize += fieldMetaData.getRealSize();
 //                // 如果是动态计算列
 //                if (fieldMateData.isDynamicField()) {
-//                    dynamicFieldList.add(fieldMateData);
+//                    dynamicFieldList.add(fieldMetaData);
 //                }
 //            }
 //        }
         // 修改后(修复实体类中列顺序与FdfsColumn.index标记顺序一致性)
         Field[] fields = genericType.getDeclaredFields();
-        FieldMateData[] mateFieldArrays = new FieldMateData[fields.length];
+        FieldMetaData[] mateFieldArrays = new FieldMetaData[fields.length];
         for (Field field : fields) {
             FdfsColumn annotation = field.getAnnotation(FdfsColumn.class);
             if (annotation == null) { continue; }
-            FieldMateData fieldMateData = new FieldMateData(field, fieldsTotalSize);
-            mateFieldArrays[annotation.index()] = fieldMateData;
+            FieldMetaData fieldMetaData = new FieldMetaData(field, fieldsTotalSize);
+            mateFieldArrays[annotation.index()] = fieldMetaData;
             // 计算偏移量
-            fieldsTotalSize += fieldMateData.getRealeSize();
+            fieldsTotalSize += fieldMetaData.getRealSize();
         }
-        List<FieldMateData> mateFieldList = new ArrayList<FieldMateData>();
-        for (FieldMateData fieldMateData : mateFieldArrays) {
-            if (fieldMateData == null) { continue; }
-            mateFieldList.add(fieldMateData);
+        List<FieldMetaData> mateFieldList = new ArrayList<FieldMetaData>();
+        for (FieldMetaData fieldMetaData : mateFieldArrays) {
+            if (fieldMetaData == null) { continue; }
+            mateFieldList.add(fieldMetaData);
             // 如果是动态计算列
-            if (fieldMateData.isDynamicField()) {
-                dynamicFieldList.add(fieldMateData);
+            if (fieldMetaData.isDynamicField()) {
+                dynamicFieldList.add(fieldMetaData);
             }
         }
         return mateFieldList;
@@ -106,8 +100,8 @@ public class ObjectMateData {
      * </pre>
      */
     private void validatFieldListDefine() {
-        for (FieldMateData field : fieldList) {
-            validatFieldItemDefineByIndex(field);
+        for (FieldMetaData field : fieldList) {
+            validateFieldItemDefineByIndex(field);
         }
     }
 
@@ -115,11 +109,14 @@ public class ObjectMateData {
      * 检查按索引映射
      * @param field
      */
-    private void validatFieldItemDefineByIndex(FieldMateData field) {
-        for (FieldMateData otherField : fieldList) {
+    private void validateFieldItemDefineByIndex(FieldMetaData field) {
+        for (FieldMetaData otherField : fieldList) {
             if (!field.equals(otherField) && (field.getIndex() == otherField.getIndex())) {
-                Object[] param = {className, field.getFieldName(), otherField.getFieldName(), field.getIndex()};
-                LOGGER.warn("在类{}映射定义中{}与{}索引定义相同为{}(请检查是否为程序错误)", param);
+                StringBuilder builder = new StringBuilder();
+                builder.append("在类[").append(className).append("]映射定义中.[");
+                builder.append(field.getFieldName()).append("]与[").append(otherField.getFieldName());
+                builder.append("]索引定义相同为[").append(field.getIndex()).append("]");
+                throw new FdfsColumnMapException(builder.toString());
             }
         }
     }
@@ -129,7 +126,7 @@ public class ObjectMateData {
      * @return
      */
     private boolean hasDynamicField() {
-        for (FieldMateData field : fieldList) {
+        for (FieldMetaData field : fieldList) {
             if (field.isDynamicField()) {
                 return true;
             }
@@ -147,7 +144,7 @@ public class ObjectMateData {
     private int getDynamicFieldSize(Object obj, Charset charset)
             throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
         int size = 0;
-        for (FieldMateData field : dynamicFieldList) {
+        for (FieldMetaData field : dynamicFieldList) {
             size = size + field.getDynamicFieldByteSize(obj, charset);
         }
         return size;
@@ -160,7 +157,7 @@ public class ObjectMateData {
     public int getFieldsFixTotalSize() {
         if (hasDynamicField()) {
             throw new FdfsColumnMapException(
-                    className + " class hasDynamicField, unsupport operator getFieldsTotalSize");
+                    className + " class hasDynamicField, unsupported operator getFieldsTotalSize");
         }
         return fieldsTotalSize;
     }
@@ -192,26 +189,12 @@ public class ObjectMateData {
         try {
             int dynamicFieldSize = getDynamicFieldSize(bean, charset);
             return fieldsTotalSize + dynamicFieldSize;
-        } catch (NoSuchMethodException ie) {
-            LOGGER.debug("Cannot invoke get methed: ", ie);
-            throw new FdfsColumnMapException(ie);
-        } catch (IllegalAccessException iae) {
-            LOGGER.debug("Illegal access: ", iae);
-            throw new FdfsColumnMapException(iae);
-        } catch (InvocationTargetException ite) {
-            LOGGER.debug("Cannot invoke method: ", ite);
-            throw new FdfsColumnMapException(ite);
-        }
-    }
-
-    /**
-     * 导出调试信息
-     */
-    public void dumpObjectMateData() {
-        LOGGER.debug("dump class={}", className);
-        LOGGER.debug("----------------------------------------");
-        for (FieldMateData md : fieldList) {
-            LOGGER.debug(md.toString());
+        } catch (NoSuchMethodException e) {
+            throw new FdfsColumnMapException("Cannot invoke get method", e);
+        } catch (IllegalAccessException e) {
+            throw new FdfsColumnMapException("Illegal access", e);
+        } catch (InvocationTargetException e) {
+            throw new FdfsColumnMapException("Cannot invoke method", e);
         }
     }
 

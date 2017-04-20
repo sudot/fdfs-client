@@ -21,13 +21,13 @@ public class StorageState {
     private String id;
     /** ip地址 */
     @FdfsColumn(index = 2, max = OtherConstants.FDFS_IPADDR_SIZE)
-    private String ipAddr;
+    private String ipAddress;
     /** domain */
     @FdfsColumn(index = 3, max = OtherConstants.FDFS_DOMAIN_NAME_MAX_SIZE)
     private String domainName; // http domain name
     /** 源ip地址 */
     @FdfsColumn(index = 4, max = OtherConstants.FDFS_IPADDR_SIZE)
-    private String srcIpAddr;
+    private String srcIpAddress;
     /** version */
     @FdfsColumn(index = 5, max = OtherConstants.FDFS_VERSION_SIZE)
     private String version;
@@ -227,31 +227,31 @@ public class StorageState {
     }
 
     /**
-     * @return the ipAddr
+     * @return the ipAddress
      */
-    public String getIpAddr() {
-        return ipAddr;
+    public String getIpAddress() {
+        return ipAddress;
     }
 
     /**
-     * @param ipAddr the ipAddr to set
+     * @param ipAddress the ipAddress to set
      */
-    public void setIpAddr(String ipAddr) {
-        this.ipAddr = ipAddr;
+    public void setIpAddress(String ipAddress) {
+        this.ipAddress = ipAddress;
     }
 
     /**
-     * @return the srcIpAddr
+     * @return the srcIpAddress
      */
-    public String getSrcIpAddr() {
-        return srcIpAddr;
+    public String getSrcIpAddress() {
+        return srcIpAddress;
     }
 
     /**
-     * @param srcIpAddr the srcIpAddr to set
+     * @param srcIpAddress the srcIpAddress to set
      */
-    public void setSrcIpAddr(String srcIpAddr) {
-        this.srcIpAddr = srcIpAddr;
+    public void setSrcIpAddress(String srcIpAddress) {
+        this.srcIpAddress = srcIpAddress;
     }
 
     /**
@@ -1050,35 +1050,71 @@ public class StorageState {
 
     @Override
     public String toString() {
-        return "StorageState [status=" + status + ", id=" + id + ", ipAddr=" + ipAddr + ", domainName=" + domainName
-                + ", srcIpAddr=" + srcIpAddr + ", version=" + version + ", joinTime=" + joinTime + ", upTime=" + upTime
-                + ", totalMB=" + totalMB + ", freeMB=" + freeMB + ", uploadPriority=" + uploadPriority
-                + ", storePathCount=" + storePathCount + ", subdirCountPerPath=" + subdirCountPerPath
-                + ", currentWritePath=" + currentWritePath + ", storagePort=" + storagePort + ", storageHttpPort="
-                + storageHttpPort + ", connectionAllocCount=" + connectionAllocCount + ", connectionCurrentCount="
-                + connectionCurrentCount + ", connectionMaxCount=" + connectionMaxCount + ", totalUploadCount="
-                + totalUploadCount + ", successUploadCount=" + successUploadCount + ", totalAppendCount="
-                + totalAppendCount + ", successAppendCount=" + successAppendCount + ", totalModifyCount="
-                + totalModifyCount + ", successModifyCount=" + successModifyCount + ", totalTruncateCount="
-                + totalTruncateCount + ", successTruncateCount=" + successTruncateCount + ", totalSetMetaCount="
-                + totalSetMetaCount + ", successSetMetaCount=" + successSetMetaCount + ", totalDeleteCount="
-                + totalDeleteCount + ", successDeleteCount=" + successDeleteCount + ", totalDownloadCount="
-                + totalDownloadCount + ", successDownloadCount=" + successDownloadCount + ", totalGetMetaCount="
-                + totalGetMetaCount + ", successGetMetaCount=" + successGetMetaCount + ", totalCreateLinkCount="
-                + totalCreateLinkCount + ", successCreateLinkCount=" + successCreateLinkCount
-                + ", totalDeleteLinkCount=" + totalDeleteLinkCount + ", successDeleteLinkCount="
-                + successDeleteLinkCount + ", totalUploadBytes=" + totalUploadBytes + ", successUploadBytes="
-                + successUploadBytes + ", totalAppendBytes=" + totalAppendBytes + ", successAppendBytes="
-                + successAppendBytes + ", totalModifyBytes=" + totalModifyBytes + ", successModifyBytes="
-                + successModifyBytes + ", totalDownloadloadBytes=" + totalDownloadloadBytes
-                + ", successDownloadloadBytes=" + successDownloadloadBytes + ", totalSyncInBytes=" + totalSyncInBytes
-                + ", successSyncInBytes=" + successSyncInBytes + ", totalSyncOutBytes=" + totalSyncOutBytes
-                + ", successSyncOutBytes=" + successSyncOutBytes + ", totalFileOpenCount=" + totalFileOpenCount
-                + ", successFileOpenCount=" + successFileOpenCount + ", totalFileReadCount=" + totalFileReadCount
-                + ", successFileReadCount=" + successFileReadCount + ", totalFileWriteCount=" + totalFileWriteCount
-                + ", successFileWriteCount=" + successFileWriteCount + ", lastSourceUpdate=" + lastSourceUpdate
-                + ", lastSyncUpdate=" + lastSyncUpdate + ", lastSyncedTimestamp=" + lastSyncedTimestamp
-                + ", lastHeartBeatTime=" + lastHeartBeatTime + ", isTrunkServer=" + isTrunkServer + "]";
+        final StringBuilder sb = new StringBuilder("StorageState{");
+        sb.append("status=").append(status);
+        sb.append(", id='").append(id).append('\'');
+        sb.append(", ipAddress='").append(ipAddress).append('\'');
+        sb.append(", domainName='").append(domainName).append('\'');
+        sb.append(", srcIpAddress='").append(srcIpAddress).append('\'');
+        sb.append(", version='").append(version).append('\'');
+        sb.append(", joinTime=").append(joinTime);
+        sb.append(", upTime=").append(upTime);
+        sb.append(", totalMB=").append(totalMB);
+        sb.append(", freeMB=").append(freeMB);
+        sb.append(", uploadPriority=").append(uploadPriority);
+        sb.append(", storePathCount=").append(storePathCount);
+        sb.append(", subdirCountPerPath=").append(subdirCountPerPath);
+        sb.append(", currentWritePath=").append(currentWritePath);
+        sb.append(", storagePort=").append(storagePort);
+        sb.append(", storageHttpPort=").append(storageHttpPort);
+        sb.append(", connectionAllocCount=").append(connectionAllocCount);
+        sb.append(", connectionCurrentCount=").append(connectionCurrentCount);
+        sb.append(", connectionMaxCount=").append(connectionMaxCount);
+        sb.append(", totalUploadCount=").append(totalUploadCount);
+        sb.append(", successUploadCount=").append(successUploadCount);
+        sb.append(", totalAppendCount=").append(totalAppendCount);
+        sb.append(", successAppendCount=").append(successAppendCount);
+        sb.append(", totalModifyCount=").append(totalModifyCount);
+        sb.append(", successModifyCount=").append(successModifyCount);
+        sb.append(", totalTruncateCount=").append(totalTruncateCount);
+        sb.append(", successTruncateCount=").append(successTruncateCount);
+        sb.append(", totalSetMetaCount=").append(totalSetMetaCount);
+        sb.append(", successSetMetaCount=").append(successSetMetaCount);
+        sb.append(", totalDeleteCount=").append(totalDeleteCount);
+        sb.append(", successDeleteCount=").append(successDeleteCount);
+        sb.append(", totalDownloadCount=").append(totalDownloadCount);
+        sb.append(", successDownloadCount=").append(successDownloadCount);
+        sb.append(", totalGetMetaCount=").append(totalGetMetaCount);
+        sb.append(", successGetMetaCount=").append(successGetMetaCount);
+        sb.append(", totalCreateLinkCount=").append(totalCreateLinkCount);
+        sb.append(", successCreateLinkCount=").append(successCreateLinkCount);
+        sb.append(", totalDeleteLinkCount=").append(totalDeleteLinkCount);
+        sb.append(", successDeleteLinkCount=").append(successDeleteLinkCount);
+        sb.append(", totalUploadBytes=").append(totalUploadBytes);
+        sb.append(", successUploadBytes=").append(successUploadBytes);
+        sb.append(", totalAppendBytes=").append(totalAppendBytes);
+        sb.append(", successAppendBytes=").append(successAppendBytes);
+        sb.append(", totalModifyBytes=").append(totalModifyBytes);
+        sb.append(", successModifyBytes=").append(successModifyBytes);
+        sb.append(", totalDownloadloadBytes=").append(totalDownloadloadBytes);
+        sb.append(", successDownloadloadBytes=").append(successDownloadloadBytes);
+        sb.append(", totalSyncInBytes=").append(totalSyncInBytes);
+        sb.append(", successSyncInBytes=").append(successSyncInBytes);
+        sb.append(", totalSyncOutBytes=").append(totalSyncOutBytes);
+        sb.append(", successSyncOutBytes=").append(successSyncOutBytes);
+        sb.append(", totalFileOpenCount=").append(totalFileOpenCount);
+        sb.append(", successFileOpenCount=").append(successFileOpenCount);
+        sb.append(", totalFileReadCount=").append(totalFileReadCount);
+        sb.append(", successFileReadCount=").append(successFileReadCount);
+        sb.append(", totalFileWriteCount=").append(totalFileWriteCount);
+        sb.append(", successFileWriteCount=").append(successFileWriteCount);
+        sb.append(", lastSourceUpdate=").append(lastSourceUpdate);
+        sb.append(", lastSyncUpdate=").append(lastSyncUpdate);
+        sb.append(", lastSyncedTimestamp=").append(lastSyncedTimestamp);
+        sb.append(", lastHeartBeatTime=").append(lastHeartBeatTime);
+        sb.append(", isTrunkServer=").append(isTrunkServer);
+        sb.append('}');
+        return sb.toString();
     }
 
 }

@@ -7,6 +7,7 @@ import net.sudot.fdfs.proto.mapper.FdfsColumn;
  * fastdfs中group的状态信息
  * @author yuqih
  * @author tobato
+ * @author sudot on 2017-04-20 0020.
  */
 public class GroupState {
 
@@ -219,11 +220,21 @@ public class GroupState {
 
     @Override
     public String toString() {
-        return "GroupState [groupName=" + groupName + ", totalMB=" + totalMB + ", freeMB=" + freeMB + ", trunkFreeMB="
-                + trunkFreeMB + ", storageCount=" + storageCount + ", storagePort=" + storagePort + ", storageHttpPort="
-                + storageHttpPort + ", activeCount=" + activeCount + ", currentWriteServer=" + currentWriteServer
-                + ", storePathCount=" + storePathCount + ", subdirCountPerPath=" + subdirCountPerPath
-                + ", currentTrunkFileId=" + currentTrunkFileId + "]";
+        final StringBuilder sb = new StringBuilder("GroupState{");
+        sb.append("groupName='").append(groupName).append('\'');
+        sb.append(", totalMB=").append(totalMB);
+        sb.append(", freeMB=").append(freeMB);
+        sb.append(", trunkFreeMB=").append(trunkFreeMB);
+        sb.append(", storageCount=").append(storageCount);
+        sb.append(", storagePort=").append(storagePort);
+        sb.append(", storageHttpPort=").append(storageHttpPort);
+        sb.append(", activeCount=").append(activeCount);
+        sb.append(", currentWriteServer=").append(currentWriteServer);
+        sb.append(", storePathCount=").append(storePathCount);
+        sb.append(", subdirCountPerPath=").append(subdirCountPerPath);
+        sb.append(", currentTrunkFileId=").append(currentTrunkFileId);
+        sb.append('}');
+        return sb.toString();
     }
 
 }

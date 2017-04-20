@@ -36,7 +36,7 @@ public class TrackerConnectionManager extends ConnectionManager {
      */
     public <T> T executeFdfsTrackerCmd(FdfsCommand<T> command) {
         InetSocketAddress address = trackerLocator.getTrackerAddress();
-        logger.debug("获取到Tracker连接地址{}", address);
+        if (logger.isDebugEnabled()) { logger.debug("获取到Tracker连接地址{}", address); }
         trackerLocator.setActive(address);
         try {
             return super.executeFdfsCmd(address, command);

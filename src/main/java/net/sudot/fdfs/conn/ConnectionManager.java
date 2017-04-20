@@ -48,7 +48,7 @@ public abstract class ConnectionManager {
      * @return
      */
     public <T> T executeFdfsCmd(InetSocketAddress address, FdfsCommand<T> command) {
-        logger.debug("对地址{}发出交易请求{}", address, command.getClass().getSimpleName());
+        if (logger.isDebugEnabled()) { logger.debug("对地址[{}]发出交易请求[{}]", address, command.getClass().getSimpleName()); }
         Connection conn = null;
         try {
             // 获取连接
@@ -116,9 +116,9 @@ public abstract class ConnectionManager {
      * @return 返回ConnectionManager及其子类
      */
     protected <C extends ConnectionManager> C invalidateObject(InetSocketAddress address, Connection conn) {
-        logger.warn("连接因异常被销毁:{} {}", address, conn);
         try {
-            if (address != null && null != conn) {
+            if (address != null && null != conn && !conn.isValid()) {
+                logger.warn("连接因异常被销毁:{} {}", address, conn);
                 pool.invalidateObject(address, conn);
             }
         } catch (Exception e) {
