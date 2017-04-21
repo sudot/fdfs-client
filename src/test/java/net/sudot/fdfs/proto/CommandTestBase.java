@@ -1,23 +1,14 @@
 package net.sudot.fdfs.proto;
 
+import net.sudot.fdfs.FastdfsTestBase;
 import net.sudot.fdfs.TestConstants;
-import net.sudot.fdfs.conn.ConnectionManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * command测试基类
  * @author tobato
+ * @author sudot on 2017-04-21 0021.
  */
-public class CommandTestBase {
-
-    /** 日志 */
-    protected Logger logger = LoggerFactory.getLogger(getClass());
-
-    /**
-     * 连接池
-     */
-    protected ConnectionManager manager = TestConstants.FDFS_OPTIONS_FACTORY.getTrackerConnectionManager();
+public class CommandTestBase extends FastdfsTestBase {
 
     /**
      * 执行Tracker交易命令
@@ -25,7 +16,7 @@ public class CommandTestBase {
      * @return
      */
     protected <T> T executeTrackerCmd(FdfsCommand<T> command) {
-        return manager.executeFdfsCmd(TestConstants.TRACKER_ADDRESS, command);
+        return trackerConnectionManager.executeFdfsCmd(TestConstants.TRACKER_ADDRESS, command);
     }
 
     /**
@@ -34,7 +25,7 @@ public class CommandTestBase {
      * @return
      */
     protected <T> T executeStoreCmd(FdfsCommand<T> command) {
-        return manager.executeFdfsCmd(TestConstants.STORE_ADDRESS, command);
+        return trackerConnectionManager.executeFdfsCmd(TestConstants.STORE_ADDRESS, command);
     }
 
 }

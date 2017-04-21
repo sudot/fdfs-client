@@ -1,26 +1,28 @@
-# ===================================================================
-# fastdfs\u914D\u7F6E
-# ===================================================================
+# =========== #
+# fastdfs配置 #
+# =========== #
 
-#host:port\u5217\u8868.\u5206\u9694\u7B26(\u82F1\u6587\u6807\u70B9\u4E0B\u7684):\u7A7A\u683C,\u9017\u53F7,\u5206\u53F7,\u6362\u884C\u7B26,\u5236\u8868\u7B26
-fdfs.trackerList=127.0.0.1:23100,127.0.0.1:23200;127.0.0.1:23300 127.0.0.1:23400\
-  \n127.0.0.1:23500\t127.0.0.1:23600
-#\u6587\u4EF6\u8BFB\u53D6\u8D85\u65F6\u65F6\u957F(\u5355\u4F4D:\u6BEB\u79D2)
+#host:port列表.分隔符(英文标点下的):空格,逗号,分号,换行符,制表符
+fdfs.trackerList=192.168.11.234:23100
+#文件读取超时时长(单位:毫秒)
 fdfs.soTimeout=3000
-#\u8BF7\u6C42\u8FDE\u63A5\u8D85\u65F6\u65F6\u957F(\u5355\u4F4D:\u6BEB\u79D2)
+#请求连接超时时长(单位:毫秒)
 fdfs.connectTimeout=5000
-#\u5B57\u7B26\u7F16\u7801
+#字符编码
 fdfs.charsetName=UTF-8
 
-#\u8FDE\u63A5\u6C60\u8BBE\u7F6E
+#连接池设置
 fdfs.pool.maxTotal=2
-#\u8BBE\u7F6E\u4E3Atrue\u65F6,\u6C60\u4E2D\u65E0\u53EF\u7528\u8FDE\u63A5,borrow\u65F6\u8FDB\u884C\u963B\u585E;\u4E3Afalse\u65F6,\u5F53\u6C60\u4E2D\u65E0\u53EF\u7528\u8FDE\u63A5,\u629B\u51FANoSuchElementException\u5F02\u5E38
+#设置为true时,池中无可用连接,borrow时进行阻塞;
+#为false时,当池中无可用连接,抛出NoSuchElementException异常
 fdfs.pool.blockWhenExhausted=true
-#\u6700\u5927\u7B49\u5F85\u65F6\u95F4(\u5355\u4F4D:\u6BEB\u79D2),\u5F53 blockWhenExhausted \u914D\u7F6E\u4E3A true \u65F6,\u6B64\u503C\u6709\u6548.\u5F53\u9700\u8981borrow\u4E00\u4E2A\u8FDE\u63A5\u65F6,\u6700\u5927\u7684\u7B49\u5F85\u65F6\u95F4,\u5982\u679C\u8D85\u51FA\u65F6\u95F4,\u629B\u51FANoSuchElementException\u5F02\u5E38,-1\u4E3A\u4E0D\u9650\u5236\u65F6\u95F4
+#最大等待时间(单位:毫秒),当 blockWhenExhausted配置为 true 时,此值有效.
+#当需要borrow一个连接时,最大的等待时间,如果超出时间,抛出NoSuchElementException异常,
+#-1为不限制时间
 fdfs.pool.maxWaitMillis=5000
-#\u7A7A\u95F2\u65F6\u8FDB\u884C\u8FDE\u63A5\u6D4B\u8BD5,\u4F1A\u542F\u52A8\u5F02\u6B65evict\u7EBF\u7A0B\u8FDB\u884C\u5931\u6548\u68C0\u6D4B
+#空闲时进行连接测试,会启动异步evict线程进行失效检测
 fdfs.pool.testWhileIdle=true
-#\u8D44\u6E90\u6700\u5C0F\u7A7A\u95F2\u65F6\u95F4(\u5355\u4F4D:\u6BEB\u79D2),\u89C6\u4F11\u7720\u65F6\u95F4\u8D85\u8FC7\u7684\u5BF9\u8C61\u4E3A\u8FC7\u671F.\u9700\u8981testWhileIdle\u4E3Atrue
+#资源最小空闲时间(单位:毫秒),视休眠时间超过的对象为过期.需要testWhileIdle为true
 fdfs.pool.minEvictableIdleTimeMillis=600000
-#\u56DE\u6536\u8D44\u6E90\u7EBF\u7A0B\u7684\u6267\u884C\u5468\u671F(\u5355\u4F4D:\u6BEB\u79D2),\u9700\u8981testWhileIdle\u4E3Atrue
+#回收资源线程的执行周期(单位:毫秒),需要testWhileIdle为true
 fdfs.pool.timeBetweenEvictionRunsMillis=600000
