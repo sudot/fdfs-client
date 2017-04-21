@@ -3,7 +3,7 @@
 Features:
 
   - 脱离Spring
-  - 剔除出slf4j和commons-pool以外的第三方依赖
+  - 剔除slf4j和commons-pool以外的第三方依赖
   - 修复原作者modify,truncate,download部分接口无法正常使用
   - 增加断点续传接口支持同时设置元数据
   - 优化命令执行效率和容错率
