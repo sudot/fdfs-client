@@ -14,7 +14,7 @@ java版fastdfs客户端操作工具
 >1. 修改了所有包名
 >2. 取消对spring的依赖,默认的使用方式是通过单例实现
 >3. 取消了对commons-pool2和slf4j以外的所以依赖
->4. 取消了图片缩略图处理,但在单元测试中有使用JDK原生API实现的对应功能.详见[net.sudot.fdfs.proto.storage.StorageUploadSlaveFileCommandTest#testStorageSlaveUploadFileCommand](https://github.com/sudot/fdfs-client/blob/FastDFS_Client_chulung/src/test/java/net/sudot/fdfs/proto/storage/StorageUploadSlaveFileCommandTest.java)
+>4. 取消了图片缩略图处理,但在单元测试中有使用JDK原生API实现的对应功能.详见[net.sudot.fdfs.proto.storage.StorageUploadSlaveFileCommandTest#testStorageSlaveUploadFileCommand](https://github.com/sudot/fdfs-client/blob/master/src/test/java/net/sudot/fdfs/proto/storage/StorageUploadSlaveFileCommandTest.java)
 >5. 修复modifyFile,truncateFile,downloadFile含偏移位置和操作文件大小的重载函数无法正常使用
 >6. 常用的连接池配置抽出通过外置文件配置(后续会将有必要的所有参数都抽取出来)
 >7. 修复连接池在运行时出现突然连接不上的情况
