@@ -19,7 +19,6 @@ public class HandlerDemo implements Runnable {
         String socketInfo = socket.getInetAddress() + ":" + socket.getPort();
         try {
             System.out.println("新连接:" + socketInfo);
-            // Thread.sleep(10000);
             InputStream in = socket.getInputStream();
             DataInputStream din = new DataInputStream(in);
             String name = din.readUTF();

@@ -51,25 +51,27 @@ public class ObjectMetaData {
 
     /**
      * 解析映射对象数据映射情况
+     * <pre>
+     * // 原代码(包含隐藏BUG,实体中定义的列顺序和FdfsColumn.index标记顺序不一致,会导致参数错误)
+     * Field[] fields = genericType.getDeclaredFields();
+     * List<FieldMetaData> mapedFieldList = new ArrayList<FieldMetaData>();
+     * for (int i = 0; i < fields.length; i++) {
+     *     if (fields[i].isAnnotationPresent(FdfsColumn.class)) {
+     *         FieldMetaData fieldMetaData = new FieldMetaData(fields[i], fieldsTotalSize);
+     *         mapedFieldList.add(fieldMetaData);
+     *         // 计算偏移量
+     *         fieldsTotalSize += fieldMetaData.getRealSize();
+     *         // 如果是动态计算列
+     *         if (fieldMateData.isDynamicField()) {
+     *             dynamicFieldList.add(fieldMetaData);
+     *         }
+     *     }
+     * }
+     * </pre>
+     *
      * @return
      */
     private <T> List<FieldMetaData> praseFieldList(Class<T> genericType) {
-//        原代码(包含隐藏BUG,实体中定义的列顺序和FdfsColumn.index标记顺序不一致,会导致参数错误)
-//        Field[] fields = genericType.getDeclaredFields();
-//        List<FieldMetaData> mapedFieldList = new ArrayList<FieldMetaData>();
-//        for (int i = 0; i < fields.length; i++) {
-//            if (fields[i].isAnnotationPresent(FdfsColumn.class)) {
-//                FieldMetaData fieldMetaData = new FieldMetaData(fields[i], fieldsTotalSize);
-//                mapedFieldList.add(fieldMetaData);
-//                // 计算偏移量
-//                fieldsTotalSize += fieldMetaData.getRealSize();
-//                // 如果是动态计算列
-//                if (fieldMateData.isDynamicField()) {
-//                    dynamicFieldList.add(fieldMetaData);
-//                }
-//            }
-//        }
-        // 修改后(修复实体类中列顺序与FdfsColumn.index标记顺序一致性)
         Field[] fields = genericType.getDeclaredFields();
         FieldMetaData[] mateFieldArrays = new FieldMetaData[fields.length];
         for (Field field : fields) {

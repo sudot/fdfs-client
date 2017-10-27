@@ -200,9 +200,7 @@ class FieldMetaData {
      * @return
      * @throws IllegalAccessException
      */
-    private Object getFieldValue(Object bean)
-            throws IllegalAccessException {
-//        return PropertyUtils.getProperty(bean, field.getName());
+    private Object getFieldValue(Object bean) throws IllegalAccessException {
         field.setAccessible(true);
         return field.get(bean);
     }

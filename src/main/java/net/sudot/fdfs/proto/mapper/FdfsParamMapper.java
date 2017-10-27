@@ -102,7 +102,6 @@ public class FdfsParamMapper {
             Object value = field.getValue(content, charset);
             Field declaredField = fieldMap.get(field.getFieldName());
             declaredField.set(obj, value);
-//            BeanUtils.setProperty(obj, field.getFieldName(), value);
         }
         return obj;
     }
