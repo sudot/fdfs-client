@@ -13,7 +13,7 @@ import net.sudot.fdfs.proto.mapper.FdfsColumn;
  */
 public class TrackerGetStoreStorageWithGroupRequest extends FdfsRequest {
 
-    private static final byte withGroupCmd = CmdConstants.TRACKER_PROTO_CMD_SERVICE_QUERY_STORE_WITH_GROUP_ONE;
+    private static final byte WITH_GROUP_ONE = CmdConstants.TRACKER_PROTO_CMD_SERVICE_QUERY_STORE_WITH_GROUP_ONE;
 
     /**
      * 分组定义
@@ -27,7 +27,7 @@ public class TrackerGetStoreStorageWithGroupRequest extends FdfsRequest {
      */
     public TrackerGetStoreStorageWithGroupRequest(String groupName) {
         this.groupName = groupName;
-        this.head = new ProtoHead(withGroupCmd);
+        this.head = new ProtoHead(WITH_GROUP_ONE);
     }
 
     public String getGroupName() {

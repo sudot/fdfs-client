@@ -25,14 +25,14 @@ public class FdfsUtil {
 
     /**
      * get token for file URL
-     * @param remote_filename the filename return by FastDFS server
+     * @param remoteFilename the filename return by FastDFS server
      * @param ts              unix timestamp, unit: second
-     * @param secret_key      the secret key
+     * @param secretKey      the secret key
      * @return token string
      */
-    public static String getToken(String remote_filename, int ts, String secret_key) throws UnsupportedEncodingException, NoSuchAlgorithmException {
-        byte[] bsFilename = remote_filename.getBytes();
-        byte[] bsKey = secret_key.getBytes();
+    public static String getToken(String remoteFilename, int ts, String secretKey) throws UnsupportedEncodingException, NoSuchAlgorithmException {
+        byte[] bsFilename = remoteFilename.getBytes();
+        byte[] bsKey = secretKey.getBytes();
         byte[] bsTimestamp = (new Integer(ts)).toString().getBytes();
         byte[] buff = new byte[bsFilename.length + bsKey.length + bsTimestamp.length];
         System.arraycopy(bsFilename, 0, buff, 0, bsFilename.length);

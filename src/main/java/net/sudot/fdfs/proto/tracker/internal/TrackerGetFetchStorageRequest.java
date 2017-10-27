@@ -14,8 +14,8 @@ import net.sudot.fdfs.proto.mapper.FdfsColumn;
  */
 public class TrackerGetFetchStorageRequest extends FdfsRequest {
 
-    private static final byte fetchCmd = CmdConstants.TRACKER_PROTO_CMD_SERVICE_QUERY_FETCH_ONE;
-    private static final byte updateCmd = CmdConstants.TRACKER_PROTO_CMD_SERVICE_QUERY_UPDATE;
+    private static final byte FETCH_CMD = CmdConstants.TRACKER_PROTO_CMD_SERVICE_QUERY_FETCH_ONE;
+    private static final byte UPDATE_CMD = CmdConstants.TRACKER_PROTO_CMD_SERVICE_QUERY_UPDATE;
 
     /** 组名 */
     @FdfsColumn(index = 0, max = OtherConstants.FDFS_GROUP_NAME_MAX_LEN)
@@ -34,9 +34,9 @@ public class TrackerGetFetchStorageRequest extends FdfsRequest {
         this.groupName = groupName;
         this.path = path;
         if (toUpdate) {
-            head = new ProtoHead(updateCmd);
+            head = new ProtoHead(UPDATE_CMD);
         } else {
-            head = new ProtoHead(fetchCmd);
+            head = new ProtoHead(FETCH_CMD);
         }
     }
 

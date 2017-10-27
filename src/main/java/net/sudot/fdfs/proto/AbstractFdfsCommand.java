@@ -25,6 +25,7 @@ public abstract class AbstractFdfsCommand<T> implements FdfsCommand<T> {
     /**
      * 对服务端发出请求然后接收反馈
      */
+    @Override
     public T execute(Connection conn) {
         // 封装socket交易 send
         try {

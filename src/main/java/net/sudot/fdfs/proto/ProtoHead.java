@@ -90,12 +90,12 @@ public class ProtoHead {
      */
     public byte[] toByte() {
         byte[] header;
-        byte[] hex_len;
+        byte[] hexLen;
 
         header = new byte[HEAD_LENGTH];
         Arrays.fill(header, (byte) 0);
-        hex_len = BytesUtil.long2buff(contentLength);
-        System.arraycopy(hex_len, 0, header, 0, hex_len.length);
+        hexLen = BytesUtil.long2buff(contentLength);
+        System.arraycopy(hexLen, 0, header, 0, hexLen.length);
         header[OtherConstants.PROTO_HEADER_CMD_INDEX] = cmd;
         header[OtherConstants.PROTO_HEADER_STATUS_INDEX] = status;
         return header;

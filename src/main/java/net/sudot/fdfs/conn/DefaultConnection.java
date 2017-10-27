@@ -50,13 +50,14 @@ public class DefaultConnection implements Connection {
     /**
      * 正常关闭连接
      */
+    @Override
     public synchronized void close() {
         logger.debug("disconnect from {}", socket);
         byte[] header = new byte[OtherConstants.FDFS_PROTO_PKG_LEN_SIZE + 2];
         Arrays.fill(header, (byte) 0);
 
-        byte[] hex_len = BytesUtil.long2buff(0);
-        System.arraycopy(hex_len, 0, header, 0, hex_len.length);
+        byte[] hexLen = BytesUtil.long2buff(0);
+        System.arraycopy(hexLen, 0, header, 0, hexLen.length);
         header[OtherConstants.PROTO_HEADER_CMD_INDEX] = CmdConstants.FDFS_PROTO_CMD_QUIT;
         header[OtherConstants.PROTO_HEADER_STATUS_INDEX] = (byte) 0;
         try {
@@ -88,8 +89,8 @@ public class DefaultConnection implements Connection {
             byte[] header = new byte[OtherConstants.FDFS_PROTO_PKG_LEN_SIZE + 2];
             Arrays.fill(header, (byte) 0);
 
-            byte[] hex_len = BytesUtil.long2buff(0);
-            System.arraycopy(hex_len, 0, header, 0, hex_len.length);
+            byte[] hexLen = BytesUtil.long2buff(0);
+            System.arraycopy(hexLen, 0, header, 0, hexLen.length);
             header[OtherConstants.PROTO_HEADER_CMD_INDEX] = CmdConstants.FDFS_PROTO_CMD_ACTIVE_TEST;
             header[OtherConstants.PROTO_HEADER_STATUS_INDEX] = (byte) 0;
             socket.getOutputStream().write(header);
@@ -109,6 +110,7 @@ public class DefaultConnection implements Connection {
      * @return
      * @throws IOException
      */
+    @Override
     public OutputStream getOutputStream() throws IOException {
         return socket.getOutputStream();
     }
@@ -118,6 +120,7 @@ public class DefaultConnection implements Connection {
      * @return
      * @throws IOException
      */
+    @Override
     public InputStream getInputStream() throws IOException {
         return socket.getInputStream();
     }
@@ -126,6 +129,7 @@ public class DefaultConnection implements Connection {
      * 获取字符集
      * @return
      */
+    @Override
     public Charset getCharset() {
         return charset;
     }

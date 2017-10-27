@@ -15,8 +15,8 @@ import java.io.InputStream;
  */
 public class StorageUploadFileRequest extends FdfsRequest {
 
-    private static final byte uploadCmd = CmdConstants.STORAGE_PROTO_CMD_UPLOAD_FILE;
-    private static final byte uploadAppenderCmd = CmdConstants.STORAGE_PROTO_CMD_UPLOAD_APPENDER_FILE;
+    private static final byte UPLOAD_CMD = CmdConstants.STORAGE_PROTO_CMD_UPLOAD_FILE;
+    private static final byte UPLOAD_APPENDER_CMD = CmdConstants.STORAGE_PROTO_CMD_UPLOAD_APPENDER_FILE;
 
     /** 存储节点index */
     @FdfsColumn(index = 0)
@@ -44,9 +44,9 @@ public class StorageUploadFileRequest extends FdfsRequest {
         this.storeIndex = storeIndex;
         this.fileExtName = fileExtName;
         if (isAppenderFile) {
-            head = new ProtoHead(uploadAppenderCmd);
+            head = new ProtoHead(UPLOAD_APPENDER_CMD);
         } else {
-            head = new ProtoHead(uploadCmd);
+            head = new ProtoHead(UPLOAD_CMD);
         }
     }
 

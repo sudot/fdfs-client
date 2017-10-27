@@ -15,18 +15,22 @@ import net.sudot.fdfs.util.Validate;
  */
 public class DefaultFdfsOptionsFactory implements FdfsOptionsFactory {
 
+    @Override
     public ConnectionManager getTrackerConnectionManager() {
         return TrackerConnectionManagerInstance.TRACKER_CONNECTION_MANAGER;
     }
 
+    @Override
     public ConnectionManager getStorageConnectionManager() {
         return StorageConnectionManagerInstance.STORAGE_CONNECTION_MANAGER;
     }
 
+    @Override
     public TrackerClient getTrackerClient() {
         return TrackerClientInstance.TRACKER_CLIENT;
     }
 
+    @Override
     public StorageClient getStorageClient() {
         return StorageClientInstance.STORAGE_CLIENT;
     }
