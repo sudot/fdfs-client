@@ -39,8 +39,8 @@ public class StorageUploadFileCommandTest extends StorageCommandTestBase {
 
     @Test
     public void testStorageUploadFileCommandByAppend() throws IOException {
-        String text = "非append模式";
-        // 非append模式
+        String text = "append模式";
+        // append模式
         StorePath storePath = execStorageUploadFileCommand(TestConstants.CAT_IMAGE_FILE, true);
         // 文件续传
         ByteArrayInputStream stream = new ByteArrayInputStream(text.getBytes(TestConstants.DEFAULT_CHARSET));

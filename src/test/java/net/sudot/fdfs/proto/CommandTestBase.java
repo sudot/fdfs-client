@@ -16,7 +16,7 @@ public class CommandTestBase extends FastdfsTestBase {
      * @return
      */
     protected <T> T executeTrackerCmd(FdfsCommand<T> command) {
-        return trackerConnectionManager.executeFdfsCmd(TestConstants.TRACKER_ADDRESS, command);
+        return trackerClient.getConnectionManager().executeFdfsCmd(TestConstants.TRACKER_ADDRESS, command);
     }
 
     /**
@@ -25,7 +25,7 @@ public class CommandTestBase extends FastdfsTestBase {
      * @return
      */
     protected <T> T executeStoreCmd(FdfsCommand<T> command) {
-        return trackerConnectionManager.executeFdfsCmd(TestConstants.STORE_ADDRESS, command);
+        return storageClient.getConnectionManager().executeFdfsCmd(TestConstants.STORE_ADDRESS, command);
     }
 
 }

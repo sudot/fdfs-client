@@ -319,6 +319,7 @@ public class DefaultStorageClient implements StorageClient {
         return getMetaData(storePath.getGroup(), storePath.getPath());
     }
 
+    @Override
     public TrackerClient getTrackerClient() {
         return trackerClient;
     }
@@ -328,6 +329,7 @@ public class DefaultStorageClient implements StorageClient {
         return this;
     }
 
+    @Override
     public ConnectionManager getConnectionManager() {
         return connectionManager;
     }

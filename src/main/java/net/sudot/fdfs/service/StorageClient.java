@@ -1,5 +1,6 @@
 package net.sudot.fdfs.service;
 
+import net.sudot.fdfs.conn.ConnectionManager;
 import net.sudot.fdfs.domain.FileInfo;
 import net.sudot.fdfs.domain.MetaData;
 import net.sudot.fdfs.domain.StorePath;
@@ -10,6 +11,7 @@ import java.util.Set;
 
 /**
  * 基本文件存储客户端操作
+ *
  * @author tobato
  * @author sudot on 2017-03-17 0017.
  */
@@ -20,6 +22,7 @@ public interface StorageClient {
      * <pre>
      * 文件上传后不可以修改，如果要修改则删除以后重新上传
      * </pre>
+     *
      * @param inputStream 文件流
      * @param fileSize    文件大小
      * @param fileExtName 文件扩展名
@@ -32,6 +35,7 @@ public interface StorageClient {
      * <pre>
      * 文件上传后不可以修改，如果要修改则删除以后重新上传
      * </pre>
+     *
      * @param groupName   文件需要上传的组
      * @param inputStream 文件流
      * @param fileSize    文件大小
@@ -45,6 +49,7 @@ public interface StorageClient {
      * <pre>
      * 文件上传后不可以修改，如果要修改则删除以后重新上传
      * </pre>
+     *
      * @param inputStream 文件流
      * @param fileSize    文件大小
      * @param fileExtName 文件扩展名
@@ -58,6 +63,7 @@ public interface StorageClient {
      * <pre>
      * 文件上传后不可以修改，如果要修改则删除以后重新上传
      * </pre>
+     *
      * @param groupName   文件需要上传的组
      * @param inputStream 文件流
      * @param fileSize    文件大小
@@ -69,6 +75,7 @@ public interface StorageClient {
 
     /**
      * 上传支持断点续传的文件
+     *
      * @param inputStream 文件流
      * @param fileSize    文件大小
      * @param fileExtName 文件扩展名
@@ -78,6 +85,7 @@ public interface StorageClient {
 
     /**
      * 上传支持断点续传的文件
+     *
      * @param groupName   文件需要上传的组
      * @param inputStream 文件流
      * @param fileSize    文件大小
@@ -88,6 +96,7 @@ public interface StorageClient {
 
     /**
      * 上传支持断点续传的文件
+     *
      * @param inputStream 文件流
      * @param fileSize    文件大小
      * @param fileExtName 文件扩展名
@@ -98,6 +107,7 @@ public interface StorageClient {
 
     /**
      * 上传支持断点续传的文件
+     *
      * @param groupName   文件需要上传的组
      * @param inputStream 文件流
      * @param fileSize    文件大小
@@ -109,6 +119,7 @@ public interface StorageClient {
 
     /**
      * 断点续传文件
+     *
      * @param groupName   文件组
      * @param path        文件路径
      * @param inputStream 上传文件流
@@ -118,6 +129,7 @@ public interface StorageClient {
 
     /**
      * 断点续传文件
+     *
      * @param fullPath    文件全路径
      * @param inputStream 上传文件流
      * @param fileSize    上传文件大小
@@ -126,6 +138,7 @@ public interface StorageClient {
 
     /**
      * 断点续传文件
+     *
      * @param storePath   文件路径信息
      * @param inputStream 上传文件流
      * @param fileSize    上传文件大小
@@ -134,6 +147,7 @@ public interface StorageClient {
 
     /**
      * 上传从文件
+     *
      * @param groupName   主文件组
      * @param masterPath  主文件路径
      * @param inputStream 从文件流
@@ -147,6 +161,7 @@ public interface StorageClient {
 
     /**
      * 上传从文件
+     *
      * @param masterFullPath 主文件全路径,包含组
      * @param inputStream    从文件流
      * @param fileSize       从文件大小
@@ -159,6 +174,7 @@ public interface StorageClient {
 
     /**
      * 上传从文件
+     *
      * @param masterStorePath 主文件路径信息
      * @param inputStream     从文件流
      * @param fileSize        从文件大小
@@ -171,6 +187,7 @@ public interface StorageClient {
 
     /**
      * 修改续传文件的内容
+     *
      * @param groupName    文件组
      * @param path         文件路径
      * @param inputStream  上传文件流
@@ -181,6 +198,7 @@ public interface StorageClient {
 
     /**
      * 修改续传文件的内容
+     *
      * @param fullPath     文件全路径
      * @param inputStream  上传文件流
      * @param modifySize   替换内容的大小(其大小不可大于输入流实际大小)
@@ -190,6 +208,7 @@ public interface StorageClient {
 
     /**
      * 修改续传文件的内容
+     *
      * @param storePath    文件路径信息
      * @param inputStream  上传文件流
      * @param modifySize   替换内容的大小(其大小不可大于输入流实际大小)
@@ -199,6 +218,7 @@ public interface StorageClient {
 
     /**
      * 删减续传类型文件的内容(从文件起始部分删减)
+     *
      * @param groupName         文件组
      * @param path              文件路径
      * @param truncatedFileSize 删减后的文件大小(需要保留的文件大小)
@@ -207,6 +227,7 @@ public interface StorageClient {
 
     /**
      * 删减续传类型文件的内容(从文件起始部分删减)
+     *
      * @param fullPath          文件全路径
      * @param truncatedFileSize 删减后的文件大小(需要保留的文件大小)
      */
@@ -214,6 +235,7 @@ public interface StorageClient {
 
     /**
      * 删减续传类型文件的内容(从文件起始部分删减)
+     *
      * @param storePath         文件路径信息
      * @param truncatedFileSize 删减后的文件大小(需要保留的文件大小)
      */
@@ -221,6 +243,7 @@ public interface StorageClient {
 
     /**
      * 删减续传类型文件的全部内容
+     *
      * @param groupName 文件组
      * @param path      文件路径
      */
@@ -228,18 +251,21 @@ public interface StorageClient {
 
     /**
      * 删减续传类型文件的全部内容
+     *
      * @param fullPath 文件全路径
      */
     void truncateFile(String fullPath);
 
     /**
      * 删减续传类型文件的全部内容
+     *
      * @param storePath 文件路径信息
      */
     void truncateFile(StorePath storePath);
 
     /**
      * 查看文件的信息
+     *
      * @param groupName 文件组
      * @param path      文件路径
      * @return 返回文件信息
@@ -248,6 +274,7 @@ public interface StorageClient {
 
     /**
      * 查看文件的信息
+     *
      * @param fullPath 文件全路径
      * @return 返回文件信息
      */
@@ -255,6 +282,7 @@ public interface StorageClient {
 
     /**
      * 查看文件的信息
+     *
      * @param storePath 文件路径信息
      * @return 返回文件信息
      */
@@ -262,6 +290,7 @@ public interface StorageClient {
 
     /**
      * 下载整个文件
+     *
      * @param groupName 文件组
      * @param path      文件路径
      * @param callback  文件下载回调
@@ -271,6 +300,7 @@ public interface StorageClient {
 
     /**
      * 下载整个文件
+     *
      * @param fullPath 文件全路径
      * @param callback 文件下载回调
      * @return 返回下载回调定义对象
@@ -279,6 +309,7 @@ public interface StorageClient {
 
     /**
      * 下载整个文件
+     *
      * @param storePath 文件路径信息
      * @param callback  文件下载回调
      * @return 返回下载回调定义对象
@@ -287,6 +318,7 @@ public interface StorageClient {
 
     /**
      * 下载文件片段
+     *
      * @param groupName      文件组
      * @param path           文件路径
      * @param downloadOffset 文件下载起始位置
@@ -299,7 +331,8 @@ public interface StorageClient {
 
     /**
      * 下载文件片段
-     * @param fullPath   文件全路径
+     *
+     * @param fullPath       文件全路径
      * @param downloadOffset 文件下载起始位置
      * @param downloadSize   预期下载文件大小
      * @param callback       文件下载回调
@@ -310,7 +343,8 @@ public interface StorageClient {
 
     /**
      * 下载文件片段
-     * @param storePath  文件路径信息
+     *
+     * @param storePath      文件路径信息
      * @param downloadOffset 文件下载起始位置
      * @param downloadSize   预期下载文件大小
      * @param callback       文件下载回调
@@ -321,6 +355,7 @@ public interface StorageClient {
 
     /**
      * 删除文件
+     *
      * @param groupName 文件组
      * @param path      文件路径
      */
@@ -328,18 +363,21 @@ public interface StorageClient {
 
     /**
      * 删除文件
+     *
      * @param fullPath 文件全路径(groupName/path)
      */
     void deleteFile(String fullPath);
 
     /**
      * 删除文件
+     *
      * @param storePath 文件路径信息
      */
     void deleteFile(StorePath storePath);
 
     /**
      * 修改文件元信息（合并）
+     *
      * @param groupName   文件组
      * @param path        文件路径
      * @param metaDataSet 需要合并的元信息
@@ -348,6 +386,7 @@ public interface StorageClient {
 
     /**
      * 修改文件元信息（合并）
+     *
      * @param fullPath    文件全路径
      * @param metaDataSet 需要合并的元信息
      */
@@ -355,6 +394,7 @@ public interface StorageClient {
 
     /**
      * 修改文件元信息（合并）
+     *
      * @param storePath   文件路径信息
      * @param metaDataSet 需要合并的元信息
      */
@@ -362,6 +402,7 @@ public interface StorageClient {
 
     /**
      * 修改文件元信息（覆盖）
+     *
      * @param groupName   文件组
      * @param path        文件路径
      * @param metaDataSet 需要修改的元信息
@@ -370,6 +411,7 @@ public interface StorageClient {
 
     /**
      * 修改文件元信息（覆盖）
+     *
      * @param fullPath    文件全路径
      * @param metaDataSet 需要修改的元信息
      */
@@ -377,6 +419,7 @@ public interface StorageClient {
 
     /**
      * 修改文件元信息（覆盖）
+     *
      * @param storePath   文件路径信息
      * @param metaDataSet 需要修改的元信息
      */
@@ -384,6 +427,7 @@ public interface StorageClient {
 
     /**
      * 获取文件元信息
+     *
      * @param groupName 文件组
      * @param path      文件路径
      * @return 返回元信息
@@ -392,6 +436,7 @@ public interface StorageClient {
 
     /**
      * 获取文件元信息
+     *
      * @param fullPath 文件全路径
      * @return 返回元信息
      */
@@ -399,9 +444,23 @@ public interface StorageClient {
 
     /**
      * 获取文件元信息
+     *
      * @param storePath 文件路径信息
      * @return 返回元信息
      */
     Set<MetaData> getMetaData(StorePath storePath);
 
+    /**
+     * 获取目录服务(Tracker)客户端接口
+     *
+     * @return 返回目录服务(Tracker)客户端接口
+     */
+    TrackerClient getTrackerClient();
+
+    /**
+     * 获取原始连接管理对象
+     *
+     * @return 返回连接管理对象
+     */
+    ConnectionManager getConnectionManager();
 }

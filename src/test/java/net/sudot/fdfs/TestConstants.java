@@ -9,6 +9,7 @@ import java.nio.charset.Charset;
 
 /**
  * 测试常量定义
+ *
  * @author tobato
  * @author sudot on 2017-04-18 0018.
  */
@@ -33,5 +34,6 @@ public class TestConstants {
 
     public static final String PERFORM_FILE_PATH = "/images/gs.jpg";
     public static final String CAT_IMAGE_FILE = "/images/cat.jpg";
+    public static final String BIG_FILE = "/images/Docker.pdf";
 
 }

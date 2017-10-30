@@ -1,8 +1,8 @@
 # fdfs-client
-java版fastdfs客户端操作工具
-此项目代码已通过工具库方式投入正式商业环境使用(2017-03-31)
-已更新至2.0.0(2017-04-21)
-更新日志详见CHANGELOG.md
+java版fastdfs客户端操作工具  
+此项目代码已通过工具库方式投入正式商业环境使用(2017-03-31)  
+已更新至2.1.0(2017-10-30)  
+更新日志详见[CHANGELOG.md](https://github.com/sudot/fdfs-client/blob/master/CHANGELOG.md)
 
 >#### 基于[chulung同学的版本](https://github.com/chulung/FastDFS_Client)
 >chulung同学的版本现已不存在
@@ -102,6 +102,8 @@ fdfs.pool.testWhileIdle=true
 fdfs.pool.minEvictableIdleTimeMillis=600000
 #回收资源线程的执行周期(单位:毫秒),需要testWhileIdle为true
 fdfs.pool.timeBetweenEvictionRunsMillis=600000
+#连接中断以后经过N秒重试(单位:秒)
+fdfs.pool.retryAfterSecend=10
 ```
 
 ### 4.使用接口服务对Fdfs服务端进行操作

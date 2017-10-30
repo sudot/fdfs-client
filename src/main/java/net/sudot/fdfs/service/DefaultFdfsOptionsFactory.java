@@ -1,29 +1,20 @@
 package net.sudot.fdfs.service;
 
-import net.sudot.fdfs.conn.ConnectionManager;
 import net.sudot.fdfs.conn.ConnectionPoolConfig;
 import net.sudot.fdfs.conn.FdfsConnectionPool;
 import net.sudot.fdfs.conn.PooledConnectionFactory;
 import net.sudot.fdfs.conn.StorageConnectionManager;
 import net.sudot.fdfs.conn.TrackerConnectionManager;
+import net.sudot.fdfs.domain.TrackerLocator;
 import net.sudot.fdfs.util.ConfigUtils;
 import net.sudot.fdfs.util.Validate;
 
 /**
  * 默认FastDFS操作客户端工厂接口
+ *
  * @author sudot on 2017-04-14 0014.
  */
 public class DefaultFdfsOptionsFactory implements FdfsOptionsFactory {
-
-    @Override
-    public ConnectionManager getTrackerConnectionManager() {
-        return TrackerConnectionManagerInstance.TRACKER_CONNECTION_MANAGER;
-    }
-
-    @Override
-    public ConnectionManager getStorageConnectionManager() {
-        return StorageConnectionManagerInstance.STORAGE_CONNECTION_MANAGER;
-    }
 
     @Override
     public TrackerClient getTrackerClient() {
@@ -37,12 +28,11 @@ public class DefaultFdfsOptionsFactory implements FdfsOptionsFactory {
 
     /**
      * 连接池静态初始化
+     *
      * @author sudot on 2017-04-17 0017.
      */
     private static class ConnectionPoolInstance {
-        private static final FdfsConnectionPool POOL;
-
-        static {
+        private static FdfsConnectionPool get() {
             String soTimeout = ConfigUtils.getConfigValue("fdfs.soTimeout");
             String connectTimeout = ConfigUtils.getConfigValue("fdfs.connectTimeout");
             String charsetName = ConfigUtils.getConfigValue("fdfs.charsetName");
@@ -69,54 +59,45 @@ public class DefaultFdfsOptionsFactory implements FdfsOptionsFactory {
             if (timeBetweenEvictionRunsMillis != null) {
                 config.setTimeBetweenEvictionRunsMillis(Long.parseLong(timeBetweenEvictionRunsMillis));
             }
-            POOL = new FdfsConnectionPool(factory, config);
-        }
-    }
-
-    /**
-     * TrackerConnectionManager静态初始化
-     * @author sudot on 2017-04-18 0018.
-     */
-    private static class TrackerConnectionManagerInstance {
-        private static final TrackerConnectionManager TRACKER_CONNECTION_MANAGER = new TrackerConnectionManager(ConnectionPoolInstance.POOL);
-
-        static {
-            String trackerList = ConfigUtils.getConfigValue("fdfs.trackerList");
-            Validate.notBlank(trackerList, "Tracker连接不能为空或包含空字符");
-            TRACKER_CONNECTION_MANAGER.setTrackerListFromString(trackerList);
+            return new FdfsConnectionPool(factory, config);
         }
     }
 
     /**
      * TrackerClient静态初始化
+     *
      * @author sudot on 2017-04-17 0017.
      */
     private static class TrackerClientInstance {
         private static final DefaultTrackerClient TRACKER_CLIENT = new DefaultTrackerClient();
 
         static {
-            TRACKER_CLIENT.setTrackerConnectionManager(TrackerConnectionManagerInstance.TRACKER_CONNECTION_MANAGER);
+            String trackerList = ConfigUtils.getConfigValue("fdfs.trackerList");
+            Validate.notBlank(trackerList, "Tracker连接不能为空或包含空字符");
+            String retryAfterSecend = ConfigUtils.getConfigValue("fdfs.pool.retryAfterSecend");
+
+            TrackerLocator trackerLocator = new TrackerLocator(trackerList);
+            if (retryAfterSecend != null) {
+                trackerLocator.setRetryAfterSecend(Integer.parseInt(retryAfterSecend));
+            }
+            TrackerConnectionManager trackerConnectionManager = new TrackerConnectionManager(ConnectionPoolInstance.get());
+            trackerConnectionManager.setTrackerLocator(trackerLocator);
+            TRACKER_CLIENT.setConnectionManager(trackerConnectionManager);
         }
     }
 
     /**
-     * StorageConnectionManager静态初始化
-     * @author sudot on 2017-04-18 0018.
-     */
-    private static class StorageConnectionManagerInstance {
-        private static final StorageConnectionManager STORAGE_CONNECTION_MANAGER = new StorageConnectionManager(ConnectionPoolInstance.POOL);
-    }
-
-    /**
      * StorageClient静态初始化
+     *
      * @author sudot on 2017-04-17 0017.
      */
     private static class StorageClientInstance {
         private static final DefaultStorageClient STORAGE_CLIENT = new DefaultStorageClient();
 
         static {
+            StorageConnectionManager storageConnectionManager = new StorageConnectionManager(ConnectionPoolInstance.get());
             STORAGE_CLIENT.setTrackerClient(TrackerClientInstance.TRACKER_CLIENT);
-            STORAGE_CLIENT.setConnectionManager(StorageConnectionManagerInstance.STORAGE_CONNECTION_MANAGER);
+            STORAGE_CLIENT.setConnectionManager(storageConnectionManager);
         }
     }
 }

@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * 线程执行工具
+ *
  * @author sudot on 2017-03-22 0022.
  */
 public class ThreadExecuteUtil {
@@ -16,16 +17,17 @@ public class ThreadExecuteUtil {
 
     /**
      * 在线程池中执行一个线程
+     *
      * @param runnable 需要执行的线程业务
      */
     public static void execute(Runnable runnable) {
         if (THREAD_POOL_EXECUTOR == null) {
             synchronized (SYNC_THREAD_POOL_EXECUTOR) {
                 if (THREAD_POOL_EXECUTOR == null) {
-                    int maximumPoolSize = 2;
+                    int maximumPoolSize = 1000;
                     int corePoolSize = maximumPoolSize;
                     long keepAliveTime = 1000L * 10L;
-                    TimeUnit unit = TimeUnit.SECONDS;
+                    TimeUnit unit = TimeUnit.MILLISECONDS;
                     BlockingQueue<Runnable> workQueue = new ArrayBlockingQueue<Runnable>(50000);
                     THREAD_POOL_EXECUTOR = new ThreadPoolExecutor(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue);
                 }

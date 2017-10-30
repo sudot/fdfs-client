@@ -5,6 +5,7 @@ import net.sudot.fdfs.util.Validate;
 
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -18,12 +19,13 @@ import java.util.Set;
  * <pre>
  * 支持负载均衡对IP轮询
  * </pre>
+ *
  * @author tobato
  */
 public class TrackerLocator {
-
-    /** 10分钟以后重试连接 */
-    private static final int DEFAULT_RETRY_AFTER_SECEND = 10 * 60;
+    public static final String SPLIT_REGEX = ",|;| |\t|\r\n|\n";
+    /** 10秒以后重试连接 */
+    private static final int DEFAULT_RETRY_AFTER_SECEND = 10;
 
     /** tracker服务配置地址列表 */
     private List<String> trackerList = new ArrayList<String>();
@@ -40,11 +42,24 @@ public class TrackerLocator {
     /**
      * 初始化Tracker服务器地址
      * 配置方式为 ip:port 如 192.168.1.2:21000
+     *
      * @param trackerList
      */
     public TrackerLocator(List<String> trackerList) {
         super();
         this.trackerList = trackerList;
+        buildTrackerAddresses();
+    }
+
+    /**
+     * 初始化Tracker服务器地址
+     * 配置方式为 ip:port 如 192.168.1.2:21000,192.168.1.2:21000
+     *
+     * @param trackerListStr
+     */
+    public TrackerLocator(String trackerListStr) {
+        super();
+        this.trackerList = Arrays.asList(trackerListStr.split(SPLIT_REGEX));
         buildTrackerAddresses();
     }
 
@@ -74,12 +89,20 @@ public class TrackerLocator {
 
     }
 
-    public void setRetryAfterSecend(int retryAfterSecend) {
+    /**
+     * 设置据上一次连接失效后的重试时长
+     *
+     * @param retryAfterSecend 据上一次连接失效后的重试时长(单位:秒)
+     * @return 返回TrackerLocator
+     */
+    public TrackerLocator setRetryAfterSecend(int retryAfterSecend) {
         this.retryAfterSecend = retryAfterSecend;
+        return this;
     }
 
     /**
      * 获取Tracker服务器地址
+     *
      * @return
      */
     public InetSocketAddress getTrackerAddress() {
@@ -91,47 +114,55 @@ public class TrackerLocator {
                 return holder.getAddress();
             }
         }
-        throw new FdfsUnavailableException("找不到可用的tracker " + getTrackerAddressConfigString());
+        throw new FdfsUnavailableException(getTrackerAddressConfigString());
     }
 
     /**
      * 获取配置地址列表
+     *
      * @return
      */
     private String getTrackerAddressConfigString() {
-        StringBuffer config = new StringBuffer();
-        for (int i = 0; i < trackerAddressCircular.size(); i++) {
+        int size = trackerAddressCircular.size();
+        StringBuilder config = new StringBuilder(size * 22 + 20);
+        config.append("找不到可用的tracker [");
+        for (int i = 0; i < size; i++) {
             TrackerAddressHolder holder = trackerAddressCircular.next();
             InetSocketAddress address = holder.getAddress();
             config.append(address.toString()).append(",");
         }
-        return config.toString();
+        return config.deleteCharAt(config.length() - 1).append("]").toString();
     }
 
     /**
      * 设置连接有效
+     *
      * @param address
      */
-    public void setActive(InetSocketAddress address) {
+    public TrackerLocator setActive(InetSocketAddress address) {
         TrackerAddressHolder holder = trackerAddressMap.get(address);
         holder.setActive();
+        return this;
     }
 
     /**
-     * 设置连接无效
+     * 设置连接为无效
+     *
      * @param address
      */
-    public void setInActive(InetSocketAddress address) {
+    public TrackerLocator setInActive(InetSocketAddress address) {
         TrackerAddressHolder holder = trackerAddressMap.get(address);
         holder.setInActive();
+        return this;
     }
 
     public List<String> getTrackerList() {
         return Collections.unmodifiableList(trackerList);
     }
 
-    public void setTrackerList(List<String> trackerList) {
+    public TrackerLocator setTrackerList(List<String> trackerList) {
         this.trackerList = trackerList;
+        return this;
     }
 
 }

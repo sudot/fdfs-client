@@ -18,7 +18,7 @@ public class PerformanceTest extends FastdfsTestBase {
     public void testPerformance() {
         final AtomicInteger failCount = new AtomicInteger(0);
         final AtomicInteger count = new AtomicInteger(0);
-        int totalCount = 1000;
+        int totalCount = 5;
         for (int i = 0; i < totalCount; i++) {
             ThreadExecuteUtil.execute(new Runnable() {
 
@@ -26,9 +26,9 @@ public class PerformanceTest extends FastdfsTestBase {
                 public void run() {
                     FileInputStream inputStream = null;
                     try {
-                        File file = TestUtils.getFile(TestConstants.PERFORM_FILE_PATH);
+                        File file = TestUtils.getFile(TestConstants.BIG_FILE);
                         inputStream = new FileInputStream(file);
-                        StorePath storePath = storageClient.uploadFile(null, inputStream, file.length(), "jpg");
+                        StorePath storePath = storageClient.uploadFile(null, inputStream, file.length(), TestUtils.getFileExtName(file.getName()));
                         logger.info("{}", storePath);
                         storageClient.deleteFile(storePath);
                     } catch (Exception e) {
@@ -38,7 +38,6 @@ public class PerformanceTest extends FastdfsTestBase {
                         IOUtils.closeQuietly(inputStream);
                         count.incrementAndGet();
                     }
-
                 }
             });
 
@@ -55,4 +54,29 @@ public class PerformanceTest extends FastdfsTestBase {
         System.out.println("fail count: " + failCount.get());
     }
 
+    /**
+     * 测试服务器停机重启连接重连
+     */
+    @Test
+    public void testReconnect() {
+        while (true) {
+            FileInputStream inputStream = null;
+            try {
+                File file = TestUtils.getFile(TestConstants.BIG_FILE);
+                inputStream = new FileInputStream(file);
+                StorePath storePath = storageClient.uploadFile(null, inputStream, file.length(), TestUtils.getFileExtName(file.getName()));
+                logger.info("{}", storePath);
+                storageClient.deleteFile(storePath);
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                IOUtils.closeQuietly(inputStream);
+            }
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

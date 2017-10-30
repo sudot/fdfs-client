@@ -26,3 +26,5 @@ fdfs.pool.testWhileIdle=true
 fdfs.pool.minEvictableIdleTimeMillis=600000
 #回收资源线程的执行周期(单位:毫秒),需要testWhileIdle为true
 fdfs.pool.timeBetweenEvictionRunsMillis=600000
+#连接中断以后经过N秒重试(单位:秒)
+fdfs.pool.retryAfterSecend=10
