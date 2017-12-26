@@ -2,6 +2,7 @@
 java版fastdfs客户端操作工具  
 此项目代码已通过工具库方式投入正式商业环境使用(2017-03-31)  
 已更新至2.1.0(2017-10-30)  
+已更新至2.2.0(2017-12-26)  
 更新日志详见[CHANGELOG.md](https://github.com/sudot/fdfs-client/blob/master/CHANGELOG.md)
 
 >#### 基于[chulung同学的版本](https://github.com/chulung/FastDFS_Client)
@@ -51,13 +52,20 @@ fdfs.test.storagePort=23200
 
 ### 1.在项目Pom当中加入依赖
 
-Maven依赖为
+因未上传至Maven仓库,此处给出jar包随项目一起打包方案,Maven依赖为
 ```xml
-    <dependency>
-        <groupId>net.sudot.fdfs</groupId>
-        <artifactId>fdfs-client</artifactId>
-        <version>2.0.0</version>
-    </dependency>
+    <properties>
+        <fdfs.client.version>2.2.0</fdfs.client.version>
+    </properties>
+    <dependencies>
+        <dependency>
+            <groupId>net.sudot.fdfs</groupId>
+            <artifactId>fdfs-client</artifactId>
+            <version>${fdfs.client.version}</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/fdfs-client-${fdfs.client.version}.jar</systemPath>
+        </dependency>
+    </dependencies>
 ```
 
 

@@ -1,3 +1,10 @@
+## 2.2.0 (2017-12-26)
+
+Features:
+
+  - 重构DefaultFdfsOptionsFactory,支持多环境配置
+  - 剔除ConfigUtils
+
 ## 2.1.0 (2017-10-30)
 
 Features:

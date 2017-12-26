@@ -6,8 +6,16 @@ import net.sudot.fdfs.conn.PooledConnectionFactory;
 import net.sudot.fdfs.conn.StorageConnectionManager;
 import net.sudot.fdfs.conn.TrackerConnectionManager;
 import net.sudot.fdfs.domain.TrackerLocator;
-import net.sudot.fdfs.util.ConfigUtils;
+import net.sudot.fdfs.exception.FdfsIOException;
+import net.sudot.fdfs.util.IOUtils;
 import net.sudot.fdfs.util.Validate;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.util.Properties;
 
 /**
  * 默认FastDFS操作客户端工厂接口
@@ -15,33 +23,75 @@ import net.sudot.fdfs.util.Validate;
  * @author sudot on 2017-04-14 0014.
  */
 public class DefaultFdfsOptionsFactory implements FdfsOptionsFactory {
+    private Properties properties = new Properties();
+    private TrackerClient trackerClient;
+    private StorageClient storageClient;
+
+    /**
+     * 使用默认的配置文件初始化
+     */
+    public DefaultFdfsOptionsFactory() {
+        this("fastdfs.properties");
+    }
+
+    /**
+     * 使用指定的配置文件初始化
+     *
+     * @param configPath 配置文件路径
+     */
+    public DefaultFdfsOptionsFactory(String configPath) {
+        File file = new File(configPath);
+        if (!file.exists()) {
+            URL url = this.getClass().getClassLoader().getResource(configPath);
+            if (url == null) { throw new FdfsIOException(String.format("找不到文件:%s", configPath)); }
+            file = new File(url.getPath());
+            if (!file.exists()) { throw new FdfsIOException(String.format("找不到文件:%s", file.getAbsolutePath())); }
+        }
+        InputStream io = null;
+        try {
+            io = new FileInputStream(file);
+            properties.load(io);
+        } catch (IOException e) {
+            throw new FdfsIOException(e);
+        } finally {
+            IOUtils.closeQuietly(io);
+        }
+        ConnectionPoolInstance poolInstance = new ConnectionPoolInstance();
+        // tracker和storage使用单独的连接池
+        trackerClient = new TrackerClientInstance(poolInstance.get()).get();
+        storageClient = new StorageClientInstance(poolInstance.get()).get();
+    }
 
     @Override
     public TrackerClient getTrackerClient() {
-        return TrackerClientInstance.TRACKER_CLIENT;
+        return trackerClient;
     }
 
     @Override
     public StorageClient getStorageClient() {
-        return StorageClientInstance.STORAGE_CLIENT;
+        return storageClient;
+    }
+
+    public Properties getProperties() {
+        return properties;
     }
 
     /**
-     * 连接池静态初始化
+     * 连接池初始化
      *
      * @author sudot on 2017-04-17 0017.
      */
-    private static class ConnectionPoolInstance {
-        private static FdfsConnectionPool get() {
-            String soTimeout = ConfigUtils.getConfigValue("fdfs.soTimeout");
-            String connectTimeout = ConfigUtils.getConfigValue("fdfs.connectTimeout");
-            String charsetName = ConfigUtils.getConfigValue("fdfs.charsetName");
-            String maxTotal = ConfigUtils.getConfigValue("fdfs.pool.maxTotal");
-            String blockWhenExhausted = ConfigUtils.getConfigValue("fdfs.pool.blockWhenExhausted");
-            String maxWaitMillis = ConfigUtils.getConfigValue("fdfs.pool.maxWaitMillis");
-            String testWhileIdle = ConfigUtils.getConfigValue("fdfs.pool.testWhileIdle");
-            String minEvictableIdleTimeMillis = ConfigUtils.getConfigValue("fdfs.pool.minEvictableIdleTimeMillis");
-            String timeBetweenEvictionRunsMillis = ConfigUtils.getConfigValue("fdfs.pool.timeBetweenEvictionRunsMillis");
+    private class ConnectionPoolInstance {
+        private FdfsConnectionPool get() {
+            String soTimeout = properties.getProperty("fdfs.soTimeout");
+            String connectTimeout = properties.getProperty("fdfs.connectTimeout");
+            String charsetName = properties.getProperty("fdfs.charsetName");
+            String maxTotal = properties.getProperty("fdfs.pool.maxTotal");
+            String blockWhenExhausted = properties.getProperty("fdfs.pool.blockWhenExhausted");
+            String maxWaitMillis = properties.getProperty("fdfs.pool.maxWaitMillis");
+            String testWhileIdle = properties.getProperty("fdfs.pool.testWhileIdle");
+            String minEvictableIdleTimeMillis = properties.getProperty("fdfs.pool.minEvictableIdleTimeMillis");
+            String timeBetweenEvictionRunsMillis = properties.getProperty("fdfs.pool.timeBetweenEvictionRunsMillis");
 
             PooledConnectionFactory factory = new PooledConnectionFactory();
             if (soTimeout != null) { factory.setSoTimeout(Integer.parseInt(soTimeout)); }
@@ -64,40 +114,52 @@ public class DefaultFdfsOptionsFactory implements FdfsOptionsFactory {
     }
 
     /**
-     * TrackerClient静态初始化
+     * TrackerClient初始化
      *
      * @author sudot on 2017-04-17 0017.
      */
-    private static class TrackerClientInstance {
-        private static final DefaultTrackerClient TRACKER_CLIENT = new DefaultTrackerClient();
+    private class TrackerClientInstance {
+        private FdfsConnectionPool pool;
 
-        static {
-            String trackerList = ConfigUtils.getConfigValue("fdfs.trackerList");
+        private TrackerClientInstance(FdfsConnectionPool pool) {
+            this.pool = pool;
+        }
+
+        private TrackerClient get() {
+            DefaultTrackerClient trackerClient = new DefaultTrackerClient();
+            String trackerList = properties.getProperty("fdfs.trackerList");
             Validate.notBlank(trackerList, "Tracker连接不能为空或包含空字符");
-            String retryAfterSecend = ConfigUtils.getConfigValue("fdfs.pool.retryAfterSecend");
+            String retryAfterSecend = properties.getProperty("fdfs.pool.retryAfterSecend");
 
             TrackerLocator trackerLocator = new TrackerLocator(trackerList);
             if (retryAfterSecend != null) {
                 trackerLocator.setRetryAfterSecend(Integer.parseInt(retryAfterSecend));
             }
-            TrackerConnectionManager trackerConnectionManager = new TrackerConnectionManager(ConnectionPoolInstance.get());
+            TrackerConnectionManager trackerConnectionManager = new TrackerConnectionManager(pool);
             trackerConnectionManager.setTrackerLocator(trackerLocator);
-            TRACKER_CLIENT.setConnectionManager(trackerConnectionManager);
+            trackerClient.setConnectionManager(trackerConnectionManager);
+            return trackerClient;
         }
     }
 
     /**
-     * StorageClient静态初始化
+     * StorageClient初始化
      *
      * @author sudot on 2017-04-17 0017.
      */
-    private static class StorageClientInstance {
-        private static final DefaultStorageClient STORAGE_CLIENT = new DefaultStorageClient();
+    private class StorageClientInstance {
+        private FdfsConnectionPool pool;
 
-        static {
-            StorageConnectionManager storageConnectionManager = new StorageConnectionManager(ConnectionPoolInstance.get());
-            STORAGE_CLIENT.setTrackerClient(TrackerClientInstance.TRACKER_CLIENT);
-            STORAGE_CLIENT.setConnectionManager(storageConnectionManager);
+        private StorageClientInstance(FdfsConnectionPool pool) {
+            this.pool = pool;
+        }
+
+        private StorageClient get() {
+            DefaultStorageClient storageClient = new DefaultStorageClient();
+            StorageConnectionManager storageConnectionManager = new StorageConnectionManager(pool);
+            storageClient.setTrackerClient(trackerClient);
+            storageClient.setConnectionManager(storageConnectionManager);
+            return storageClient;
         }
     }
 }
