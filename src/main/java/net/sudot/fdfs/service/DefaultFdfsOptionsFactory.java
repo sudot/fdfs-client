@@ -7,14 +7,9 @@ import net.sudot.fdfs.conn.StorageConnectionManager;
 import net.sudot.fdfs.conn.TrackerConnectionManager;
 import net.sudot.fdfs.domain.TrackerLocator;
 import net.sudot.fdfs.exception.FdfsIOException;
-import net.sudot.fdfs.util.IOUtils;
 import net.sudot.fdfs.util.Validate;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.util.Properties;
 
 /**
@@ -40,21 +35,11 @@ public class DefaultFdfsOptionsFactory implements FdfsOptionsFactory {
      * @param configPath 配置文件路径
      */
     public DefaultFdfsOptionsFactory(String configPath) {
-        File file = new File(configPath);
-        if (!file.exists()) {
-            URL url = this.getClass().getClassLoader().getResource(configPath);
-            if (url == null) { throw new FdfsIOException(String.format("找不到文件:%s", configPath)); }
-            file = new File(url.getPath());
-            if (!file.exists()) { throw new FdfsIOException(String.format("找不到文件:%s", file.getAbsolutePath())); }
-        }
-        InputStream io = null;
-        try {
-            io = new FileInputStream(file);
-            properties.load(io);
-        } catch (IOException e) {
+        try (InputStream inputStream = ClassLoader.getSystemResourceAsStream(configPath)) {
+            if (inputStream == null) { throw new FdfsIOException(String.format("找不到文件:%s", configPath)); }
+            properties.load(inputStream);
+        } catch (Exception e) {
             throw new FdfsIOException(e);
-        } finally {
-            IOUtils.closeQuietly(io);
         }
         ConnectionPoolInstance poolInstance = new ConnectionPoolInstance();
         // tracker和storage使用单独的连接池
