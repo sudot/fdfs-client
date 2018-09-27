@@ -35,7 +35,7 @@ public class DefaultFdfsOptionsFactory implements FdfsOptionsFactory {
      * @param configPath 配置文件路径
      */
     public DefaultFdfsOptionsFactory(String configPath) {
-        try (InputStream inputStream = ClassLoader.getSystemResourceAsStream(configPath)) {
+        try (InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(configPath)) {
             if (inputStream == null) { throw new FdfsIOException(String.format("找不到文件:%s", configPath)); }
             properties.load(inputStream);
         } catch (Exception e) {
