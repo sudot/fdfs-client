@@ -38,6 +38,8 @@ public class DefaultFdfsOptionsFactory implements FdfsOptionsFactory {
         try (InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(configPath)) {
             if (inputStream == null) { throw new FdfsIOException(String.format("找不到文件:%s", configPath)); }
             properties.load(inputStream);
+        } catch (FdfsIOException e) {
+            throw e;
         } catch (Exception e) {
             throw new FdfsIOException(e);
         }
