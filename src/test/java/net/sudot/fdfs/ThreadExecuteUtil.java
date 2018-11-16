@@ -24,7 +24,7 @@ public class ThreadExecuteUtil {
         if (THREAD_POOL_EXECUTOR == null) {
             synchronized (SYNC_THREAD_POOL_EXECUTOR) {
                 if (THREAD_POOL_EXECUTOR == null) {
-                    int maximumPoolSize = 1000;
+                    int maximumPoolSize = 50;
                     int corePoolSize = maximumPoolSize;
                     long keepAliveTime = 1000L * 10L;
                     TimeUnit unit = TimeUnit.MILLISECONDS;

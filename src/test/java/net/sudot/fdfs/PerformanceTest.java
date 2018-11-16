@@ -6,19 +6,21 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * 性能测试
+ *
  * @author tobato
  * @author sudot on 2017-04-18 0018.
  */
 public class PerformanceTest extends FastdfsTestBase {
     @Test
     public void testPerformance() {
+        int totalCount = 1000;
+        final CountDownLatch countDownLatch = new CountDownLatch(totalCount);
         final AtomicInteger failCount = new AtomicInteger(0);
-        final AtomicInteger count = new AtomicInteger(0);
-        int totalCount = 5;
         for (int i = 0; i < totalCount; i++) {
             ThreadExecuteUtil.execute(new Runnable() {
 
@@ -36,21 +38,19 @@ public class PerformanceTest extends FastdfsTestBase {
                         failCount.incrementAndGet();
                     } finally {
                         IOUtils.closeQuietly(inputStream);
-                        count.incrementAndGet();
+                        countDownLatch.countDown();
                     }
                 }
             });
 
         }
-        while (count.get() < totalCount) {
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        try {
+            countDownLatch.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
         ThreadExecuteUtil.destroy();
-        System.out.println("success count: " + count.get());
+        System.out.println("success count: " + totalCount);
         System.out.println("fail count: " + failCount.get());
     }
 
